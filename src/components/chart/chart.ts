@@ -74,6 +74,11 @@ export interface Bar {
   close?: number
   empty?: boolean
   active?: boolean
+  zlevels?: { bids: Array<number>; asks: Array<number> }
+  zratios?: Array<number>
+  zbids?: Array<number>
+  zasks?: Array<number>
+  zupdates?: number
 }
 
 export interface IndicatorApi extends ISeriesApi<any> {
@@ -1166,7 +1171,7 @@ export default class Chart {
    * also cache finished bar
    * @param {Trade[]} trades trades to render
    */
-  renderRealtimeTrades(trades) {
+  renderRealtimeTrades(trades: Trade[]) {
     if (!trades.length) {
       return
     }
@@ -1200,6 +1205,21 @@ export default class Chart {
             timestamp = this.activeRenderer.timestamp
           }
         }
+        /*if (trade.zlevels) {
+          this.activeRenderer.bar.zlevels = trade.zlevels
+        }
+        if (trade.zratios) {
+          this.activeRenderer.bar.zratios = trade.zratios
+        }
+        if (trade.zasks) {
+          this.activeRenderer.bar.zasks = trade.zasks
+        }
+        if (trade.zbids) {
+          this.activeRenderer.bar.zbids = trade.zbids
+        }
+        if (trade.zupdates) {
+          this.activeRenderer.bar.zupdates = trade.zupdates
+        }*/
       } else {
         timestamp = trade.timestamp / 1000
       }
@@ -1292,6 +1312,21 @@ export default class Chart {
         )
       }
 
+      if (trade.zlevels) {
+        this.activeRenderer.sources[identifier].zlevels = trade.zlevels
+      }
+      if (trade.zratios) {
+        this.activeRenderer.sources[identifier].zratios = trade.zratios
+      }
+      if (trade.zasks) {
+        this.activeRenderer.sources[identifier].zasks = trade.zasks
+      }
+      if (trade.zbids) {
+        this.activeRenderer.sources[identifier].zbids = trade.zbids
+      }
+      if (trade.zupdates) {
+        this.activeRenderer.sources[identifier].zupdates += trade.zupdates
+      }
       this.activeRenderer.sources[identifier]['c' + trade.side] += trade.count
       this.activeRenderer.sources[identifier]['v' + trade.side] += amount
 
@@ -1338,7 +1373,12 @@ export default class Chart {
       cbuy: sourceBar.cbuy,
       csell: sourceBar.csell,
       lbuy: sourceBar.lbuy,
-      lsell: sourceBar.lsell
+      lsell: sourceBar.lsell,
+      zlevels: sourceBar.zlevels,
+      zratios: sourceBar.zratios,
+      zasks: sourceBar.zasks,
+      zbids: sourceBar.zbids,
+      zupdates: sourceBar.zupdates
     }
   }
 
@@ -1355,7 +1395,7 @@ export default class Chart {
   renderBars(bars: Bar[], indicatorId, silent?: boolean) {
     let indicatorsIds
     let drawReferences = false
-
+    console.log(bars)
     if (indicatorId) {
       const indicator = this.getLoadedIndicator(indicatorId)
       if (
@@ -1425,6 +1465,11 @@ export default class Chart {
             cachedBar.high = activeBar.high
             cachedBar.low = activeBar.low
             cachedBar.close = activeBar.close
+            cachedBar.zlevels = activeBar.zlevels
+            cachedBar.zratios = activeBar.zratios
+            cachedBar.zasks = activeBar.zasks
+            cachedBar.zbids = activeBar.zbids
+            cachedBar.zupdates = activeBar.zupdates
             activeBars.splice(i, 1)
             i--
 
@@ -1536,6 +1581,11 @@ export default class Chart {
         temporaryRenderer.bar.csell += bar.csell
         temporaryRenderer.bar.lbuy += bar.lbuy
         temporaryRenderer.bar.lsell += bar.lsell
+        temporaryRenderer.bar.zlevels = bar.zlevels
+        temporaryRenderer.bar.zasks = bar.zasks
+        temporaryRenderer.bar.zbids = bar.zbids
+        temporaryRenderer.bar.zratios = bar.zratios
+        temporaryRenderer.bar.zupdates += bar.zupdates
       }
 
       temporaryRenderer.sources[marketKey] = this.cloneSourceBar(bar)
@@ -2263,6 +2313,7 @@ export default class Chart {
     bar.lbuy = 0
     bar.lsell = 0
     bar.empty = true
+    bar.zupdates = 0
 
     return bar
   }
@@ -2757,12 +2808,31 @@ export default class Chart {
     this.isLoading = true
 
     return historicalService
-      .fetch(
+      .fetchOrderbook(
         rangeToFetch.from * 1000,
         rangeToFetch.to * 1000,
         timeframe,
-        historicalMarkets
+        // TODO remove non ORDERBOOK: pair
+        store.state.panes.panes[this.paneId].markets
       )
+      .then(results2 => {
+        return historicalService
+          .fetch(
+            rangeToFetch.from * 1000,
+            rangeToFetch.to * 1000,
+            timeframe,
+            historicalMarkets
+          )
+          .then(results => {
+            const newResults = [...results.data, ...results2.data]
+            newResults.sort((a, b) => a.time - b.time)
+            results.data = newResults
+            return results
+          })
+          .catch(err => {
+            return results2
+          })
+      })
       .then(results => this.onHistorical(results))
       .catch(err => {
         console.error(err)

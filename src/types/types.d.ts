@@ -52,6 +52,11 @@ export interface Trade {
   originalPrice?: number
   liquidation?: boolean
   slippage?: number
+  zlevels?: { bids: Array<number>; asks: Array<number> }
+  zratios?: Array<number>
+  zbids?: Array<number>
+  zasks?: Array<number>
+  zupdates?: number
 }
 
 export interface QueuedTrade extends Trade {
