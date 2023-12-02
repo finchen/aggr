@@ -270,7 +270,11 @@ class HistoricalService extends EventEmitter {
           zupdates:
             typeof columns['zupdates'] !== 'undefined'
               ? data[i][columns['zupdates']]
-              : 0
+              : 0,
+          zalert:
+              typeof columns['zalert'] !== 'undefined' && data[i][columns['zalert']]
+                ? data[i][columns['zalert']]
+                : []
         }
       } else {
         // pending bar was sent
@@ -317,6 +321,7 @@ class HistoricalService extends EventEmitter {
           lastClosedBars[data[i].market].zasks = data[i].zasks
           lastClosedBars[data[i].market].zbids = data[i].zbids
           lastClosedBars[data[i].market].zratios = data[i].zratios
+          lastClosedBars[data[i].market].zalert = data[i].zalert
           lastClosedBars[data[i].market].zupdates += data[i].zupdates
 
           data.splice(i, 1)

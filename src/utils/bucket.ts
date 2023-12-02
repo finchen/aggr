@@ -68,7 +68,7 @@ export default class Bucket {
 
   getAdapter(str: string) {
     const litteral = str.replace(
-      /([^.]|^)(vbuy|vsell|cbuy|csell|lbuy|lsell|zlevels|zratios|zbids|zasks|zupdates)/g,
+      /([^.]|^)(vbuy|vsell|cbuy|csell|lbuy|lsell|zlevels|zratios|zbids|zasks|zupdates|zalert)/g,
       '$1stats.$2'
     )
     return new Function('stats', `'use strict'; return ${litteral};`) as (

@@ -57,6 +57,7 @@ export interface Trade {
   zbids?: Array<number>
   zasks?: Array<number>
   zupdates?: number
+  zalert?: Array<any>
 }
 
 export interface QueuedTrade extends Trade {

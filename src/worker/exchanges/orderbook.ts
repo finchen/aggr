@@ -105,7 +105,8 @@ export default class ORDERBOOK extends Exchange {
       zratios: trade.zratios ? trade.zratios : undefined,
       zbids: trade.zbids ? trade.zbids : undefined,
       zasks: trade.zasks ? trade.zasks : undefined,
-      zupdates: trade.zupdates ? trade.zupdates : undefined
+      zupdates: trade.zupdates ? trade.zupdates : undefined,
+      zalert: trade.zalert ? trade.zalert : []
     }
   }
 
