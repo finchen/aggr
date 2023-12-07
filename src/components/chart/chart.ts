@@ -1115,7 +1115,7 @@ export default class Chart {
    * also cache finished bar
    * @param {Trade[]} trades trades to render
    */
-  renderRealtimeTrades(trades) {
+  renderRealtimeTrades(trades: Trade[]) {
     if (!trades.length) {
       return
     }
@@ -1232,6 +1232,24 @@ export default class Chart {
         )
       }
 
+      if (trade.zlevels) {
+        this.activeRenderer.sources[identifier].zlevels = trade.zlevels
+      }
+      if (trade.zratios) {
+        this.activeRenderer.sources[identifier].zratios = trade.zratios
+      }
+      if (trade.zasks) {
+        this.activeRenderer.sources[identifier].zasks = trade.zasks
+      }
+      if (trade.zbids) {
+        this.activeRenderer.sources[identifier].zbids = trade.zbids
+      }
+      if (trade.zupdates) {
+        this.activeRenderer.sources[identifier].zupdates += trade.zupdates
+      }
+      if (trade.zalert) {
+        this.activeRenderer.sources[identifier].zalert = trade.zalert
+      }
       this.activeRenderer.sources[identifier]['c' + trade.side] += trade.count
       this.activeRenderer.sources[identifier]['v' + trade.side] += trade.amount
 
@@ -1272,7 +1290,7 @@ export default class Chart {
   renderBars(bars: Bar[], indicatorId, silent?: boolean) {
     let indicatorsIds
     let drawReferences = false
-
+    console.log(bars)
     if (indicatorId) {
       const indicator = this.getLoadedIndicator(indicatorId)
       if (
@@ -1389,6 +1407,12 @@ export default class Chart {
         temporaryRenderer.bar.csell += bar.csell
         temporaryRenderer.bar.lbuy += bar.lbuy
         temporaryRenderer.bar.lsell += bar.lsell
+        temporaryRenderer.bar.zlevels = bar.zlevels
+        temporaryRenderer.bar.zasks = bar.zasks
+        temporaryRenderer.bar.zbids = bar.zbids
+        temporaryRenderer.bar.zratios = bar.zratios
+        temporaryRenderer.bar.zalert = bar.zalert
+        temporaryRenderer.bar.zupdates += bar.zupdates
       }
 
       temporaryRenderer.sources[marketKey] = cloneSourceBar(bar)
@@ -2468,6 +2492,34 @@ export default class Chart {
         timeframe,
         this.historicalMarkets
       )
+      .then(results => {
+        if (
+          store.state.panes.panes[this.paneId].markets.findIndex(s =>
+            s.indexOf('ORDERBOOK')
+          ) === -1
+        ) {
+          return results
+        }
+        return historicalService
+          .fetchOrderbook(
+            rangeToFetch.from * 1000,
+            rangeToFetch.to * 1000,
+            timeframe,
+            store.state.panes.panes[this.paneId].markets.filter(
+              m => m.indexOf('ORDERBOOK') !== -1
+            )
+          )
+          .then(results2 => {
+            const newResults = [...results.data, ...results2.data]
+            newResults.sort((a, b) => a.time - b.time)
+            results.data = newResults
+            return results
+          })
+          .catch(err => {
+            console.error(err)
+            return results
+          })
+      })
       .then(results => this.onHistorical(results))
       .catch(err => {
         console.error(err)

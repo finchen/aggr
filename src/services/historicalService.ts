@@ -9,6 +9,7 @@ import EventEmitter from 'eventemitter3'
 
 import store from '../store'
 import { parseMarket } from './productsService'
+import { ORDERBOOK_API_URL } from '@/worker/exchanges/orderbook'
 
 export type InitialPrices = { [market: string]: number }
 
@@ -43,6 +44,16 @@ class HistoricalService extends EventEmitter {
     }
 
     return `${this.url}/${params.join('/')}`
+  }
+
+  getOrderbookApiUrl(from, to, timeframe, markets) {
+    const params = [from, to, (timeframe * 1000).toString()]
+
+    if (markets && markets.length) {
+      params.push(encodeURIComponent(markets.join('+')))
+    }
+
+    return `${ORDERBOOK_API_URL}/historical/${params.join('/')}`
   }
 
   fetch(
@@ -106,6 +117,69 @@ class HistoricalService extends EventEmitter {
 
     return this.promisesOfData[url]
   }
+
+  fetchOrderbook(
+    from: number,
+    to: number,
+    timeframe: number,
+    markets: string[]
+  ): Promise<HistoricalResponse> {
+    const url = this.getOrderbookApiUrl(from, to, timeframe, markets)
+
+    if (this.promisesOfData[url]) {
+      return this.promisesOfData[url]
+    }
+
+    this.promisesOfData[url] = fetch(url)
+      .then(async response => {
+        const contentType = response.headers.get('content-type')
+        let json
+
+        if (contentType && contentType.indexOf('application/json') !== -1) {
+          json = await response.json()
+        } else {
+          // text = error
+          throw new Error(await response.text())
+        }
+
+        json.status = response.status
+        return json
+      })
+      .then(json => {
+        if (!json || json.error) {
+          throw new Error(json && json.error ? json.error : 'empty-response')
+        }
+
+        /*if (!json.results.length) {
+          throw new Error('No more data')
+        }*/
+
+        if (json.format !== 'point') {
+          throw new Error('Bad data')
+        }
+
+        return this.normalizePoints(
+          json.results,
+          json.columns,
+          timeframe,
+          markets
+        )
+      })
+      .catch(err => {
+        handleFetchError(err)
+
+        throw err
+      })
+      .then(data => {
+        store.commit('app/TOGGLE_LOADING', false)
+        delete this.promisesOfData[url]
+
+        return data
+      })
+
+    return this.promisesOfData[url]
+  }
+
   normalizePoints(data, columns, timeframe, markets: string[]) {
     const lastClosedBars = {}
     const initialPrices = {}
@@ -179,7 +253,31 @@ class HistoricalService extends EventEmitter {
           vsell:
             typeof columns['vsell'] !== 'undefined'
               ? data[i][columns['vsell']]
-              : 0
+              : 0,
+          zlevels:
+            typeof columns['zlevels'] !== 'undefined'
+              ? data[i][columns['zlevels']]
+              : { bids: [], asks: [] },
+          zratios:
+            typeof columns['zratios'] !== 'undefined'
+              ? data[i][columns['zratios']]
+              : [],
+          zbids:
+            typeof columns['zbids'] !== 'undefined'
+              ? data[i][columns['zbids']]
+              : [],
+          zasks:
+            typeof columns['zasks'] !== 'undefined'
+              ? data[i][columns['zasks']]
+              : [],
+          zupdates:
+            typeof columns['zupdates'] !== 'undefined'
+              ? data[i][columns['zupdates']]
+              : 0,
+          zalert:
+              typeof columns['zalert'] !== 'undefined' && data[i][columns['zalert']]
+                ? data[i][columns['zalert']]
+                : []
         }
       } else {
         // pending bar was sent
@@ -231,6 +329,12 @@ class HistoricalService extends EventEmitter {
             lastClosedBars[data[i].market].low
           )
           lastClosedBars[data[i].market].close = data[i].close
+          lastClosedBars[data[i].market].zlevels = data[i].zlevels
+          lastClosedBars[data[i].market].zasks = data[i].zasks
+          lastClosedBars[data[i].market].zbids = data[i].zbids
+          lastClosedBars[data[i].market].zratios = data[i].zratios
+          lastClosedBars[data[i].market].zalert = data[i].zalert
+          lastClosedBars[data[i].market].zupdates += data[i].zupdates
 
           data.splice(i, 1)
           i--

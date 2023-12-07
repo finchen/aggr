@@ -16,6 +16,12 @@ export interface Bar {
   active?: boolean
   exchange?: string
   pair?: string
+  zlevels?: { bids: Array<number>; asks: Array<number> }
+  zratios?: Array<number>
+  zbids?: Array<number>
+  zasks?: Array<number>
+  zupdates?: number
+  zalert?: Array<any>
 }
 
 export type MarketsBars = {

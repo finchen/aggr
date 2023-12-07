@@ -92,7 +92,7 @@ function normalizeCommonVariables(input, indicatorId) {
   input = input.replace(/([^.])?\b(indicatorId)\b/gi, `$1'${indicatorId}'`)
   input = input.replace(/([^.])?\b(bar)\b/gi, '$1renderer')
   input = input.replace(
-    /([^.]|^)\b(vbuy|vsell|cbuy|csell|lbuy|lsell)\b/gi,
+    /([^.]|^)\b(vbuy|vsell|cbuy|csell|lbuy|lsell|zlevels|zratios|zbids|zasks|zupdates|zalert)\b/gi,
     '$1renderer.bar.$2'
   )
   input = input.replace(

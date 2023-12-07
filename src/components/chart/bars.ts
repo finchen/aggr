@@ -42,7 +42,8 @@ export function resetBar(bar: Bar) {
   bar.lbuy = 0
   bar.lsell = 0
   bar.empty = true
-
+  bar.zalert = []
+  
   return bar
 }
 
@@ -66,7 +67,13 @@ export function cloneSourceBar(sourceBar: Bar, timestamp?: number): Bar {
     cbuy: sourceBar.cbuy,
     csell: sourceBar.csell,
     lbuy: sourceBar.lbuy,
-    lsell: sourceBar.lsell
+    lsell: sourceBar.lsell,
+    zlevels: sourceBar.zlevels,
+    zratios: sourceBar.zratios,
+    zasks: sourceBar.zasks,
+    zbids: sourceBar.zbids,
+    zupdates: sourceBar.zupdates,
+    zalert: sourceBar.zalert
   }
 }
 
@@ -119,6 +126,12 @@ export function mergeBarsWithActiveBars(bars: Bar[], renderer: Renderer) {
           cachedBar.high = activeBar.high
           cachedBar.low = activeBar.low
           cachedBar.close = activeBar.close
+          cachedBar.zlevels = activeBar.zlevels
+          cachedBar.zratios = activeBar.zratios
+          cachedBar.zasks = activeBar.zasks
+          cachedBar.zbids = activeBar.zbids
+          cachedBar.zupdates = activeBar.zupdates
+          cachedBar.zalert = activeBar.zalert
           activeBars.splice(i, 1)
           i--
 
