@@ -14,7 +14,9 @@ export function resetRendererBar(renderer: Renderer) {
     csell: 0,
     lbuy: 0,
     lsell: 0,
-    empty: true
+    empty: true,
+    zalert: [],
+    zupdates: 0
   }
 
   if (typeof renderer.sources !== 'undefined') {
@@ -43,7 +45,7 @@ export function resetBar(bar: Bar) {
   bar.lsell = 0
   bar.empty = true
   bar.zalert = []
-  
+  bar.zupdates = 0
   return bar
 }
 
@@ -68,7 +70,7 @@ export function cloneSourceBar(sourceBar: Bar, timestamp?: number): Bar {
     csell: sourceBar.csell,
     lbuy: sourceBar.lbuy,
     lsell: sourceBar.lsell,
-    zlevels: sourceBar.zlevels,
+    zlevels: { ...sourceBar.zlevels },
     zratios: sourceBar.zratios,
     zasks: sourceBar.zasks,
     zbids: sourceBar.zbids,

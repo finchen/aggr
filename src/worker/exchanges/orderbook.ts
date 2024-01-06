@@ -4,13 +4,13 @@ const isDev = false;
 const API_PORT = isDev ? 3001 : 3000;
 const WS_PORT = isDev ? 3013 : 3012;
 
-export const ORDERBOOK_API_URL = `http://localhost:${API_PORT}/api/orderbook`
+export const ORDERBOOK_API_URL = import.meta.env.VITE_APP_PROXY_URL + `http://localhost:${API_PORT}/api/orderbook`
 
 export default class ORDERBOOK extends Exchange {
   id = 'ORDERBOOK'
 
   protected endpoints = {
-    PRODUCTS: [`http://localhost:${API_PORT}/api/orderbook/products`]
+    PRODUCTS: [import.meta.env.VITE_APP_PROXY_URL + `http://localhost:${API_PORT}/api/orderbook/products`]
   }
 
   /*products = [
@@ -32,19 +32,14 @@ export default class ORDERBOOK extends Exchange {
     const types = {}
 
     for (const product of response) {
-      // For each exchange/pair we add the ratios, bids and asks
-      for (const obType of ['RATIO', 'BIDS', 'ASKS']) {
-        for (const obTypeIndex of [0, 1, 2, 3]) {
-          const symbol = `${product.exchange}-${product.symbol}${obType}${obTypeIndex}`
-          products.push(symbol)
-          //types[symbol] = product.type
-        }
-      }
+      products.push(`${product.exchange}-${product.symbol}`)
     }
 
-    products.push(`AGGRSPOT-BTCUSDLEVELS`)
-    types[`AGGRSPOT-BTCUSDLEVELS`] = 'spot'
-    products.push(`AGGRPERP-BTCUSDLEVELS`)
+    products.push(`AGGRSPOT-BTCUSD`)
+    products.push(`AGGRPERP-BTCUSD`)
+    products.push(`AGGRSPOT-BTCUSDALERTS`)
+
+    //types[`AGGRSPOT-BTCUSDLEVELS`] = 'spot'
     //types[`AGGRPERP-BTCUSDLEVELS`] = 'perp'
 
     return {

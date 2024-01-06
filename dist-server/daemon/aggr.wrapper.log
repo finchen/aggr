@@ -1,0 +1,2 @@
+2024-01-03 07:36:37 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=2048 C:\Users\Laptop\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\Laptop\Documents\aggr_finchen\dist-server\index.mjs --scriptoptions= --log "Aggr wrapper" --grow 0.5 --wait 2 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-01-03 07:36:37 - Started 3132

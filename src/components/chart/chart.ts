@@ -1290,7 +1290,7 @@ export default class Chart {
   renderBars(bars: Bar[], indicatorId, silent?: boolean) {
     let indicatorsIds
     let drawReferences = false
-    console.log(bars)
+
     if (indicatorId) {
       const indicator = this.getLoadedIndicator(indicatorId)
       if (
@@ -2493,10 +2493,12 @@ export default class Chart {
         this.historicalMarkets
       )
       .then(results => {
+        const obMarkets = store.state.panes.panes[this.paneId].markets.filter(
+            m => m.indexOf('ORDERBOOK') !== -1
+          )
+
         if (
-          store.state.panes.panes[this.paneId].markets.findIndex(s =>
-            s.indexOf('ORDERBOOK')
-          ) === -1
+            obMarkets.length === 0 
         ) {
           return results
         }
@@ -2505,9 +2507,7 @@ export default class Chart {
             rangeToFetch.from * 1000,
             rangeToFetch.to * 1000,
             timeframe,
-            store.state.panes.panes[this.paneId].markets.filter(
-              m => m.indexOf('ORDERBOOK') !== -1
-            )
+            obMarkets
           )
           .then(results2 => {
             const newResults = [...results.data, ...results2.data]
