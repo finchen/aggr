@@ -293,7 +293,8 @@ class WorkspacesService {
     if (this.urlStrategy === 'hash') {
       urlWorkspaceId = location.hash.substring(1)
     } else {
-      [, urlWorkspaceId, urlPairs] = decodeURIComponent(
+      // eslint-disable-next-line @typescript-eslint/no-extra-semi
+      ;[, urlWorkspaceId, urlPairs] = decodeURIComponent(
         location.pathname
       ).split('/')
     }
@@ -605,41 +606,85 @@ class WorkspacesService {
     return this.db.delete('gifs', slug)
   }
 
-  async saveIndicator(indicator: IndicatorSettings) {
+  async saveIndicator(indicator: IndicatorSettings, silent = false) {
     const now = Date.now()
 
-    const originalIndicator: IndicatorSettings = await this.db.get(
-      'indicators',
-      indicator.id
-    )
-
-    const payload = {
-      ...originalIndicator,
-      ...JSON.parse(JSON.stringify(indicator)),
-      preview: originalIndicator && originalIndicator.preview,
-      unsavedChanges: false
+    if (!indicator.libraryId) {
+      if (indicator.id && indicator.id[0] !== '_') {
+        indicator.libraryId = indicator.id
+      } else {
+        indicator.libraryId = uniqueName(
+          slugify(indicator.name),
+          await this.getIndicatorsIds()
+        )
+      }
     }
 
-    payload.createdAt = payload.createdAt || now
-    payload.updatedAt = now
+    const originalIndicator: IndicatorSettings =
+      (await this.db.get('indicators', indicator.libraryId)) || {}
 
-    store.dispatch('app/showNotice', {
-      type: 'info',
-      title: `Saved indicator ${payload.id}`
-    })
+    indicator.createdAt =
+      indicator.createdAt || originalIndicator.createdAt || now
+    indicator.updatedAt = silent
+      ? indicator.updatedAt || originalIndicator.updatedAt || now
+      : now
 
-    return this.db.put('indicators', payload)
+    const payload = JSON.parse(
+      JSON.stringify({
+        id: indicator.libraryId,
+        name: indicator.name || originalIndicator.name,
+        options: indicator.options || originalIndicator.options,
+        script: indicator.script || originalIndicator.script,
+        createdAt: indicator.createdAt,
+        updatedAt: indicator.updatedAt,
+        preview: indicator.preview
+      })
+    )
+
+    const optionals = ['displayName', 'description', 'enabled', 'author', 'pr']
+
+    for (const key of optionals) {
+      if (typeof indicator[key] !== 'undefined') {
+        payload[key] = indicator[key]
+      } else if (typeof originalIndicator[key] !== 'undefined') {
+        payload[key] = originalIndicator[key]
+      }
+    }
+
+    payload.preview =
+      typeof indicator.preview !== 'undefined'
+        ? indicator.preview
+        : originalIndicator.preview
+
+    await this.db.put('indicators', payload)
+
+    if (!silent) {
+      store.dispatch('app/showNotice', {
+        type: 'info',
+        title: `Saved ${
+          payload.createdAt === payload.updatedAt
+            ? 'new indicator'
+            : 'indicator'
+        } ${payload.id}`
+      })
+    }
+
+    return payload
   }
 
   async saveIndicatorPreview(indicatorId: string, blob: Blob) {
     const originalIndicator = await this.db.get('indicators', indicatorId)
+
+    if (originalIndicator.preview instanceof File) {
+      return
+    }
 
     originalIndicator.preview = blob
 
     await this.db.put('indicators', originalIndicator)
   }
 
-  async incrementIndicatorUsage(id: string): Promise<string> {
+  async incrementIndicatorUsage(id: string): Promise<IndicatorSettings> {
     const indicator = await this.getIndicator(id)
 
     if (!indicator) {
@@ -648,7 +693,9 @@ class WorkspacesService {
 
     indicator.updatedAt = Date.now()
 
-    return this.saveIndicator(indicator)
+    await this.saveIndicator(indicator)
+
+    return indicator
   }
 
   getIndicator(id: string): Promise<IndicatorSettings> {
@@ -663,8 +710,13 @@ class WorkspacesService {
     return this.db.getAllKeys('indicators')
   }
 
-  deleteIndicator(id: string) {
-    return this.db.delete('indicators', id)
+  async deleteIndicator(id: string) {
+    await this.db.delete('indicators', id)
+
+    store.dispatch('app/showNotice', {
+      type: 'info',
+      title: `Deleted indicator ${id}`
+    })
   }
 
   async savePreset(preset: Preset, type?: string, confirmOverride = true) {
@@ -802,7 +854,9 @@ class WorkspacesService {
   async showLegacyNotice() {
     const stay = await dialogService.confirm({
       title: 'Update notice',
-      message: `Welcome to aggr.trade ${import.meta.env.VITE_APP_VERSION}.<br>We are replacing the old version with the new on the main app.<br><br>If for some reasons you don't like it,<br>legacy app can still be found on <a href="https://legacy.aggr.trade">legacy.aggr.trade</a> ☺️`,
+      message: `Welcome to aggr.trade ${
+        import.meta.env.VITE_APP_VERSION
+      }.<br>We are replacing the old version with the new on the main app.<br><br>If for some reasons you don't like it,<br>legacy app can still be found on <a href="https://legacy.aggr.trade">legacy.aggr.trade</a> ☺️`,
       ok: 'Stay ',
       cancel: 'Go back',
       html: true

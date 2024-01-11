@@ -16,26 +16,28 @@
       >
         {{ action.label }}
       </button>
-
       <Btn
         type="button"
-        class="-text mr8"
+        class="mr8"
+        :class="cancelClass"
         @click="close(false)"
         @mousedown.native.prevent
         v-if="cancel"
       >
-        {{ cancel }}
+        <i v-if="cancelIcon" class="mr4" :class="cancelIcon"></i> {{ cancel }}
       </Btn>
+
       <Btn
         v-if="ok"
         type="button"
         :disabled="!isSubmitEnabled"
-        class="-green -large"
+        class="-large"
+        :class="okClass"
         v-autofocus
         @click="close(true)"
         @mousedown.native.prevent
       >
-        <i class="icon-check mr4"></i> {{ ok }}
+        <i v-if="okIcon" class="mr4" :class="okIcon"></i> {{ ok }}
       </Btn>
     </template>
   </Dialog>
@@ -62,9 +64,25 @@ export default {
       type: String,
       default: 'OK'
     },
+    okIcon: {
+      type: String,
+      default: 'icon-check'
+    },
+    okClass: {
+      type: String,
+      default: '-green'
+    },
     cancel: {
       type: String,
       default: 'Cancel'
+    },
+    cancelIcon: {
+      type: String,
+      default: null
+    },
+    cancelClass: {
+      type: String,
+      default: '-text'
     },
     html: {
       type: Boolean,
@@ -106,6 +124,11 @@ export default {
     async bindScroll() {
       await this.$nextTick()
       const bodyElement = this.$refs.dialog.$refs.body
+
+      if (bodyElement.clientHeight === bodyElement.scrollHeight) {
+        this.isSubmitEnabled = true
+        return
+      }
 
       if (bodyElement) {
         this.scrollHandler = this.handleScroll.bind(this)

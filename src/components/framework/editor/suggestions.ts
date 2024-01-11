@@ -135,9 +135,19 @@ export default [
     detail: '[AGGR] list option',
     insertText: `quote = option(
   type=list,
-  options=[null, "USD", "USDT", "TUSD", "USDC", "BUSD", "FDUSD"],
+  options=[null, "USD", "USDT", "TUSD", "USDC", "FDUSD"],
   rebuild=true // not specifc to list but will trigger a full indi rebuild when change
 )`
+  },
+  {
+    label: 'option',
+    detail: '[AGGR] simple option',
+    insertText: `option(default=14,step=1)`
+  },
+  {
+    label: 'option (range)',
+    detail: '[AGGR] simple option (range)',
+    insertText: `option(default=14,type=range,step=1,min=0,max=200)`
   },
   {
     label: 'listname',
@@ -148,9 +158,8 @@ export default [
     "": "Pick something",
     "USD": "United State Dollar",
     "USDT": "Tether",
-    "TUSD": "TrueUSD",
     "USDC": "Coinbase USD",
-    "BUSD": "Binance USD"
+    "TUSD": "TrueUSD"
   },
   default=USD,
   rebuild=true

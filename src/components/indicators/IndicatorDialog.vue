@@ -5,25 +5,24 @@
       !navigation.columnWidth && 'indicator-dialog--collapsed-column',
       resizingColumn && 'indicator-dialog--resizing-column'
     ]"
-    size="large"
+    size="wide"
     :mask="false"
     :close-on-escape="false"
     @clickOutside="close"
     @resize="onResize"
+    contrasted
   >
     <template #header>
-      <div class="d-flex">
-        <div class="dialog__title indicator-dialog__title -center">
-          <div @dblclick="renameIndicator">{{ name }}</div>
-          <code
-            class="dialog__subtitle indicator-dialog__id -filled"
-            @click="copyIndicatorId"
-            @dblclick="editDescription"
-            :title="indicatorId"
-            v-tippy
-            >{{ displayId }}</code
-          >
-        </div>
+      <div class="dialog__title indicator-dialog__title -center">
+        <div @dblclick="renameIndicator">{{ name }}</div>
+        <code
+          class="indicator-dialog__id -filled"
+          @click="copyIndicatorId"
+          :title="libraryId"
+          v-tippy
+        >
+          <small>{{ displayId }}</small>
+        </code>
       </div>
 
       <a
@@ -87,7 +86,7 @@
         title="Script options"
         id="indicator-left-script"
       >
-        <div class="indicator-options__grid mt16">
+        <div class="indicator-options__grid">
           <indicator-option
             v-for="key in scriptOptionsKeys"
             :key="key"
@@ -107,7 +106,7 @@
         title="Colors"
         id="indicator-left-colors"
       >
-        <div class="indicator-options__grid mt16">
+        <div class="indicator-options__grid">
           <indicator-option
             v-for="key in colorOptionsKeys"
             :key="key"
@@ -126,7 +125,7 @@
         title="Other options"
         id="indicator-left-other"
       >
-        <div class="indicator-options__grid mt16">
+        <div class="indicator-options__grid">
           <indicator-option
             v-for="key in defaultOptionsKeys"
             :key="key"
@@ -293,7 +292,7 @@
 
     <template v-slot:footer>
       <presets
-        :type="'indicator:' + indicatorId"
+        :type="'indicator:' + libraryId"
         class="mr8 -left"
         :adapter="getIndicatorPreset"
         :placeholder="presetPlaceholder"
@@ -365,10 +364,10 @@ import {
   getIndicatorOptionType,
   getIndicatorOptionValue,
   plotTypesMap
-} from './options'
+} from '../chart/options'
 import dialogService from '../../services/dialogService'
 import merge from 'lodash.merge'
-import IndicatorPresetDialog from './IndicatorPresetDialog.vue'
+import IndicatorPresetDialog from '../chart/IndicatorPresetDialog.vue'
 import { copyTextToClipboard, getEventCords } from '@/utils/helpers'
 
 const ignoredOptionsKeys = [
@@ -425,14 +424,23 @@ export default {
     indicator() {
       return this.$store.state[this.paneId].indicators[this.indicatorId]
     },
+    libraryId() {
+      return this.indicator.libraryId || this.indicatorId
+    },
     displayName() {
       return this.indicator.displayName
     },
     displayId() {
-      if (this.indicatorId.length <= 16) {
-        return this.indicatorId
+      const id = this.libraryId
+
+      if (!id) {
+        return 'n/a'
+      }
+
+      if (id.length <= 16) {
+        return id
       } else {
-        return this.indicatorId.slice(0, 6) + '..' + this.indicatorId.substr(-6)
+        return id.slice(0, 6) + '..' + id.substr(-6)
       }
     },
     presetPlaceholder() {
@@ -674,23 +682,9 @@ export default {
       })
 
       if (typeof name === 'string' && name !== this.name) {
-        await this.close()
-        await this.$store.dispatch(this.paneId + '/renameIndicator', {
+        this.$store.dispatch(this.paneId + '/renameIndicator', {
           id: this.indicatorId,
           name
-        })
-      }
-    },
-    async editDescription() {
-      const description = await dialogService.prompt({
-        action: 'Description',
-        input: this.description
-      })
-
-      if (typeof description === 'string' && description !== this.description) {
-        await this.$store.commit(this.paneId + '/UPDATE_DESCRIPTION', {
-          id: this.indicatorId,
-          description
         })
       }
     },
@@ -715,7 +709,10 @@ export default {
         return
       }
 
-      this.$store.dispatch(this.paneId + '/undoIndicator', this.indicatorId)
+      this.$store.dispatch(this.paneId + '/undoIndicator', {
+        libraryId: this.libraryId,
+        indicatorId: this.indicatorId
+      })
     },
     async getIndicatorPreset(originalPreset: Preset) {
       const optionsKeys = [
@@ -990,16 +987,6 @@ export default {
       align-items: stretch;
       overflow: visible;
     }
-
-    .dialog__header {
-      border-bottom: 0 !important;
-      padding-bottom: 0;
-    }
-
-    .dialog__header,
-    .dialog__subheader {
-      background-color: var(--theme-base-o25);
-    }
   }
 
   &__title {
@@ -1021,6 +1008,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin: 0;
 
     @media screen and (min-width: 768px) {
       display: block;
@@ -1190,8 +1178,7 @@ export default {
     }
 
     .indicator-dialog--collapsed-column & {
-      right: -1px;
-      border-radius: 0.25rem 0 0 0.25rem;
+      right: -4px;
     }
   }
 }

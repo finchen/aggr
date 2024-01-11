@@ -5,14 +5,8 @@
     contentClass="settings"
     size="medium"
   >
-    <template v-slot:header
-      ><div>
-        <div class="dialog__title">Settings</div>
-        <div class="dialog__subtitle" v-if="hits">
-          <i class="icon-bolt"></i> <code v-text="hits"></code> messages /s
-        </div>
-      </div>
-      <div class="column -center"></div>
+    <template #header>
+      <div class="dialog__title">Settings</div>
     </template>
     <ToggableSection
       v-if="currentWorkspace"
@@ -47,7 +41,7 @@
             @click="openWorkspace(workspaceDropdownId, true)"
           >
             <i class="icon-external-link-square-alt"></i>
-            <span>Open in a new tab</span>
+            <span>Open in a tab</span>
           </button>
           <button
             type="button"
@@ -80,7 +74,7 @@
             @click="removeWorkspace(workspaceDropdownId)"
           >
             <i class="icon-cross"></i>
-            <span>Remove workspace</span>
+            <span>Remove</span>
           </button>
         </dropdown>
         <button
@@ -409,8 +403,6 @@ import ToggableSection from '@/components/framework/ToggableSection.vue'
 
 import importService from '@/services/importService'
 import workspacesService from '@/services/workspacesService'
-import aggregatorService from '@/services/aggregatorService'
-import { APPLICATION_START_TIME } from '@/utils/constants'
 
 import DialogMixin from '@/mixins/dialogMixin'
 
@@ -430,7 +422,6 @@ export default {
     return {
       currentWorkspace: null,
       workspaces: [],
-      hits: null,
       workspaceDropdownId: null,
       workspaceDropdownTrigger: null
     }
@@ -491,33 +482,9 @@ export default {
 
   async created() {
     await this.getWorkspaces()
-
-    if (import.meta.env.NODE_ENV !== 'production') {
-      this.getHits()
-    }
-  },
-
-  beforeDestroy() {
-    if (this._hitsTimeout) {
-      clearTimeout(this._hitsTimeout)
-    }
   },
 
   methods: {
-    getHits() {
-      if (this.hits === null) {
-        this.hits = '...'
-      }
-
-      this._hitsTimeout = setTimeout(async () => {
-        const hits = await aggregatorService.dispatchAsync({ op: 'getHits' })
-        const elapsed = Date.now() - APPLICATION_START_TIME
-        this.hits = (hits / (elapsed / 1000)).toFixed()
-
-        this.getHits()
-      }, 1000)
-    },
-
     async getWorkspaces() {
       const workspaces = (await workspacesService.getWorkspaces()).sort(
         (a, b) => b.updatedAt - a.updatedAt
@@ -779,8 +746,8 @@ export default {
   opacity: 0.75;
   line-height: 1;
   position: relative;
-  top: -0.5em;
-  left: 0.25em;
+  top: -0.5rem;
+  left: 0.25rem;
   align-self: center;
 }
 

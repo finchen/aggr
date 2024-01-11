@@ -60,10 +60,6 @@ export interface Trade {
   zalert?: Array<any>
 }
 
-export interface QueuedTrade extends Trade {
-  timeout?: number
-}
-
 export interface Volumes {
   timestamp: number
   vbuy: number

@@ -75,6 +75,7 @@ export type IndicatorRealtimeAdapter = (
 ) => void
 export interface LoadedIndicator {
   id: string
+  libraryId: string
   options: any
   script: string
   model: IndicatorTranspilationResult

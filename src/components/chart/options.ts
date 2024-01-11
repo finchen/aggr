@@ -9,6 +9,7 @@ import {
 } from 'lightweight-charts'
 import { ChartPaneState, IndicatorSettings } from '@/store/panesSettings/chart'
 import merge from 'lodash.merge'
+import { getCustomPlotOptions } from './buildUtils'
 
 const computedDefaultValues = {}
 const computedOptionTypes = {}
@@ -323,7 +324,7 @@ export function getChartScales(
   indicators: {
     [id: string]: IndicatorSettings
   },
-  indicatorId?: string
+  indicatorId = ''
 ) {
   return Object.values(indicators).reduce(
     (scales, indicator) => {
@@ -333,15 +334,17 @@ export function getChartScales(
         indicator.options.priceScaleId &&
         !scales[indicator.options.priceScaleId]
       ) {
-        scales[indicator.options.priceScaleId] = indicator.name || indicator.id
+        scales[indicator.options.priceScaleId] = `${
+          indicator.name
+        } (${indicator.id.slice(0, 8)}${indicator.id.length > 8 ? '...' : ''})`
       }
 
       return scales
     },
     {
-      ...(indicatorId ? { [indicatorId]: `* Indicator's scale (📍)` } : {}),
-      left: '* Left (←)',
-      right: '* Right (→)'
+      ...{ [indicatorId]: `Own scale 📍` },
+      left: 'Left ←',
+      right: 'Right →'
     }
   )
 }
@@ -488,4 +491,30 @@ export function getIndicatorOptionValue(
   }
 
   return null
+}
+
+export function getSerieOptions(indicator, plot, priceScale?) {
+  if (priceScale && priceScale.priceFormat) {
+    indicator.options.priceFormat = {
+      ...indicator.options.priceFormat,
+      ...priceScale.priceFormat
+    }
+  }
+
+  const customPlotOptions = getCustomPlotOptions(indicator, plot)
+
+  return {
+    ...defaultSerieOptions,
+    ...(defaultPlotsOptions[plot.type] || {}),
+    ...indicator.options,
+    ...(priceScale && priceScale.scaleMargins
+      ? {
+          scaleMargins: {
+            top: priceScale.scaleMargins.top,
+            bottom: priceScale.scaleMargins.bottom
+          }
+        }
+      : {}),
+    ...customPlotOptions
+  }
 }

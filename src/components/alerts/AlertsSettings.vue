@@ -6,14 +6,7 @@
     @change="toggleAlerts($event)"
   >
     <p class="mt0 text-color-50">
-      <i class="icon-info"></i> Triggers using the
-      <span
-        v-tippy
-        title="for example BTCUSD alerts will use avg. price of 26 markets across 13 exchanges and not the one you have on screen"
-      >
-        average price
-      </span>
-      of a coin.
+      <i class="icon-info"></i> Uses average price of the coin
     </p>
     <div class="column">
       <div class="form-group">
@@ -71,14 +64,24 @@
         <label for="audio-assistant-source"
           ><i class="icon-music-note mr4"></i> Alert sound</label
         >
-        <button class="btn -file -blue -cases" @change="handleAlertSoundFile">
-          <i class="icon-upload mr8"></i> {{ alertSound || 'Browse' }}
+        <button class="btn -file -blue -cases">
+          <i class="icon-upload mr8"></i> {{ displayAlertSound || 'Browse' }}
+          <i
+            v-if="alertSound"
+            class="icon-volume-high mr8 btn__suffix"
+            @click.stop.prevent="playAlertSound"
+          ></i>
           <i
             v-if="alertSound"
             class="icon-cross mr8 btn__suffix"
             @click.stop.prevent="removeAlertSound"
           ></i>
-          <input type="file" class="input-file" accept="audio/*" />
+          <input
+            type="file"
+            class="input-file"
+            accept="audio/*"
+            @change="handleAlertSoundFile"
+          />
         </button>
       </div>
     </div>
@@ -152,6 +155,20 @@ export default class AlertsSettings extends Vue {
 
   get alertsClick() {
     return this.$store.state.settings.alertsClick
+  }
+
+  get displayAlertSound() {
+    const id = this.alertSound
+
+    if (!id) {
+      return null
+    }
+
+    if (id.length <= 14) {
+      return id
+    } else {
+      return id.slice(0, 6) + '..' + id.substr(-6)
+    }
   }
 
   created() {
@@ -243,6 +260,22 @@ export default class AlertsSettings extends Vue {
     }
 
     this.$store.commit('settings/SET_ALERT_SOUND', null)
+  }
+
+  async playAlertSound() {
+    if (!this.alertSound) {
+      return
+    }
+
+    try {
+      await audioService.playOnce(this.alertSound, 3000)
+    } catch (error) {
+      console.error(error)
+      this.$store.dispatch('app/showNotice', {
+        type: 'error',
+        title: `Failed to play ${this.alertSound}`
+      })
+    }
   }
 }
 </script>
