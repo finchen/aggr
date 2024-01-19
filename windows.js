@@ -6,7 +6,7 @@ var svc = new Service({
     name: 'Aggr',
     description: 'Aggr',
     script: 'C:\\Users\\Laptop\\Documents\\aggr_finchen\\dist-server\\index.mjs',
-    nodeOptions: ['--harmony', '--max_old_space_size=2048'],
+    nodeOptions: ['--harmony', '--max_old_space_size=1024'],
     env: {
         name: 'NODE_ENV',
         value: 'production',
@@ -25,9 +25,8 @@ svc.on('install', function () {
 
 svc.on('alreadyinstalled', function () {
     console.log('This service is already installed.');
-    svc.stop();
     svc.uninstall();
-    svc.install();
+    console.log('uninstall. you can now install');
 });
 
 // Listen for the "start" event and let us know when the

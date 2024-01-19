@@ -13,15 +13,7 @@ export default class ORDERBOOK extends Exchange {
     PRODUCTS: [import.meta.env.VITE_APP_PROXY_URL + `http://localhost:${API_PORT}/api/orderbook/products`]
   }
 
-  /*products = [
-    'BTCUSD-AGGRPERP-0','BTCUSD-AGGRPERP-1','BTCUSD-AGGRPERP-2','BTCUSD-AGGRPERP-3',
-    'BTCUSD-AGGRSPOT-0','BTCUSD-AGGRSPOT-1','BTCUSD-AGGRSPOT-2','BTCUSD-AGGRSPOT-3',
-    'BTCUSD-AGGRPERP-BIDS','BTCUSD-AGGRPERP-ASKS',
-    'BTCUSD-AGGRSPOT-BIDS','BTCUSD-AGGRSPOT-ASKS',
-    'BTCUSD-BINANCE-0','BTCUSDT-BINANCE-1','BTCUSDT-BINANCE-2','BTCUSDT-BINANCE-3',
-    'BTCUSD-COINBASE-0','BTCUSD-COINBASE-1','BTCUSD-COINBASE-2','BTCUSD-COINBASE-3',
-    'BTCUSD-BINANCEPERP-0','BTCUSD-BINANCEPERP-1','BTCUSD-BINANCEPERP-2','BTCUSD-BINANCEPERP-3',
-]*/
+
 
   async getUrl() {
     return `ws://localhost:${WS_PORT}`
@@ -39,8 +31,8 @@ export default class ORDERBOOK extends Exchange {
     products.push(`AGGRPERP-BTCUSD`)
     products.push(`AGGRSPOT-BTCUSDALERTS`)
 
-    //types[`AGGRSPOT-BTCUSDLEVELS`] = 'spot'
-    //types[`AGGRPERP-BTCUSDLEVELS`] = 'perp'
+    types[`AGGRSPOT-BTCUSD`] = 'spot'
+    types[`AGGRPERP-BTCUSD`] = 'perp'
 
     return {
       products

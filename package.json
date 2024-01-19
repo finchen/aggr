@@ -14,7 +14,8 @@
     "clean": "rm -rf node_modules && npm cache clean -f",
     "serve:dist": "node ./dist-server/index.mjs",
     "deploy": "node scripts/gh-pages-deploy.mjs",
-    "deploy-windows": "node windows.js"
+    "deploy-windows": "node windows.js",
+    "serve-prod": "set DEBUG=express:* & node ./dist-server/index.mjs"
   },
   "dependencies": {
     "@mdi/font": "^5.6.55",
