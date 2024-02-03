@@ -91,6 +91,16 @@
         </button>
         <button
           class="dropdown-item dropdown-item--space-between"
+          @click="addPane('ratios')"
+        >
+          <div>
+            <div>OB Ratios</div>
+            <div class="dropdown-item__subtitle">Orderbook Ratios</div>
+          </div>
+          <i class="icon-plus" />
+        </button>
+        <button
+          class="dropdown-item dropdown-item--space-between"
           @click="addPane('counters')"
         >
           <div>

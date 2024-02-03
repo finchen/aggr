@@ -59,7 +59,8 @@ import { GridItem } from '@/utils/grid'
     Prices: () => import('@/components/prices/Prices.vue'),
     Website: () => import('@/components/website/Website.vue'),
     TradesLite: () => import('@/components/trades/TradesLite.vue'),
-    Alerts: () => import('@/components/alerts/Alerts.vue')
+    Alerts: () => import('@/components/alerts/Alerts.vue'),
+    Ratios: () => import('@/components/ratios/Ratios.vue'),
   }
 })
 export default class Panes extends Vue {

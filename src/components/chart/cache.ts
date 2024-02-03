@@ -19,7 +19,7 @@ export default class ChartCache {
    */
   saveChunk(chunk) {
     let index
-
+   
     if (
       !this.chunks.length ||
       this.chunks[this.chunks.length - 1].to < chunk.from
