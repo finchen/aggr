@@ -83,6 +83,7 @@ export interface ChartPaneState {
   watermarkColor: string
   showBorder: boolean
   borderColor: string
+  textColor: string
   showLeftScale: boolean
   showRightScale: boolean
   showTimeScale: boolean
@@ -120,6 +121,7 @@ const state = {
   watermarkColor: 'rgba(255,255,255,.1)',
   showBorder: true,
   borderColor: null,
+  textColor: null,
   showLeftScale: false,
   showRightScale: true,
   showTimeScale: true,
@@ -132,7 +134,9 @@ const actions = {
     state.indicatorsErrors = {} // let chart recalculate potential errors
     state.layouting = false // start without layouting overlay
 
-    if (!Object.keys(state.indicators).length) {
+    const indicatorsIds = Object.keys(state.indicators)
+
+    if (!indicatorsIds.length) {
       const indicators = await workspacesService.getIndicators()
 
       for (const indicator of indicators) {
@@ -147,27 +151,35 @@ const actions = {
           libraryId: indicator.id,
           series: []
         })
+        indicatorsIds.push(id)
       }
 
       scheduleSync(state)
     }
 
-    if (!state.indicatorOrder.length) {
-      state.indicatorOrder = Object.keys(state.indicators)
+    if (state.indicatorOrder.length !== indicatorsIds.length) {
+      state.indicatorOrder = indicatorsIds
     }
   },
-  addIndicator({ commit }, indicator) {
+  addIndicator({ commit, state }, indicator) {
     const id = `_${randomString()}`
+    const libraryId = indicator.id || indicator.libraryId
     indicator = {
       id,
-      libraryId: indicator.libraryId,
-      name: indicator.name,
-      description: indicator.description,
+      libraryId,
+      name: uniqueName(
+        indicator.name,
+        Object.keys(state.indicators).map(
+          indicatorId => state.indicators[indicatorId].name
+        ),
+        false,
+        '2'
+      ),
       script: indicator.script || 'line(avg_close(bar))',
       createdAt: indicator.createdAt,
       updatedAt: indicator.updatedAt,
       options: {
-        priceScaleId: indicator.priceScaleId || indicator.libraryId || id,
+        priceScaleId: indicator.priceScaleId || libraryId || id,
         ...indicator.options
       }
     }
@@ -182,7 +194,6 @@ const actions = {
     const indicator = merge({}, state.indicators[id])
 
     const indicators = Object.values(state.indicators)
-
     indicator.name = uniqueName(
       indicator.name,
       indicators.map(indicator => indicator.name)
@@ -193,7 +204,7 @@ const actions = {
     delete indicator.enabled
     delete indicator.series
     delete indicator.optionsDefinitions
-    delete indicator.model
+    delete (indicator as any).model // past releases might have included this, force remove
 
     dispatch('addIndicator', indicator)
   },
@@ -201,10 +212,14 @@ const actions = {
   async downloadIndicator({ state }, indicatorId) {
     const indicator = state.indicators[indicatorId]
 
+    const presets = await workspacesService.getAllPresets(
+      `indicator:${indicator.libraryId}`
+    )
+
     await downloadAnything(
       {
         type: 'indicator',
-        name: 'indicator:' + indicator.name,
+        name: indicator.name,
         data: {
           libraryId: indicator.libraryId,
           displayName: indicator.displayName,
@@ -212,7 +227,8 @@ const actions = {
           description: indicator.description,
           script: indicator.script,
           createdAt: indicator.createdAt,
-          updatedAt: indicator.updatedAt
+          updatedAt: indicator.updatedAt,
+          presets
         }
       },
       'indicator_' + (indicator.displayName || indicator.name)
@@ -236,6 +252,7 @@ const actions = {
     } catch (error) {
       // empty
     }
+
     if (state.indicators[id] && state.indicators[id].options[key] === value) {
       return
     }
@@ -304,27 +321,27 @@ const actions = {
     indicator.name = name
     commit('UPDATE_INDICATOR_DISPLAY_NAME', id)
   },
-  syncIndicator({ state, rootState }, indicator: IndicatorSettings) {
+  syncIndicator({ rootState }, indicator: IndicatorSettings) {
     for (const paneId in rootState.panes.panes) {
-      if (
-        paneId === state._id ||
-        rootState.panes.panes[paneId].type !== 'chart'
-      ) {
-        continue
-      }
-
       for (const otherPaneIndicatorId in rootState[paneId].indicators) {
+        if (otherPaneIndicatorId === indicator.id) {
+          continue
+        }
+
         const otherPaneIndicator = rootState[paneId].indicators[
           otherPaneIndicatorId
         ] as IndicatorSettings
+
         if (
           otherPaneIndicator &&
           otherPaneIndicator.libraryId === indicator.libraryId &&
           !otherPaneIndicator.unsavedChanges
         ) {
-          otherPaneIndicator.options = indicator.options
+          otherPaneIndicator.options = merge({}, indicator.options)
 
-          this.commit(paneId + '/SET_INDICATOR_SCRIPT', { id: indicator.id })
+          this.commit(paneId + '/SET_INDICATOR_SCRIPT', {
+            id: otherPaneIndicator.id
+          })
         }
       }
     }
@@ -457,6 +474,9 @@ const mutations = {
     } else {
       state.borderColor = value
     }
+  },
+  SET_TEXT_COLOR(state, { value }) {
+    state.textColor = value
   },
   TOGGLE_AXIS(state, side) {
     if (side === 'left') {

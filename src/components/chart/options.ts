@@ -205,12 +205,14 @@ export function getChartFontSize(paneId) {
 
 export function getChartLayoutOptions(paneId?: string) {
   const styles = getComputedStyle(document.documentElement)
-  const textColor = styles.getPropertyValue('--theme-color-100')
   const transColor = styles.getPropertyValue('--theme-background-100')
+
+  const chartOptions = store.state[paneId] as ChartPaneState
 
   const customColorsOptions = {
     layout: {
-      textColor: textColor,
+      textColor:
+        chartOptions?.textColor || styles.getPropertyValue('--theme-color-100'),
       borderColor: transColor,
       fontSize: getChartFontSize(paneId)
     }
@@ -365,7 +367,7 @@ export function getChartOptions(
 
 export function getChartCustomColorsOptions(paneId) {
   return merge(
-    getChartLayoutOptions(),
+    getChartLayoutOptions(paneId),
     getChartOptions(defaultChartOptions as any),
     getChartWatermarkOptions(paneId),
     getChartGridlinesOptions(paneId)

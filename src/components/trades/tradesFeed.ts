@@ -320,17 +320,17 @@ export default class TradesFeed {
     ${pairName}
     ${
       this.showPrices
-        ? `<div class="trade__price">${formatMarketPrice(
-            trade.price,
+        ? `<div class="trade__price">${priceSlippage}${formatMarketPrice(
+            trade.avgPrice,
             marketKey
-          )}${priceSlippage}</div>`
+          )}</div>`
         : ''
     }
     <div class="trade__amount">
     <span class="trade__amount__quote">
         ${' '}
         <span class="icon-quote"></span>
-        <span>${formatAmount(trade.size * trade.price)}</span>
+        <span>${formatAmount(trade.size * trade.avgPrice)}</span>
         ${' '}
       </span>
       <span class="trade__amount__base">

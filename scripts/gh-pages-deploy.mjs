@@ -25,6 +25,10 @@ import fs from 'fs'
     await execa('git', ['checkout', '--orphan', 'gh-pages'])
     // Understand if it's dist or build folder
     const distFolder = fs.existsSync('dist') ? 'dist' : 'build'
+<<<<<<< HEAD
+=======
+    await execa('touch', [`${distFolder}/.nojekyll`])
+>>>>>>> OriginalRepo/release/3.6.1
     await execa('git', ['--work-tree', distFolder, 'add', '--all'])
     await execa('git', ['--work-tree', distFolder, 'commit', '-m', 'gh-pages'])
     console.log('Pushing to gh-pages...')

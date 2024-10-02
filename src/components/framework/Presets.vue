@@ -130,7 +130,7 @@ import Btn from '@/components/framework/Btn.vue'
 import dialogService from '@/services/dialogService'
 import workspacesService from '@/services/workspacesService'
 import importService from '@/services/importService'
-import { Preset, PresetType } from '@/types/types'
+import { Preset } from '@/types/types'
 import { Component, Vue } from 'vue-property-decorator'
 import { downloadAnything, slugify } from '@/utils/helpers'
 
@@ -168,7 +168,7 @@ interface PresetSummary {
   }
 })
 export default class Presets extends Vue {
-  type: PresetType
+  type: string
   adapter: (originalPreset: Preset) => Preset
   placeholder: string
   presets: PresetSummary[] = []
@@ -228,7 +228,6 @@ export default class Presets extends Vue {
 
   async getPresets() {
     this.presets.splice(1, this.presets.length)
-
     const keys = (await workspacesService.getPresetsKeysByType(
       this.type
     )) as string[]
@@ -293,7 +292,6 @@ export default class Presets extends Vue {
     await workspacesService.savePreset(
       {
         name,
-        type: this.type,
         data,
         createdAt: original ? original.createdAt : now,
         updatedAt: original ? now : null
@@ -399,7 +397,13 @@ export default class Presets extends Vue {
 
   async downloadPreset(presetSummary: PresetSummary) {
     const preset = await workspacesService.getPreset(presetSummary.id)
-    downloadAnything(preset, slugify(presetSummary.label))
+    downloadAnything(
+      {
+        ...preset,
+        type: 'preset'
+      },
+      slugify(presetSummary.label)
+    )
   }
 
   async downloadSettings() {
@@ -410,12 +414,10 @@ export default class Presets extends Vue {
       return
     }
 
-    const underlyingType = this.type.split(':')[0]
-
     downloadAnything(
       {
         name: this.type + ':' + name,
-        type: underlyingType,
+        type: 'preset',
         data
       },
       slugify(name)

@@ -198,8 +198,8 @@
             calculateSlippage === 'price'
               ? 'Show slippage in $'
               : calculateSlippage === 'bps'
-              ? 'Show slippage in basis point (bps)'
-              : 'Slippage disabled'
+                ? 'Show slippage in basis point (bps)'
+                : 'Slippage disabled'
           "
           v-tippy="{ placement: 'left', boundary: 'window' }"
         >
@@ -567,6 +567,7 @@ export default {
         'https://random-word-api.herokuapp.com/word?number=2'
       )
         .then(response => response.json())
+        .catch(() => [])
         .then(words =>
           words.map(word => word[0].toUpperCase() + word.slice(1)).join('')
         )
@@ -720,14 +721,22 @@ export default {
         for (const paneId in this.$store.state.panes.panes) {
           if (/^trades/.test(this.$store.state.panes.panes[paneId].type)) {
             this.$store.dispatch(`${paneId}/generateSwatch`, {
-              buyColor,
-              sellColor,
+              color: buyColor,
+              side: 'buy',
               baseVariance: 0.25
             })
 
+            this.$store.dispatch(`${paneId}/generateSwatch`, {
+              color: sellColor,
+              side: 'sell',
+              baseVariance: 0.25
+            })
+
+            // force refresh
             this.$store.state[paneId].thresholds = JSON.parse(
               JSON.stringify(this.$store.state[paneId].thresholds)
             )
+            this.$store.commit(paneId + '/SET_THRESHOLD_COLOR', {})
           }
         }
 

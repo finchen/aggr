@@ -7,7 +7,6 @@ import {
   GifsStorage,
   ImportedSound,
   Preset,
-  PresetType,
   ProductsStorage,
   Workspace
 } from '@/types/types'
@@ -615,7 +614,9 @@ class WorkspacesService {
       } else {
         indicator.libraryId = uniqueName(
           slugify(indicator.name),
-          await this.getIndicatorsIds()
+          await this.getIndicatorsIds(),
+          true,
+          '2'
         )
       }
     }
@@ -658,14 +659,10 @@ class WorkspacesService {
 
     await this.db.put('indicators', payload)
 
-    if (!silent) {
+    if (!originalIndicator) {
       store.dispatch('app/showNotice', {
         type: 'info',
-        title: `Saved ${
-          payload.createdAt === payload.updatedAt
-            ? 'new indicator'
-            : 'indicator'
-        } ${payload.id}`
+        title: `Saved indicator ${payload.id}`
       })
     }
 
@@ -723,7 +720,7 @@ class WorkspacesService {
     if (type) {
       // ex indicator:price
 
-      const inputType = preset.type.split(':')[0] as PresetType
+      const inputType = preset.name.split(':')[0]
       const targetType = type.split(':')[0]
 
       if (targetType !== inputType) {
@@ -732,7 +729,6 @@ class WorkspacesService {
         )
       }
 
-      preset.type = targetType
       preset.name = type + ':' + preset.name.split(':').pop()
     }
 
@@ -748,15 +744,25 @@ class WorkspacesService {
       return
     }
 
-    return this.db.put('presets', preset)
+    return this.db.put('presets', {
+      ...preset,
+      type: 'preset'
+    })
   }
 
   async getPreset(id: string): Promise<Preset> {
     return this.db.get('presets', id)
   }
 
-  getPresetsKeysByType(type: PresetType) {
+  getPresetsKeysByType(type: string) {
     return this.db.getAllKeys(
+      'presets',
+      IDBKeyRange.bound(type, type + '|', true, true)
+    )
+  }
+
+  getAllPresets(type: string) {
+    return this.db.getAll(
       'presets',
       IDBKeyRange.bound(type, type + '|', true, true)
     )

@@ -33,12 +33,28 @@
     </div>
     <br />
     <ToggableSection
+      class="thresholds"
       title="Thresholds"
       id="trades-thresholds"
       :badge="thresholds.length"
       :disabled="!showTrades"
       inset
     >
+      <template #title>
+        <label class="checkbox-control -small mr0" @click.stop>
+          <input
+            type="checkbox"
+            class="form-control"
+            :checked="showTrades"
+            @change="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showTrades')"
+          />
+          <div></div>
+        </label>
+        <div class="toggable-section__title ml16">Trades</div>
+        <span class="badge -outline ml8 mrauto">{{ thresholds.length }}</span>
+        <ThresholdColor :pane-id="paneId" type="thresholds" side="buy" />
+        <ThresholdColor :pane-id="paneId" type="thresholds" side="sell" />
+      </template>
       <div class="form-group">
         <thresholds
           :paneId="paneId"
@@ -60,12 +76,30 @@
       </div>
     </ToggableSection>
     <ToggableSection
-      title="Liquidations"
+      class="thresholds"
       id="trades-liquidations"
       :badge="liquidations.length"
       :disabled="!showLiquidations"
       inset
     >
+      <template #title>
+        <label class="checkbox-control -small mr0" @click.stop>
+          <input
+            type="checkbox"
+            class="form-control"
+            :checked="showLiquidations"
+            @change="
+              $store.commit(paneId + '/TOGGLE_PREFERENCE', 'showLiquidations')
+            "
+            @click.stop
+          />
+          <div></div>
+        </label>
+        <div class="toggable-section__title ml16">Liquidations</div>
+        <span class="badge -outline ml8 mrauto">{{ liquidations.length }}</span>
+        <ThresholdColor :pane-id="paneId" type="liquidations" side="buy" />
+        <ThresholdColor :pane-id="paneId" type="liquidations" side="sell" />
+      </template>
       <div class="form-group">
         <thresholds
           :paneId="paneId"
@@ -188,7 +222,7 @@
       </button>
     </ToggableSection>
 
-    <ToggableSection title="Preferences" id="trades-display" inset>
+    <ToggableSection title="Preferences" id="trades-preferences" inset>
       <div
         class="form-group column mb8"
         title="Number of trades rendered"
@@ -205,126 +239,6 @@
           :value="maxRows"
           @change="$store.commit(paneId + '/SET_MAX_ROWS', $event.target.value)"
         />
-      </div>
-
-      <div
-        class="form-group column mb8"
-        @click.stop="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showTrades')"
-      >
-        <label class="-fill -center -inline">Show trades</label>
-        <div
-          class="checkbox-control checkbox-control-input -unshrinkable"
-          @click.stop
-        >
-          <input type="checkbox" class="form-control" :checked="showTrades" />
-          <div
-            @click="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showTrades')"
-          />
-        </div>
-      </div>
-
-      <div
-        class="form-group column mb8"
-        @click.stop="
-          $store.commit(paneId + '/TOGGLE_PREFERENCE', 'showLiquidations')
-        "
-      >
-        <label class="-fill -center -inline">Show liquidations</label>
-        <div
-          class="checkbox-control checkbox-control-input -unshrinkable"
-          @click.stop
-        >
-          <input
-            type="checkbox"
-            class="form-control"
-            :checked="showLiquidations"
-          />
-          <div
-            @click="
-              $store.commit(paneId + '/TOGGLE_PREFERENCE', 'showLiquidations')
-            "
-          />
-        </div>
-      </div>
-
-      <div
-        v-if="isLegacy"
-        class="form-group column mb8"
-        @click.stop="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showLogos')"
-      >
-        <label class="-fill -center -inline">Show logos</label>
-        <div
-          class="checkbox-control checkbox-control-input -unshrinkable"
-          title="Exchange's logos + style"
-          v-tippy
-          @click.stop
-        >
-          <input type="checkbox" class="form-control" :checked="showLogos" />
-          <div
-            @click="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showLogos')"
-          />
-        </div>
-      </div>
-
-      <div
-        v-if="showLogos && isLegacy"
-        class="form-group column mb8"
-        @click.stop="
-          $store.commit(paneId + '/TOGGLE_PREFERENCE', 'monochromeLogos')
-        "
-      >
-        <label class="-fill -center -inline">Monochrome logos</label>
-        <div
-          class="checkbox-control checkbox-control-input -unshrinkable"
-          title="Exchange's logos + style"
-          v-tippy
-          @click.stop
-        >
-          <input
-            type="checkbox"
-            class="form-control"
-            :checked="monochromeLogos"
-          />
-          <div
-            @click="
-              $store.commit(paneId + '/TOGGLE_PREFERENCE', 'monochromeLogos')
-            "
-          />
-        </div>
-      </div>
-
-      <div
-        class="form-group column mb8"
-        @click.stop="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showPairs')"
-      >
-        <label class="-fill -center -inline">Show pairs</label>
-        <div
-          class="checkbox-control checkbox-control-input -unshrinkable"
-          title="Show symbol's names<br>(ex: BTC-USD)"
-          v-tippy
-          @click.stop
-        >
-          <input type="checkbox" class="form-control" :checked="showPairs" />
-          <div
-            @click="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showPairs')"
-          ></div>
-        </div>
-      </div>
-
-      <div
-        class="form-group column mb8"
-        @click.stop="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showPrices')"
-      >
-        <label class="-fill -center -inline">Show prices</label>
-        <div
-          class="checkbox-control checkbox-control-input -unshrinkable"
-          @click.stop
-        >
-          <input type="checkbox" class="form-control" :checked="showPrices" />
-          <div
-            @click="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showPrices')"
-          />
-        </div>
       </div>
 
       <div
@@ -372,70 +286,100 @@
         </div>
       </div>
     </ToggableSection>
-    <ToggableSection v-if="isLegacy" title="THRESHOLD MULTIPLIER" inset>
+
+    <ToggableSection title="Formats" id="trades-columns" inset>
+      <div class="form-group mb8">
+        <label class="checkbox-control -small">
+          <input
+            type="checkbox"
+            class="form-control"
+            :checked="showPairs"
+            @change="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showPairs')"
+          />
+          <div></div>
+          <span>
+            Show pairs
+            <i
+              class="icon-info"
+              v-tippy
+              title="Show symbol's names<br>(ex: BTC-USD)"
+            ></i>
+          </span>
+        </label>
+      </div>
+
+      <toggable-group
+        class="mb8 mt16"
+        :value="showPrices"
+        label="Show prices"
+        @change="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showPrices')"
+        small
+      >
+        <div class="form-group">
+          <label class="checkbox-control -small">
+            <input
+              type="checkbox"
+              class="form-control"
+              :checked="showAvgPrice"
+              @change="
+                $store.commit(paneId + '/TOGGLE_PREFERENCE', 'showAvgPrice')
+              "
+            />
+            <div></div>
+            <span>
+              Weighted average
+              <i
+                class="icon-info"
+                v-tippy
+                title="Show the weighted average price instead of the last price for aggregated trade results"
+              ></i>
+            </span>
+          </label>
+        </div>
+      </toggable-group>
+      <toggable-group
+        v-if="isLegacy"
+        class="mb8 mt16"
+        :value="showLogos"
+        label="Show logos"
+        @change="$store.commit(paneId + '/TOGGLE_PREFERENCE', 'showLogos')"
+        small
+      >
+        <div class="form-group">
+          <label class="checkbox-control -small">
+            <input
+              type="checkbox"
+              class="form-control"
+              :checked="monochromeLogos"
+              @change="
+                $store.commit(paneId + '/TOGGLE_PREFERENCE', 'monochromeLogos')
+              "
+            />
+            <div></div>
+            <span> Monochrome logos </span>
+          </label>
+        </div>
+      </toggable-group>
+    </ToggableSection>
+    <ToggableSection
+      v-if="isLegacy"
+      :title="`THRESHOLD MULTIPLIER (${mutipliersCount})`"
+      inset
+    >
       <div class="form-group" v-if="multipliers.length">
         <label>
           <div class="d-flex">
-            <div>
-              ← Decrease threshold<br /><small>← Increase visibility</small>
-            </div>
-            <div class="text-right mlauto">
-              Increase threshold →<br /><small>Decrease visibility →</small>
-            </div>
+            <div>← Decrease threshold</div>
+            <div class="text-right mlauto">Increase threshold →</div>
           </div>
         </label>
         <div class="multipliers">
-          <div
+          <MarketMultiplier
             v-for="market in multipliers"
             :key="market.identifier"
-            class="d-flex multipliers-market"
-            :class="{ '-disabled': market.multiplier === 1 }"
-          >
-            <div
-              class="multipliers-market__id"
-              @dblclick="
-                $store.commit(paneId + '/SET_THRESHOLD_MULTIPLIER', {
-                  identifier: market.identifier,
-                  multiplier: null
-                })
-              "
-            >
-              <div class="text-nowrap market-exchange">
-                <small>{{ market.exchange }}</small>
-              </div>
-              <div class="text-nowrap market-pair">
-                {{ market.pair }}
-              </div>
-            </div>
-            <div class="-fill -center ml16">
-              <slider
-                style="width: 100%; min-width: 150px"
-                :min="0"
-                :max="2"
-                :label="market.multiplier !== 1"
-                :step="0.01"
-                :showCompletion="false"
-                :value="market.multiplier"
-                :editable="false"
-                @input="
-                  $store.commit(paneId + '/SET_THRESHOLD_MULTIPLIER', {
-                    identifier: market.identifier,
-                    multiplier: $event
-                  })
-                "
-                @reset="
-                  $store.commit(paneId + '/SET_THRESHOLD_MULTIPLIER', {
-                    identifier: market.identifier,
-                    multiplier: 1
-                  })
-                "
-              >
-                <template v-slot:tooltip="{ value }">
-                  {{ thresholds[0].amount * value }}
-                </template>
-              </slider>
-            </div>
-          </div>
+            :pane-id="paneId"
+            :market="market"
+          />
         </div>
       </div>
       <p v-else class="mb0">
@@ -455,16 +399,24 @@
 import { TradesPaneState } from '@/store/panesSettings/trades'
 import { ago } from '@/utils/helpers'
 import { Component, Vue } from 'vue-property-decorator'
-import Slider from '../framework/picker/Slider.vue'
-import Thresholds from '../settings/Thresholds.vue'
+import Slider from '@/components/framework/picker/Slider.vue'
+import Thresholds from '@/components/settings/Thresholds.vue'
 import { formatAmount, parseMarket } from '@/services/productsService'
 import ToggableSection from '@/components/framework/ToggableSection.vue'
+import ColorPickerControl from '@/components/framework/picker/ColorPickerControl.vue'
+import ThresholdColor from '@/components/trades/ThresholdColor.vue'
+import MarketMultiplier from '@/components/trades/MarketMultiplier.vue'
+import ToggableGroup from '@/components/framework/ToggableGroup.vue'
 
 @Component({
   components: {
     Thresholds,
     Slider,
-    ToggableSection
+    ThresholdColor,
+    ToggableSection,
+    MarketMultiplier,
+    ColorPickerControl,
+    ToggableGroup
   },
   name: 'TradesSettings',
   props: {
@@ -519,6 +471,10 @@ export default class TradesSettings extends Vue {
 
   get showTimeAgo() {
     return (this.$store.state[this.paneId] as TradesPaneState).showTimeAgo
+  }
+
+  get showAvgPrice() {
+    return (this.$store.state[this.paneId] as TradesPaneState).showAvgPrice
   }
 
   get showPrices() {
@@ -614,6 +570,22 @@ export default class TradesSettings extends Vue {
     ]
   }
 
+  get thresholdsBuyColor() {
+    return this.thresholds[1].buyColor
+  }
+
+  get thresholdsSellColor() {
+    return this.thresholds[1].sellColor
+  }
+
+  get liquidationsBuyColor() {
+    return this.liquidations[1].buyColor
+  }
+
+  get liquidationsSellColor() {
+    return this.liquidations[1].sellColor
+  }
+
   mounted() {
     const time = Date.now()
 
@@ -634,6 +606,10 @@ export default class TradesSettings extends Vue {
 }
 </script>
 <style scoped lang="scss">
+.thresholds {
+  pointer-events: all;
+}
+
 .multipliers {
   margin: 0 -1rem;
   padding: 0.5rem 0;

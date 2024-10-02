@@ -485,7 +485,7 @@ export default {
       const name = this.$store.getters['panes/getName'](this.selectedPaneId)
 
       if (!name.trim().length) {
-        return '👻'
+        return this.$store.state.panes.panes[this.selectedPaneId].type
       }
 
       return name
@@ -865,8 +865,8 @@ export default {
       return this.$refs.dialog.currentSize === 'small'
         ? 3
         : this.$refs.dialog.currentSize === 'medium'
-        ? 5
-        : 10
+          ? 5
+          : 10
     },
     async ensureIndexedProducts() {
       const selectedExchanges = this.selection.reduce((acc, market) => {
@@ -1277,6 +1277,7 @@ export default {
 
   &__side {
     width: 13.5rem;
+    overflow-y: auto;
     border-right: 1px solid var(--theme-background-150);
     flex-shrink: 0;
 
@@ -1326,7 +1327,7 @@ export default {
     tr {
       color: var(--theme-color-300);
 
-      + tr:not(:last-child) > td {
+      + tr > td {
         border-top: 1px solid var(--theme-background-100);
       }
 
@@ -1360,7 +1361,7 @@ export default {
       backdrop-filter: blur(0.25rem);
       background-color: var(--theme-background-o75);
       position: sticky;
-      border-top: 1px solid var(--theme-background-100);
+      border-top: 1px solid var(--theme-background-150);
       align-items: center;
       padding: 0.5rem;
       gap: 0.25rem;
@@ -1403,6 +1404,10 @@ export default {
       right: 0;
       bottom: 0;
       z-index: 0;
+
+      #app.-light & {
+        background-blend-mode: darken;
+      }
 
       p {
         max-width: 75%;
@@ -1489,7 +1494,7 @@ export default {
       @media screen and (min-width: 550px) {
         backdrop-filter: blur(0.25rem);
         background-color: var(--theme-background-o75);
-        border-bottom: 1px solid var(--theme-background-100);
+        border-bottom: 1px solid var(--theme-background-150);
         position: sticky;
         top: 0;
         z-index: 2;

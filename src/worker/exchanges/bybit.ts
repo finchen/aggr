@@ -169,10 +169,9 @@ export default class BYBIT extends Exchange {
           json.data.map(trade => this.formatTrade(trade, isSpot))
         )
       } else {
-        return this.emitLiquidations(
-          api.id,
-          json.data.map(liquidation => this.formatLiquidation(liquidation))
-        )
+        return this.emitLiquidations(api.id, [
+          this.formatLiquidation(json.data)
+        ])
       }
     }
   }

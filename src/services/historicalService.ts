@@ -13,6 +13,8 @@ import { ORDERBOOK_API_URL } from '@/worker/exchanges/orderbook'
 
 export type InitialPrices = { [market: string]: number }
 
+export type InitialPrices = { [market: string]: number }
+
 export interface HistoricalResponse {
   from: number
   to: number
@@ -156,6 +158,10 @@ class HistoricalService extends EventEmitter {
 
         if (json.format !== 'point') {
           throw new Error('Bad data')
+        }
+
+        if (!json.results.length) {
+          throw new Error('No more data')
         }
 
         return this.normalizePoints(

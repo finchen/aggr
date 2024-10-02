@@ -4,6 +4,7 @@ import workspacesService from './workspacesService'
 import SettingsImportConfirmation from '../components/settings/ImportConfirmation.vue'
 import store from '@/store'
 import notificationService from './notificationService'
+import { PaneType } from '../store/panes'
 
 class ImportService {
   getJSON(file: File) {
@@ -59,16 +60,21 @@ class ImportService {
       throw new Error('Preset is empty')
     }
 
+    const type = preset.name.split(':')[0]
+    const isPresetAPane = Object.values(PaneType).includes(type as PaneType)
+
     await workspacesService.savePreset(preset, presetType)
 
-    store.dispatch('panes/addPane', {
-      type: preset.type,
-      settings: preset.data,
-      markets: preset.markets
-    })
+    if (isPresetAPane) {
+      store.dispatch('panes/addPane', {
+        type: preset.type,
+        settings: preset.data,
+        markets: preset.markets
+      })
+    }
 
     store.dispatch('app/showNotice', {
-      title: `Imported preset ${preset.name}`,
+      title: `Imported ${preset.name} as preset for ${type}`,
       type: 'info'
     })
 
@@ -123,11 +129,14 @@ class ImportService {
     return null
   }
 
-  async importIndicator(json) {
-    const name = json.name.split(':').slice(1).join(':')
+  async importIndicator(
+    json,
+    { save = false, addToChart = false, openLibrary = false }
+  ) {
+    const name = json.name.replace(/^indicators?:/, '')
     const now = Date.now()
-
-    const indicator = await workspacesService.saveIndicator({
+    let indicator = {
+      id: null,
       name,
       displayName: json.data.displayName || name,
       author: json.data.author || null,
@@ -137,26 +146,55 @@ class ImportService {
       createdAt: json.data.createdAt || now,
       updatedAt: json.data.updatedAt || json.data.createdAt || now,
       preview: json.data.preview || null
-    })
-
-    if (!dialogService.isDialogOpened('indicator-library')) {
-      dialogService.open(
-        (await import('@/components/indicators/IndicatorLibraryDialog.vue'))
-          .default,
-        {},
-        'indicator-library'
-      )
     }
 
-    const indicatorLibraryDialog =
-      dialogService.mountedComponents['indicator-library']
+    openLibrary =
+      dialogService.mountedComponents['indicator-library'] || openLibrary
 
-    store.dispatch('app/showNotice', {
-      title: `indicator "${indicator.id}" imported successfully`
-    })
+    if (save || openLibrary) {
+      indicator = await workspacesService.saveIndicator(indicator)
+    }
 
-    if (indicatorLibraryDialog) {
-      indicatorLibraryDialog.setSelection(indicator)
+    if (indicator.id && json.data.presets) {
+      for (const preset of json.data.presets) {
+        await workspacesService.savePreset({
+          ...preset,
+          name: preset.name.replace(
+            `:${json.data.libraryId}:`,
+            `:${indicator.id}:`
+          )
+        })
+      }
+    }
+
+    if (openLibrary) {
+      if (!dialogService.isDialogOpened('indicator-library')) {
+        dialogService.open(
+          (await import('@/components/indicators/IndicatorLibraryDialog.vue'))
+            .default,
+          {},
+          'indicator-library'
+        )
+      }
+
+      const indicatorLibraryDialog =
+        dialogService.mountedComponents['indicator-library']
+
+      store.dispatch('app/showNotice', {
+        title: `indicator "${indicator.id}" imported successfully`
+      })
+
+      if (indicatorLibraryDialog) {
+        indicatorLibraryDialog.setSelection(indicator)
+      }
+    }
+
+    if (addToChart) {
+      const paneId = store.getters['panes/getFocusedPaneId']('chart')
+
+      if (paneId) {
+        store.dispatch(paneId + '/addIndicator', indicator)
+      }
     }
   }
 
@@ -185,7 +223,9 @@ class ImportService {
         await this.importDatabase(file)
       } else if (json.type && json.data) {
         if (json.type === 'indicator' && json.name.split(':').length < 3) {
-          this.importIndicator(json)
+          this.importIndicator(json, {
+            addToChart: true
+          })
         } else {
           await this.importPreset(file)
         }

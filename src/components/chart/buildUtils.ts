@@ -22,20 +22,6 @@ import {
   uniqueName
 } from '@/utils/helpers'
 import { plotTypesMap } from './options'
-const REGEX_REGEX = /^\/.+\/\w?$/
-const VARIABLES_VAR_NAME = 'vars'
-const FUNCTIONS_VAR_NAME = 'fns'
-export const DATA_PROPS = ['vbuy', 'vsell', 'cbuy', 'csell', 'lbuy', 'lsell']
-export const SERIE_TYPES = {
-  candlestick: 'ohlc',
-  bar: 'ohlc',
-  line: 'number',
-  histogram: 'number',
-  area: 'number',
-  cloudarea: 'range',
-  brokenarea: 'range',
-  baseline: 'number'
-}
 
 export enum ALLOWED_OPTION_TYPES {
   text,
@@ -49,6 +35,20 @@ export enum ALLOWED_OPTION_TYPES {
   exchange
 }
 
+const VARIABLES_VAR_NAME = 'vars'
+const FUNCTIONS_VAR_NAME = 'fns'
+export const DATA_PROPS = ['vbuy', 'vsell', 'cbuy', 'csell', 'lbuy', 'lsell']
+export const SERIE_TYPES = {
+  candlestick: 'ohlc',
+  bar: 'ohlc',
+  line: 'number',
+  histogram: 'number',
+  area: 'number',
+  cloudarea: 'range',
+  brokenarea: 'range',
+  baseline: 'number'
+}
+const REGEX_REGEX = /^\/.+\/\w?$/
 const allowedOptionsTypes = Object.values(ALLOWED_OPTION_TYPES)
 
 /**
@@ -103,6 +103,11 @@ function normalizeCommonVariables(input, indicatorId) {
   input = input.replace(
     /([^.]|^)\b(time)\b([^:])/gi,
     '$1renderer.localTimestamp$3'
+  )
+  // retro compatibility
+  input = input.replace(
+    /renderer\.indicators\[[\w\d_\-'"` ]+\]\.series\[([\w\d_\-'"`.\][ ]+)\]/g,
+    'renderer.series[series[$1].id]'
   )
 
   return input
@@ -189,7 +194,6 @@ function parse(
     output,
     functions,
     plots,
-    indicatorId,
     libraryId,
     serieIndicatorsMap
   )
@@ -379,7 +383,6 @@ function parseSerie(
   output: string,
   match: RegExpExecArray,
   plots: IndicatorPlot[],
-  indicatorId: string,
   libraryId: string,
   serieIndicatorsMap
 ) {
@@ -400,13 +403,35 @@ function parseSerie(
   const rawFunctionInstruction = match[1] + '(' + rawFunctionArguments + ')'
 
   // plot function arguments ['sma($price.close,options.smaLength)','color=red']
-  const args = parseFunctionArguments(rawFunctionArguments)
+  const args = parseFunctionArguments(rawFunctionArguments).filter(
+    arg => arg.length
+  )
 
   // parse and store serie options in dedicated object (eg. color=red in line arguments)
-  const serieOptions = parseCustomArguments(args, 1)
+  const serieOptions = parseCustomArguments(args)
+
+  // series id are unique within a chart, allowing indicators to communicate series data between them
+  const idsInUse = Object.keys(serieIndicatorsMap).concat(
+    plots.map(plot => plot.id)
+  )
+
+  let id: string
+
+  if (typeof serieOptions.id === 'string' && serieOptions.id.length) {
+    id = serieOptions.id
+
+    delete serieOptions.id
+  } else if (plots.length === 0) {
+    id = libraryId
+  } else {
+    id = randomString(8)
+  }
+
+  id = uniqueName(id, idsInUse, false, '2')
 
   // prepare final input that goes in line (store it for reference)
-  const pointVariable = `renderer.indicators['${indicatorId}'].series[${plots.length}]`
+  const pointVariable = `renderer.series['${id}']`
+
   let seriePoint = `${pointVariable} = `
 
   const expectedInput = SERIE_TYPES[serieType]
@@ -419,7 +444,9 @@ function parseSerie(
   // tranform input into valid lightweight-charts data point
   const argIsObject = /{/.test(args[0]) && /}/.test(args[0])
   const argContainSpecialChars = /^[\w_$]+\$/.test(args[0])
-  if (
+  if (!args.length) {
+    seriePoint = ``
+  } else if (
     args.length === 1 &&
     (argIsObject || (serieType !== 'line' && argContainSpecialChars))
   ) {
@@ -458,31 +485,18 @@ function parseSerie(
 
   output = output.replace(rawFunctionInstruction, seriePoint)
 
-  let id: string
-
-  if (typeof serieOptions.id === 'string' && serieOptions.id.length) {
-    id = serieOptions.id
-
-    delete serieOptions.id
-  } else if (plots.length === 0) {
-    id = libraryId
-  } else {
-    id = randomString(8)
-  }
-
-  const names = Object.keys(serieIndicatorsMap).concat(
-    plots.map(plot => plot.id)
-  )
-
   // register plot
   plots.push({
-    id: uniqueName(id, names),
+    id,
     type: plotTypesMap[serieType] || serieType,
     expectedInput: expectedInput,
     options: serieOptions
   })
 
-  return output
+  return {
+    output,
+    offset: seriePoint.length ? match[0].length : 0
+  }
 }
 
 function parseCustomArguments(args, startIndex = 0): { [key: string]: any } {
@@ -522,7 +536,6 @@ function parseFunctions(
   instructions: IndicatorFunction[],
   plots: IndicatorPlot[],
   indicatorId: string,
-  libraryId: string,
   serieIndicatorsMap: { [serieId: string]: IndicatorReference }
 ): string {
   const FUNCTION_LOOKUP_REGEX = new RegExp(`([a-zA-Z0_9_]+)\\(`, 'g')
@@ -533,27 +546,25 @@ function parseFunctions(
   do {
     if ((functionMatch = FUNCTION_LOOKUP_REGEX.exec(output))) {
       const functionName = functionMatch[1]
-      const isMathFunction = Object.prototype.hasOwnProperty.call(
-        Math,
-        functionName
-      )
-      const isSerieFunction = SERIE_TYPES[functionName.replace(/^plot/, '')]
-      const isMethod = output[functionMatch.index - 1] === '.'
 
-      if (isMathFunction || isSerieFunction || isMethod) {
+      if (output[functionMatch.index - 1] === '.') {
+        // is a method -> ignore
         FUNCTION_LOOKUP_REGEX.lastIndex =
           functionMatch.index + functionMatch[0].length
+        continue
+      }
 
-        if (typeof isSerieFunction === 'string') {
-          output = parseSerie(
-            output,
-            functionMatch,
-            plots,
-            indicatorId,
-            libraryId,
-            serieIndicatorsMap
-          )
-        }
+      if (SERIE_TYPES[functionName.replace(/^plot/, '')]) {
+        // is a serie definition -> parse serie
+        const result = parseSerie(
+          output,
+          functionMatch,
+          plots,
+          indicatorId,
+          serieIndicatorsMap
+        )
+        output = result.output
+        FUNCTION_LOOKUP_REGEX.lastIndex = functionMatch.index + result.offset
         continue
       }
 
@@ -580,7 +591,7 @@ function parseFunctions(
           customArgsStartIndex + functionMatch[1].length + 1,
           customArgsEndIndex
         )
-      )
+      ).filter(arg => arg.length)
 
       if (typeof seriesUtils[functionName] === 'function') {
         output = `${output.slice(
@@ -669,7 +680,7 @@ function parseOptions(output, options) {
             customArgsStartIndex + functionMatch[0].length,
             customArgsEndIndex
           )
-        )
+        ).filter(arg => arg.length)
       )
 
       output = output.replace(
@@ -725,7 +736,7 @@ function parseSources(output, sources) {
           customArgsStartIndex + functionMatch[0].length,
           customArgsEndIndex
         )
-      )
+      ).filter(arg => arg.length)
 
       let prop
 
@@ -826,7 +837,7 @@ function parseReferences(
 
         output = output.replace(
           new RegExp('\\$(' + serieId + ')\\b', 'ig'),
-          `renderer.indicators['${indicatorId}'].series[${plotIndex}]`
+          `renderer.series['${serieId}']`
         )
       } catch (error) {
         throw {
@@ -1145,7 +1156,6 @@ export function getRendererIndicatorData(indicator: LoadedIndicator) {
 
   return {
     canRender: indicator.options.minLength <= 1,
-    series: [],
     functions,
     variables,
     plotsOptions,

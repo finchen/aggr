@@ -1,7 +1,5 @@
 import 'vite/client'
 
-import { PaneType } from '@/store/panes'
-
 export type SlippageMode = false | 'price' | 'bps'
 export type AggregationLength = 0 | 1 | 10 | 100 | 1000 | -1
 
@@ -23,7 +21,7 @@ export interface AggregatorPayload {
 }
 
 export interface AggregatedTrade extends Trade {
-  originalPrice: number
+  prices: number
 }
 
 export interface AggregatorSettings {
@@ -47,9 +45,9 @@ export interface Trade {
   price: number
   size: number
   side: 'buy' | 'sell'
+  avgPrice?: number
   amount?: number
   count?: number
-  originalPrice?: number
   liquidation?: boolean
   slippage?: number
   zlevels?: { bids: Array<number>; asks: Array<number> }
@@ -99,11 +97,9 @@ export interface Workspace {
   states: { [id: string]: any }
 }
 
-export type PresetType = ('audio' | 'colors' | 'indicator') | PaneType
-
 export interface Preset {
   name: string
-  type: PresetType
+  type?: 'preset'
   data: any
   createdAt: number
   updatedAt: number

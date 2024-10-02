@@ -17,16 +17,16 @@ enum StaticPaneType {
   alerts = 'alerts'
 }
 
-export type PaneType =
-  | 'trades'
-  | 'chart'
-  | 'stats'
-  | 'counters'
-  | 'prices'
-  | 'website'
-  | 'alerts'
-  | 'trades-lite'
-  | 'ratios'
+export enum PaneType {
+  trades = 'trades',
+  chart = 'chart',
+  stats = 'stats',
+  counters = 'counters',
+  prices = 'prices',
+  website = 'website',
+  alerts = 'alerts',
+  'trades-list' = 'trades-lite'
+}
 
 export type MarketsListeners = { [market: string]: ListenedProduct }
 
@@ -44,6 +44,7 @@ export interface PanesState {
   layout: GridItem[]
   panes: { [paneId: string]: Pane }
   marketsListeners: MarketsListeners
+  syncedWithParentFrame: string[]
 }
 
 const layoutDesktop = [
@@ -71,12 +72,28 @@ const getters = {
     } else {
       return state.panes[id].type
     }
+  },
+  getFocusedPaneId: (state, getters, rootState) => (type: string) => {
+    if (
+      rootState.app.focusedPaneId &&
+      state.panes[rootState.app.focusedPaneId].type === type
+    ) {
+      return rootState.app.focusedPaneId
+    } else {
+      for (const id in state.panes.panes) {
+        if (state.panes.panes[id].type === type) {
+          return id
+        }
+      }
+    }
+
+    return null
   }
 } as GetterTree<PanesState, ModulesState>
 
 const actions = {
   async boot({ state, dispatch }) {
-    if (!state.layout) {
+    if (!state.layout.length && Object.keys(state.panes).length) {
       dispatch('setupLayout')
     }
 
@@ -121,23 +138,24 @@ const actions = {
           : options.markets || Object.keys(state.marketsListeners)
     }
 
-    const space = await findOrCreateSpace(
-      state.layout,
-      options.originalGridItem
-    )
+    const item = { pane, space: null }
 
-    if (!space) {
+    try {
+      item.space = await findOrCreateSpace(
+        state.layout,
+        options.originalGridItem
+      )
+    } catch (error) {
       dialogService.confirm({
         message: `Please remove one or more existing panes to create space before adding a new pane`,
         cancel: null
       })
-      return
     }
 
     await registerModule(id, {}, true, pane)
 
     commit('ADD_PANE', pane)
-    commit('ADD_GRID_ITEM', { pane, space })
+    commit('ADD_GRID_ITEM', item)
 
     dispatch('refreshMarketsListeners')
   },
@@ -151,6 +169,10 @@ const actions = {
     dispatch('removePaneGridItems', id)
     commit('REMOVE_PANE', id)
     dispatch('refreshMarketsListeners')
+
+    if (state.syncedWithParentFrame.indexOf(id) !== -1) {
+      commit('TOGGLE_SYNC_WITH_PARENT_FRAME', id)
+    }
 
     if (rootState.app.focusedPaneId === id) {
       this.commit('app/SET_FOCUSED_PANE', null)
@@ -352,8 +374,8 @@ const actions = {
       typeof zoom === 'number'
         ? zoom
         : state.panes[id].zoom
-        ? Math.max(0.1, state.panes[id].zoom)
-        : 1
+          ? Math.max(0.1, state.panes[id].zoom)
+          : 1
     const el = document.getElementById(id) as HTMLElement
 
     if (el) {
@@ -392,7 +414,6 @@ const actions = {
     } else {
       // start with mobile layout
       state.layout = layoutMobile
-      initialZoom = 1.25
 
       delete state.panes.liquidations
     }
@@ -447,6 +468,15 @@ const mutations = {
   },
   SET_PANE_ZOOM: (state, { id, zoom }: { id: string; zoom: number }) => {
     Vue.set(state.panes[id], 'zoom', zoom)
+  },
+  TOGGLE_SYNC_WITH_PARENT_FRAME: (state, paneId) => {
+    const index = state.syncedWithParentFrame.indexOf(paneId)
+
+    if (index !== -1) {
+      state.syncedWithParentFrame.splice(index, 1)
+    } else {
+      state.syncedWithParentFrame.push(paneId)
+    }
   }
 } as MutationTree<PanesState>
 
