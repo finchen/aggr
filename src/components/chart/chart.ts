@@ -42,12 +42,12 @@ import workspacesService from '@/services/workspacesService'
 import { stripStablePair, marketDecimals } from '@/services/productsService'
 import audioService from '@/services/audioService'
 import alertService, {
-    MarketAlert,
-    AlertEvent,
-    AlertEventType
+  MarketAlert,
+  AlertEvent,
+  AlertEventType
 } from '@/services/alertService'
 import historicalService, {
-    HistoricalResponse
+  HistoricalResponse
 } from '@/services/historicalService'
 
 import seriesUtils from '@/components/chart/serieUtils'
@@ -94,8 +94,8 @@ import {
 // + renderer (all about actual rendering)
 // + helpers (utilities, exposed getters)
 export default class Chart {
-    paneId: string
-    watermark: string
+  paneId: string
+  watermark: string
 
   chartCache: ChartCache
   chartControl: ChartControl
@@ -189,16 +189,43 @@ export default class Chart {
       this._promiseOfMarkets = null
     }
 
-    private activeChunk: Chunk
-    private queuedTrades: Trade[] = []
-    private historicalMarkets: string[]
-    private seriesIndicatorsMap: { [serieId: string]: IndicatorReference } = {}
-    private previousLogicalRange: string
-    private axis: { top: number; left: number; right: number; time: number } = {
-        top: 0,
-        left: 0,
-        right: 0,
-        time: 0
+    const markets: string[] = store.state.panes.panes[this.paneId].markets
+    const normalizeWatermarks = store.state.settings.normalizeWatermarks
+    const marketsForWatermark: string[] = []
+    const marketsIndexes: { [index: string]: number } = {}
+    const marketsFilters: any = {}
+
+    for (const marketKey of markets) {
+      const [exchange] = marketKey.split(':')
+      const market = store.state.panes.marketsListeners[marketKey]
+
+      let localPair = marketKey
+
+      if (market) {
+        localPair = stripStablePair(market.local)
+      }
+
+      // build up markets
+      marketsFilters[marketKey] =
+        store.state.exchanges[exchange] &&
+        !store.state.exchanges[exchange].disabled &&
+        !store.state[this.paneId].hiddenMarkets[marketKey]
+
+      // build up watermark
+      if (
+        marketsFilters[marketKey] &&
+        marketsForWatermark.indexOf(localPair) === -1
+      ) {
+        marketsForWatermark.push(
+          !normalizeWatermarks || !market ? marketKey : localPair
+        )
+      }
+
+      // find main pair
+      if (!marketsIndexes[localPair]) {
+        marketsIndexes[localPair] = 0
+      }
+      marketsIndexes[localPair]++
     }
 
     this.marketsFilters = marketsFilters
@@ -248,7 +275,8 @@ export default class Chart {
     this.isOddTimeframe = isOddTimeframe(this.timeframe)
     this.previousLogicalRange = null
 
-        aggregatorService.on('decimals', this._refreshDecimalsHandler)
+    this.updateWatermark()
+  }
 
   /**
    * cache timezone offset
@@ -518,7 +546,7 @@ export default class Chart {
     }
 
     /**
-     * update watermark when pane's markets changes
+     * weird spaces (\u00A0) are for left / right margins
      */
     this.chartInstance.applyOptions({
       watermark: {
@@ -649,197 +677,23 @@ export default class Chart {
           return false
           // too many dependencies
         }
+      }
     }
 
-    /**
-     * set timeframe to chart model and update watermark with litteral
-     * @param timeframe
-     */
-    setTimeframe(timeframe) {
-        const modifier = timeframe[timeframe.length - 1]
-        if (modifier === 't') {
-            this.type = 'tick'
-        } else if (modifier === 'b') {
-            this.type = 'bps'
-        } else if (modifier === 'v') {
-            this.type = 'vol'
-        } else {
-            this.type = 'time'
-        }
-
-        this.timeframe = parseFloat(timeframe)
-        this.isOddTimeframe = isOddTimeframe(this.timeframe)
-        this.previousLogicalRange = null
-
-        this.updateWatermark()
-    }
-
-    /**
-     * cache timezone offset
-     * @param offset in ms
-     */
-    setTimezoneOffset(offset: number) {
-        const originalTimezoneOffset = this.timezoneOffset
-
-        this.timezoneOffset = offset / 1000
-
-        const change = this.timezoneOffset - originalTimezoneOffset
-
-        if (this.activeRenderer) {
-            this.activeRenderer.localTimestamp += change
-        }
-    }
-
-    /**
-     * create Lightweight Charts instance and render pane's indicators
-     */
-    createChart() {
-        console.log(`[chart/${this.paneId}/controller] create chart`)
-
-        const chartOptions = merge(
-            getChartOptions(defaultChartOptions, this.paneId),
-            getChartWatermarkOptions(this.paneId),
-            getChartGridlinesOptions(this.paneId),
-            getChartBarSpacingOptions(this.paneId, this.chartElement.clientWidth)
-        )
-
-        this.chartInstance = createTVChart(
-            this.chartElement,
-            chartOptions
-        ) as IChartApi
-
-        this.addPaneIndicators()
-        this.updateWatermark()
-        this.updateFontSize()
-
-        if (!this.chartControl) {
-            this.chartControl = new ChartControl(this)
-        }
-        this.chartControl.bindEvents()
-    }
-
-    /**
-     * remove series, destroy this.chartInstance and cancel related events
-     */
-    removeChart() {
-        console.log(`[chart/${this.paneId}/controller] remove chart`)
-
-        this.chartControl.unbindEvents()
-
-        this.priceScales.splice(0, this.priceScales.length)
-
-        while (this.loadedIndicators.length) {
-            this.removeIndicator(this.loadedIndicators[0])
-        }
-
-        if (!this.chartInstance) {
-            return
-        }
-
-        this.chartInstance = null
-        this.chartElement.innerHTML = ''
-    }
-
-    /**
-     * get active indicator by id
-     * @returns {LoadedIndicator} serie
-     */
-    getLoadedIndicator(id: string): LoadedIndicator {
-        for (let i = 0; i < this.loadedIndicators.length; i++) {
-            if (this.loadedIndicators[i].id === id) {
-                return this.loadedIndicators[i]
-            }
-        }
-    }
-
-    /**
-     * set indicator option by key
-     * @param {string} id serie id
-     * @param {string} key option key
-     * @param {any} value serie id
-     */
-    setIndicatorOption(id, key, value, silent = false) {
-        const indicator = this.getLoadedIndicator(id)
-
-        if (!indicator) {
-            return
-        }
-
-        indicator.options[key] = value
-
-        if (silent) {
-            return
-        }
-
-        if (key === 'visible') {
-            this.toggleIndicatorVisibility(indicator, value)
-
-            return
-        } else if (key === 'priceFormat') {
-            if (value.auto) {
-                setTimeout(() => this.refreshAutoDecimals(null, id))
-            }
-        }
-
-        for (let i = 0; i < indicator.apis.length; i++) {
-            indicator.apis[i].applyOptions({
-                [key]: value
-            })
-        }
-
-        if (key === 'priceScaleId') {
-            this.ensurePriceScale(indicator.options)
-        }
-
-        if (indicator.model.options[key] && indicator.model.options[key].rebuild) {
-            this.refreshIndicatorAdapter(indicator, this.activeRenderer)
-            this.redrawIndicator(id)
-        } else if (this.optionRequiresRedraw(key)) {
-            this.redrawIndicator(id)
-        }
-    }
-
-    toggleIndicatorVisibility(indicator: LoadedIndicator, value: boolean) {
-        if (!value) {
-            this.removeIndicatorSeries(indicator)
-        } else {
-            if (!indicator.model) {
-                this.prepareIndicator(indicator)
-            } else {
-                this.createIndicatorSeries(indicator)
-            }
-            this.redrawIndicator(indicator.id)
-        }
-    }
-
-    /**
-     * return true if option change require complete redraw, false otherwise
-     * @param key option key
-     * @returns
-     */
-    optionRequiresRedraw(key: string) {
-        const redrawOptions =
-            /upColor|downColor|wickDownColor|wickUpColor|borderDownColor|borderUpColor|compositeOperation|src|priceScaleId/i
-
-        if (redrawOptions.test(key)) {
-            return true
-        }
-
-        const noRedrawOptions = /color|priceFormat|linetype|width|style/i
-
-        if (noRedrawOptions.test(key)) {
-            return false
+    if (indicators[missingSerieId]) {
+      if (
+        this.addIndicator(indicators[missingSerieId].id, dependencyDepth + 1)
+      ) {
+        if (dependencyDepth === 0) {
+          this.addIndicator(originalIndicatorId, dependencyDepth + 1)
         }
 
         return true
+      }
     }
 
-    /**
-     * rebuild the whole serie
-     * @param {string} id serie id
-     */
-    rebuildIndicator(id) {
-        this.removeIndicator(this.getLoadedIndicator(id))
+    return false
+  }
 
   /**
    * build indicator and create own series instances from Lightweight Charts
@@ -990,6 +844,13 @@ export default class Chart {
           top: 0.1,
           bottom: 0.2
         }
+      }
+
+      // save it
+      store.commit(this.paneId + '/SET_PRICE_SCALE', {
+        id: priceScaleId,
+        priceScale
+      })
     }
 
     this.refreshPriceScale(priceScaleId)
@@ -1016,18 +877,15 @@ export default class Chart {
       indicator = this.getLoadedIndicator(indicator)
     }
 
-    /**
-     * redraw one specific indicator (and the series it depends on)
-     * @param {string} indicatorId
-     * @param {number?} from timestamp
-     * @param {number?} to timestamp
-     */
-    redrawIndicator(indicatorId: string, from?: number, to?: number) {
-        const indicator = this.getLoadedIndicator(indicatorId)
+    if (!indicator) {
+      return
+    }
 
-        this.clearIndicatorSeries(indicator)
+    this.removeIndicatorSeries(indicator)
 
-        let bars = []
+    // remove from active series model
+    this.loadedIndicators.splice(this.loadedIndicators.indexOf(indicator), 1)
+  }
 
   moveIndicator(indicatorId, position) {
     const currentIndex = this.loadedIndicators.findIndex(
@@ -1303,8 +1161,7 @@ export default class Chart {
                   this.activeRenderer.sources[source],
                   this.activeRenderer.timestamp
                 )
-            } else {
-                bars = bars.concat(chunk.bars)
+              )
             }
           }
 
@@ -1373,26 +1230,24 @@ export default class Chart {
           this.activeRenderer.sources[identifier].close
         )
       }
-
       if (trade.zlevels) {
-        this.activeRenderer.sources[identifier].zlevels = trade.zlevels
-        }
+        this.activeRenderer.sources[identifier].zlevels = trade.zlevel
+    }
         if (trade.zratios) {
-            this.activeRenderer.sources[identifier].zratios = trade.zratios
+        this.activeRenderer.sources[identifier].zratios = trade.zratios
         }
         if (trade.zasks) {
-            this.activeRenderer.sources[identifier].zasks = trade.zasks
+        this.activeRenderer.sources[identifier].zasks = trade.zasks
         }
         if (trade.zbids) {
-            this.activeRenderer.sources[identifier].zbids = trade.zbids
+        this.activeRenderer.sources[identifier].zbids = trade.zbids
         }
         if (trade.zupdates) {
-            this.activeRenderer.sources[identifier].zupdates += trade.zupdates
+        this.activeRenderer.sources[identifier].zupdates += trade.zupdates
         }
         if (trade.zalert) {
-            this.activeRenderer.sources[identifier].zalert = trade.zalert
+        this.activeRenderer.sources[identifier].zalert = trade.zalert
         }
-
       this.activeRenderer.sources[identifier]['c' + trade.side] += trade.count
       this.activeRenderer.sources[identifier]['v' + trade.side] += trade.amount
 
@@ -1594,7 +1449,6 @@ export default class Chart {
         temporaryRenderer.bar.zratios = bar.zratios
         temporaryRenderer.bar.zalert = bar.zalert
         temporaryRenderer.bar.zupdates += bar.zupdates
-
       }
 
       temporaryRenderer.sources[marketKey] = cloneSourceBar(bar)
@@ -1885,272 +1739,91 @@ export default class Chart {
         .coordinateToLogical(
           this.chartInstance
             .timeScale()
-            .getVisibleRange() as TimeRange
-
-        if (!visibleRange) {
-            return visibleRange
-        }
-
-        visibleRange.from -= this.timezoneOffset
-        visibleRange.to -= this.timezoneOffset
-
-        return visibleRange
+            .timeToCoordinate(timestamp as UTCTimestamp)
+        )
     }
 
-    /**
-     * add all pane's indicators
-     */
-    addPaneIndicators() {
-        for (const id of store.state[this.paneId].indicatorOrder) {
-            this.addIndicator(id)
-        }
+    const showLabel = store.state[this.paneId].showAlertsLabel
+    let title = ''
+
+    if (showLabel && alert.message && alert.message.length < 3) {
+      title = alert.message
     }
 
-    /**
-     * render watermark in chart
-     * @returns
-     */
-    updateWatermark(marketsUpdate?: string[]) {
-        if (marketsUpdate) {
-            if (!marketsUpdate.length) {
-                this.watermark = 'Empty'
-            } else if (store.state.settings.normalizeWatermarks) {
-                this.watermark = marketsUpdate.join('\u2009|\u2009')
-            } else {
-                const othersCount = marketsUpdate.length - 3
-                this.watermark =
-                    marketsUpdate.slice(0, 3).join('\u2009+\u2009') +
-                    (othersCount > 0
-                        ? '\u2009+\u2009' +
-                        othersCount +
-                        '\u2009other' +
-                        (othersCount > 1 ? 's' : '')
-                        : '')
-            }
-        }
+    let color = store.state.settings.alertsColor
 
-        if (!this.chartInstance) {
-            return
-        }
-
-        /**
-         * weird spaces (\u00A0) are for left / right margins
-         */
-        this.chartInstance.applyOptions({
-            watermark: {
-                text: `\u00A0\u00A0\u00A0\u00A0${this.watermark +
-                    '\u2009|\u2009' +
-                    getTimeframeForHuman(store.state[this.paneId].timeframe)
-                    }\u00A0\u00A0\u00A0\u00A0`,
-                ...getChartWatermarkOptions(this.paneId).watermark
-            }
-        })
+    if (alert.triggered) {
+      title += '✔'
     }
 
-    /**
-     * update chart font using pane zoom option
-     */
-    updateFontSize() {
-        if (!this.chartElement) {
-            return
-        }
-
-        const multiplier = store.state.panes.panes[this.paneId].zoom || 1
-        const watermarkBaseFontSize =
-            this.chartElement.clientWidth *
-            0.05 *
-            (!store.state.settings.normalizeWatermarks ? 0.5 : 1)
-
-        this.chartInstance.applyOptions({
-            layout: {
-                fontSize: 14 * multiplier
-            },
-            watermark: {
-                fontSize: Math.max(
-                    16,
-                    Math.min(144, watermarkBaseFontSize * multiplier)
-                )
-            }
-        })
+    if (opacity || alert.triggered) {
+      const colorRgb = splitColorCode(color)
+      colorRgb[3] = (colorRgb[3] || 1) * (opacity || 0.5)
+      color = joinRgba(colorRgb)
     }
 
-    /**
-     * create indicator and register associated series
-     * @param {string} indicatorId indicator id
-     */
-    addIndicator(id, dependencyDepth?: number) {
-        if (this.getLoadedIndicator(id)) {
-            return true
-        }
+    return api.createPriceLine({
+      market: alert.market,
+      message: alert.message,
+      index,
+      price: alert.price,
+      lineWidth: store.state.settings.alertsLineWidth,
+      lineStyle: store.state.settings.alertsLineStyle,
+      color,
+      title: title.length ? title : null,
+      axisLabelVisible: showLabel
+    } as any)
+  }
 
-        if (dependencyDepth > 5) {
-            return false
-        }
-
-        // get indicator name, script, options ...
-        const indicatorSettings = store.state[this.paneId].indicators[id]
-        const indicatorOptions = indicatorSettings.options || {}
-
-        console.debug(`[chart/${this.paneId}/addIndicator] adding ${id}`)
-
-        const indicator: LoadedIndicator = {
-            id,
-            libraryId: indicatorSettings.libraryId || id,
-            options: JSON.parse(JSON.stringify(indicatorOptions)),
-            script: indicatorSettings.script,
-            model: null,
-            adapter: null,
-            apis: []
-        }
-
-        // build indicator
-        try {
-            this.prepareIndicator(indicator)
-        } catch (error) {
-            // handle dependency issue (resolveDependency adds required indicator(s) then try add this one again)
-            if (
-                error.status === 'indicator-required' &&
-                !this.resolveDependency(
-                    indicator.id,
-                    error.serieId,
-                    dependencyDepth || 0
-                )
-            ) {
-                dialogService.confirm({
-                    title: 'Referenced indicator',
-                    message: `The <code class="-filled">${indicator.libraryId}</code> indicator you added requires the <code class="-filled">$${error.serieId}</code> series, but it was not located among the added indicators.`,
-                    html: true,
-                    cancel: false
-                })
-            }
-
-            if (!error.status && !dialogService.isDialogOpened('indicator')) {
-                dialogService.openIndicator(this.paneId, indicator.id)
-            }
-
-            return false
-        }
-
-        // build complete
-        this.loadedIndicators.push(indicator)
-
-        return true
+  /**
+   * replace whole chart with a set of computed series bars
+   * @param {Bar[]} seriesData Lightweight Charts formated series
+   */
+  replaceData(
+    seriesData: {
+      [id: string]: (LineData | BarData | HistogramData)[]
+    },
+    silent?: boolean
+  ) {
+    if (silent) {
+      this.preventPan()
     }
 
-    resolveDependency(
-        originalIndicatorId: string,
-        missingSerieId: string,
-        dependencyDepth: number
-    ) {
-        // serie was not found in active indicators
-        // first we loop through pane indicators, maybe order of add is incorrect
-        const indicators = (store.state[this.paneId] as ChartPaneState).indicators
+    for (let i = this.loadedIndicators.length - 1; i >= 0; i--) {
+      if (this.loadedIndicators[i].options.visible === false) {
+        continue
+      }
 
-        for (const otherIndicatorId in indicators) {
-            if (
-                otherIndicatorId === originalIndicatorId ||
-                !indicators[otherIndicatorId].series
-            ) {
-                continue
-            }
-
-            if (indicators[otherIndicatorId].series.indexOf(missingSerieId) !== -1) {
-                // found missing indicator
-                // add missing indicator (otherIndicatorId) that seems to contain the missing serie (missingSerieId)
-                if (this.addIndicator(otherIndicatorId, dependencyDepth + 1)) {
-                    if (dependencyDepth === 0) {
-                        // finaly add original indicator
-                        this.addIndicator(originalIndicatorId, dependencyDepth + 1)
-                    }
-
-                    return true
-                } else {
-                    return false
-                    // too many dependencies
-                }
-            }
-        }
-
-        if (indicators[missingSerieId]) {
-            if (
-                this.addIndicator(indicators[missingSerieId].id, dependencyDepth + 1)
-            ) {
-                if (dependencyDepth === 0) {
-                    this.addIndicator(originalIndicatorId, dependencyDepth + 1)
-                }
-
-                return true
-            }
-        }
-
-        return false
-    }
-
-    /**
-     * build indicator and create own series instances from Lightweight Charts
-     * @param indicator
-     */
-    prepareIndicator(indicator: LoadedIndicator) {
-        try {
-            const result = build(indicator, this.seriesIndicatorsMap)
-
-            if (store.state[this.paneId].indicatorsErrors[indicator.id]) {
-                store.commit(this.paneId + '/SET_INDICATOR_ERROR', {
-                    id: indicator.id,
-                    error: null
-                })
-            }
-
-            indicator.model = result
-            indicator.options = Object.keys(result.options).reduce((acc, key) => {
-                acc[key] =
-                    typeof indicator.options[key] !== 'undefined'
-                        ? indicator.options[key]
-                        : result.options[key].default
-                return acc
-            }, indicator.options)
-
-            store.commit(this.paneId + '/SET_INDICATOR_OPTIONS_DEFINITIONS', {
-                id: indicator.id,
-                optionsDefinitions: result.options
+      for (let j = 0; j < this.loadedIndicators[i].apis.length; j++) {
+        const serieId = this.loadedIndicators[i].apis[j].id
+        if (seriesData[serieId]) {
+          try {
+            this.loadedIndicators[i].apis[j].setData(seriesData[serieId])
+          } catch (error) {
+            store.commit(this.paneId + '/SET_INDICATOR_ERROR', {
+              id: this.loadedIndicators[i].id,
+              error: error.message
             })
 
-            if (indicator.options.visible !== false) {
-                this.createIndicatorSeries(indicator)
-            }
-        } catch (error) {
-            if (indicator.options.visible !== false) {
-                console.error(
-                    `[chart/${this.paneId}/prepareIndicator] transpilation failed`
-                )
-                console.error(`\t->`, error)
-
-                store.commit(this.paneId + '/SET_INDICATOR_ERROR', {
-                    id: indicator.id,
-                    error: error.message
-                })
-
-                throw error
-            }
+            this.setIndicatorOption(
+              this.loadedIndicators[i].id,
+              'visible',
+              false
+            )
+          }
         }
+      }
     }
+  }
 
-    /**
-     * attach indicator copy of indicator model (incl. states of variables and functions)
-     * @param {LoadedIndicator} indicator
-     * @param {Renderer} renderer
-     * @returns
-     */
-    bindIndicator(indicator: LoadedIndicator, renderer: Renderer) {
-        if (
-            !renderer ||
-            typeof renderer.indicators[indicator.id] !== 'undefined' ||
-            !indicator.model
-        ) {
-            return
-        }
+  /**
+   * excecute indicators, updating chart series with renderer's data
+   * @param renderer
+   */
+  updateBar(renderer: Renderer) {
+    this.preventPan()
 
-        renderer.indicators[indicator.id] = getRendererIndicatorData(indicator)
+    const toUpdate = []
 
     for (let i = 0; i < this.loadedIndicators.length; i++) {
       if (this.loadedIndicators[i].options.visible === false) {
@@ -2181,32 +1854,19 @@ export default class Chart {
                 point.lowerValue === null) ||
               (indicator.model.plots[j].type === 'histogram' && !point.value)
             ) {
-                indicator.apis[i].applyOptions(
-                    renderer.indicators[indicator.id].plotsOptions[i]
-                )
+              continue
             }
             toUpdate.push([indicator.apis[j], point])
           }
         }
-
-        this.prepareRendererForIndicators(indicator, renderer)
-
-        return indicator
+      }
     }
 
-    refreshIndicatorAdapter(indicator: LoadedIndicator, renderer) {
-        try {
-            indicator.adapter = getBuildedIndicator(
-                indicator.model,
-                this.marketsFilters,
-                indicator.options
-            )
-        } catch (error) {
-            this.unbindIndicator(indicator, renderer)
-
-            throw error
-        }
+    for (let i = 0; i < toUpdate.length; i++) {
+      toUpdate[i][0].update(toUpdate[i][1])
+      toUpdate[i][1].rendered = true
     }
+  }
 
   /**
    * excecute indicators with renderer's data, and return series points
@@ -2221,18 +1881,17 @@ export default class Chart {
     const points = {}
     renderer.series = {}
 
-    /**
-     * detach serie from renderer
-     * @param {LoadedIndicator} indicator
-     * @param {Renderer} renderer
-     */
-    unbindIndicator(indicator, renderer) {
-        if (!renderer || typeof renderer.indicators[indicator.id] === 'undefined') {
-            return
-        }
+    for (let i = 0; i < this.loadedIndicators.length; i++) {
+      if (
+        (indicatorsIds &&
+          indicatorsIds.indexOf(this.loadedIndicators[i].id) === -1) ||
+        this.loadedIndicators[i].options.visible === false
+      ) {
+        continue
+      }
 
-        delete renderer.indicators[indicator.id]
-    }
+      const indicator = this.loadedIndicators[i]
+      const serieData = renderer.indicators[indicator.id]
 
       try {
         indicator.adapter(
@@ -2268,15 +1927,19 @@ export default class Chart {
             point.lowerValue === null) ||
           (indicator.model.plots[j].type === 'histogram' && point.value === 0)
         ) {
-            return
+          continue
         }
         points[indicator.apis[j].id] = point
       }
     }
 
-        const visibleRange = this.getVisibleRange() as TimeRange
+    return points
+  }
 
-        let rangeToFetch
+  getPriceApi() {
+    if (this._priceApi) {
+      return this._priceApi
+    }
 
     const price = this.loadedIndicators.find(
       a => a.id === 'price' || a.libraryId === 'price'
@@ -2397,24 +2060,46 @@ export default class Chart {
             })
           }
         }
+      }
+    }
 
     this.incrementRendererBar(renderer)
     resetRendererBar(renderer)
 
-        if (this.chartCache.cacheRange.from) {
-            rangeToFetch.to = Math.min(
-                floorTimestampToTimeframe(this.chartCache.cacheRange.from, timeframe),
-                rangeToFetch.to
-            )
-        }
+    renderer.timestamp = timestamp
+    renderer.localTimestamp = timestamp + this.timezoneOffset
+  }
 
-        const barsCount = Math.floor(
-            (rangeToFetch.to - rangeToFetch.from) / timeframe
-        )
-        const bytesPerBar = 112
-        const estimatedSize = formatBytes(
-            barsCount * this.historicalMarkets.length * bytesPerBar
-        )
+  /**
+   * increment bar (1 timeframe forward)
+   * @param {Renderer} bar bar to clear for next timestamp
+   */
+  incrementRendererBar(renderer: Renderer) {
+    renderer.length++
+    renderer.timestamp += renderer.timeframe
+    renderer.localTimestamp += renderer.timeframe
+    renderer.price = null
+
+    for (let i = 0; i < this.loadedIndicators.length; i++) {
+      const rendererSerieData = renderer.indicators[this.loadedIndicators[i].id]
+
+      if (!rendererSerieData) {
+        continue
+      }
+
+      rendererSerieData.canRender =
+        renderer.length >= rendererSerieData.minLength
+
+      for (let f = 0; f < rendererSerieData.functions.length; f++) {
+        const instruction = rendererSerieData.functions[f]
+
+        if (typeof seriesUtils[instruction.name].next === 'function') {
+          seriesUtils[instruction.name].next(instruction)
+        }
+      }
+
+      for (let v = 0; v < rendererSerieData.variables.length; v++) {
+        const instruction = rendererSerieData.variables[v]
 
         if (instruction.length > 1) {
           instruction.state.unshift(instruction.state[0])
@@ -2543,6 +2228,9 @@ export default class Chart {
         this.loadedIndicators[i].apis[j].applyOptions({
           priceFormat: precisionOptions
         })
+      }
+    }
+  }
 
   getPrice() {
     if (!this.activeRenderer) {
@@ -2684,17 +2372,36 @@ export default class Chart {
           return
         }
 
-        this.chartCache.saveChunk(chunk)
+        let color = options.color || options.upColor || textColor
 
-        if (this.isPrepending) {
-            registerPrependFromHistorical(this.prepend, response)
+        try {
+          color = splitColorCode(color)
+
+          if (typeof color[3] !== 'undefined') {
+            color[3] = 1
+          }
+
+          color = joinRgba(color)
+        } catch (error) {
+          // not rgb(a)
         }
 
-        this.renderAll(true)
+        const text = indicator.displayName || indicator.name
+
+        ctx.fillStyle = textColor
+        ctx.strokeStyle = themeColorO75
+        ctx.lineWidth = 4 * pxRatio
+        ctx.fillStyle = color
+        ctx.lineJoin = 'round'
+        ctx.strokeText(text, textPadding, offsetY)
+        ctx.fillText(text, textPadding, offsetY)
+
+        offsetY += lineHeight * 1.2
+      })
     }
 
-    async fetchMore(visibleLogicalRange) {
-        const logicalRangeId = `${visibleLogicalRange.from},${visibleLogicalRange.to}`
+    displayCanvasInPopup(canvas)
+  }
 
   restart() {
     this.destroy()
@@ -2795,7 +2502,35 @@ export default class Chart {
         timeframe,
         this.historicalMarkets
       )
-      .then(results => this.onHistorical(results))
+    .then(results => {
+        const obMarkets = store.state.panes.panes[this.paneId].markets.filter(
+            m => m.indexOf('ORDERBOOK') !== -1
+        )
+
+        if (
+            obMarkets.length === 0
+        ) {
+            return results
+        }
+        return historicalService
+            .fetchOrderbook(
+                rangeToFetch.from * 1000,
+                rangeToFetch.to * 1000,
+                timeframe,
+                obMarkets
+            )
+            .then(results2 => {
+                const newResults = [...results.data, ...results2.data]
+                newResults.sort((a, b) => a.time - b.time)
+                results.data = newResults
+                return results
+            })
+            .catch(err => {
+                console.error(err)
+                return results
+            })
+    })
+    .then(results => this.onHistorical(results))
       .catch(err => {
         console.error(err)
 
@@ -2858,112 +2593,152 @@ export default class Chart {
         if (!this.activeRenderer.indicators[indicatorId].minLength) {
           continue
         }
-
-        this.previousLogicalRange = logicalRangeId
-
-        let indicatorLength = 0
-
-        if (this.activeRenderer) {
-            for (const indicatorId in this.activeRenderer.indicators) {
-                if (!this.activeRenderer.indicators[indicatorId].minLength) {
-                    continue
-                }
-                indicatorLength = Math.max(
-                    indicatorLength,
-                    this.activeRenderer.indicators[indicatorId].minLength
-                )
-            }
-        }
-
-        const barsToLoad =
-            Math.round(
-                Math.min(Math.abs(visibleLogicalRange.from) + indicatorLength, 500)
-            ) + 1
-
-        if (!barsToLoad) {
-            return
-        }
-
-        const rangeToFetch = {
-            from:
-                this.chartCache.cacheRange.from -
-                barsToLoad * store.state[this.paneId].timeframe,
-            to: this.chartCache.cacheRange.from - 1
-        }
-
-        await this.fetch(rangeToFetch)
+        indicatorLength = Math.max(
+          indicatorLength,
+          this.activeRenderer.indicators[indicatorId].minLength
+        )
+      }
     }
 
-    savePosition(visibleLogicalRange) {
-        store.commit(
-            this.paneId + '/SET_BAR_SPACING',
-            this.getBarSpacing(visibleLogicalRange)
+    const barsToLoad =
+      Math.round(
+        Math.min(Math.abs(visibleLogicalRange.from) + indicatorLength, 500)
+      ) + 1
+
+    if (!barsToLoad) {
+      return
+    }
+
+    const rangeToFetch = {
+      from:
+        this.chartCache.cacheRange.from -
+        barsToLoad * store.state[this.paneId].timeframe,
+      to: this.chartCache.cacheRange.from - 1
+    }
+
+    await this.fetch(rangeToFetch)
+  }
+
+  savePosition(visibleLogicalRange) {
+    store.commit(
+      this.paneId + '/SET_BAR_SPACING',
+      this.getBarSpacing(visibleLogicalRange)
+    )
+  }
+
+  getBarSpacing(visibleLogicalRange) {
+    if (!visibleLogicalRange) {
+      return defaultChartOptions.timeScale.barSpacing
+    }
+
+    const canvasWidth = this.getChartCanvas().clientWidth
+    const barSpacing =
+      canvasWidth / (visibleLogicalRange.to - visibleLogicalRange.from)
+
+    return barSpacing
+  }
+
+  trimChart() {
+    if (Date.now() > this._timeToRecycle) {
+      const visibleRange = this.getVisibleRange() as TimeRange
+
+      let end
+
+      if (visibleRange) {
+        end = visibleRange.from - (visibleRange.to - visibleRange.from) * 2
+      }
+
+      if (this.chartCache.trim(end)) {
+        this.renderAll()
+      }
+
+      this.setTimeToRecycle()
+    }
+
+    this._recycleTimeout = setTimeout(
+      this.trimChart.bind(this),
+      1000 * 60 * 15
+    ) as unknown as number
+  }
+
+  setupRecycle() {
+    this._recycleTimeout = setTimeout(
+      this.trimChart.bind(this),
+      1000 * 60 * 3
+    ) as unknown as number
+    this.setTimeToRecycle()
+  }
+
+  clearRecycle() {
+    clearTimeout(this._recycleTimeout)
+  }
+
+  setTimeToRecycle() {
+    const now = Date.now()
+
+    if (this.type === 'time') {
+      const chartCanvas = this.getChartCanvas()
+      const chartWidth = chartCanvas.clientWidth
+      const barSpacing = this.getBarSpacing(
+        this.chartInstance.timeScale().getVisibleLogicalRange()
+      )
+      this._timeToRecycle =
+        now +
+        Math.min(
+          1000 * 60 * 60 * 24,
+          (this.timeframe * 1000 * (chartWidth / barSpacing)) / 2
         )
     }
 
-    getBarSpacing(visibleLogicalRange) {
-        if (!visibleLogicalRange) {
-            return defaultChartOptions.timeScale.barSpacing
-        }
+    this._timeToRecycle = now + 900000
+  }
 
-        const canvasWidth = this.getChartCanvas().clientWidth
-        const barSpacing =
-            canvasWidth / (visibleLogicalRange.to - visibleLogicalRange.from)
+  async createAlertAtPrice(price, timestamp) {
+    if (!store.state.settings.alerts) {
+      if (
+        !(await dialogService.confirm({
+          title: 'Alerts are disabled',
+          message: 'Enable alerts ?',
+          ok: 'Yes please'
+        }))
+      ) {
+        return
+      }
 
-        return barSpacing
+      store.commit('settings/TOGGLE_ALERTS', true)
     }
 
-    trimChart() {
-        if (Date.now() > this._timeToRecycle) {
-            const visibleRange = this.getVisibleRange() as TimeRange
+    const market = this.mainIndex
 
-            let end
-
-            if (visibleRange) {
-                end = visibleRange.from - (visibleRange.to - visibleRange.from) * 2
-            }
-
-            if (this.chartCache.trim(end)) {
-                this.renderAll()
-            }
-
-            this.setTimeToRecycle()
-        }
-
-        this._recycleTimeout = setTimeout(
-            this.trimChart.bind(this),
-            1000 * 60 * 15
-        ) as unknown as number
+    const alert: MarketAlert = {
+      price,
+      market,
+      timestamp,
+      active: false
     }
 
-    setupRecycle() {
-        this._recycleTimeout = setTimeout(
-            this.trimChart.bind(this),
-            1000 * 60 * 3
-        ) as unknown as number
-        this.setTimeToRecycle()
+    alertService.createAlert(alert, this.getPrice())
+  }
+
+  async refreshChartDimensions() {
+    if (!this.chartInstance) {
+      return
     }
 
-    clearRecycle() {
-        clearTimeout(this._recycleTimeout)
+    let headerHeight = 0
+
+    if (!store.state.settings.autoHideHeaders) {
+      const zoom = store.state.panes.panes[this.paneId].zoom || 1
+      headerHeight = 1.375 * zoom * 16
     }
 
-    setTimeToRecycle() {
-        const now = Date.now()
+    const paneElement = this.chartElement.parentElement
 
-        if (this.type === 'time') {
-            const chartCanvas = this.getChartCanvas()
-            const chartWidth = chartCanvas.clientWidth
-            const barSpacing = this.getBarSpacing(
-                this.chartInstance.timeScale().getVisibleLogicalRange()
-            )
-            this._timeToRecycle =
-                now +
-                Math.min(
-                    1000 * 60 * 60 * 24,
-                    (this.timeframe * 1000 * (chartWidth / barSpacing)) / 2
-                )
-        }
+    this.chartInstance.resize(
+      paneElement.clientWidth,
+      paneElement.clientHeight - headerHeight
+    )
+  }
 
   async saveIndicatorPreview(indicatorId) {
     const chartOptions = merge(
