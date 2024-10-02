@@ -2426,12 +2426,7 @@ export default class Chart {
             return
         }
 
-        const isVolumeTimeframe = Object.prototype.toString.call((store.state[this.paneId] as ChartPaneState).timeframe) === "[object String]" && ('' + (store.state[this.paneId] as ChartPaneState).timeframe).indexOf('v') > 0
-        let timeframe = +(store.state[this.paneId] as ChartPaneState).timeframe
-
-        if (isVolumeTimeframe) {
-            timeframe = 30 // seconds
-        }
+        const timeframe = +(store.state[this.paneId] as ChartPaneState).timeframe
 
         if (!timeframe) {
             this.hasReachedEnd = true
@@ -2561,75 +2556,13 @@ export default class Chart {
      * Render chart once everything is done
      */
     onHistorical(response: HistoricalResponse) {
-        
-        console.log('onHistorical')
-        const isVolumeTimeframe = Object.prototype.toString.call((store.state[this.paneId] as ChartPaneState).timeframe) === "[object String]" && ('' + (store.state[this.paneId] as ChartPaneState).timeframe).indexOf('v') > 0
-        const volumeBasedBars = [];
-
-        if (isVolumeTimeframe) {
-            console.log(`Transforming ${response.data.length} bars to volume bars`, response.data)
-
-            // Tranform chunk to volume bars
-            // Received 30s bars -> create volume bars
-            const volumeBasedBars: Bar[] = [];
-            let currentVolume = 0;
-            let currentVolumeBasedBar: Bar | null = null;
-
-            for (let i = 0; i < response.data.length; i++) { 
-                const originalBar = response.data[i];
-                if( !originalBar.open || !originalBar.close || !originalBar.open ){
-                    continue
-                }
-                // Calculate the total volume for the current bar
-                const volume = (originalBar.vbuy || 0) + (originalBar.vsell || 0);
-
-                if( !currentVolumeBasedBar ){
-                    currentVolumeBasedBar = {...originalBar}
-                }else{
-                    currentVolumeBasedBar = {
-                        ...currentVolumeBasedBar,
-                        vbuy: currentVolumeBasedBar.vbuy +  (originalBar.vbuy || 0),
-                        vsell: currentVolumeBasedBar.vsell +  (originalBar.vsell || 0),
-                        high: Math.max(
-                            (currentVolumeBasedBar.high),
-                            (originalBar.high)
-                        ),
-                        low: Math.min(
-                            (currentVolumeBasedBar.low),
-                            (originalBar.low)
-                        ),
-                        close: originalBar.close
-                    };
-                }
-
-                // Add the current bar's volume to the running total
-                currentVolume += volume;
-
-                // Check if adding the current bar's volume exceeds or equals 10000000
-                if (currentVolume >= 1000000) {
-                    // Create a new volume-based bar and reset the current volume
-                    volumeBasedBars.push(currentVolumeBasedBar);
-                    console.log('push bar');
-                    // Reset the current volume
-                    currentVolume = 0;
-
-                    currentVolumeBasedBar  = undefined 
-                }
-            }
-
-            if (currentVolumeBasedBar) { 
-                volumeBasedBars.push(currentVolumeBasedBar);
-            }
-            console.log('volumes bar', volumeBasedBars)
-        }
 
         const chunk: Chunk = {
             from: response.from,
             to: response.to,
-            bars: isVolumeTimeframe ? {...volumeBasedBars} : response.data
+            bars: response.data
         }
 
-        console.log('final chunks', chunk)
         this.chartCache.saveChunk(chunk)
 
         if (this.isPrepending) {
@@ -2640,12 +2573,6 @@ export default class Chart {
     }
 
     async fetchMore(visibleLogicalRange) {
-        const isVolumeTimeframe = Object.prototype.toString.call((store.state[this.paneId] as ChartPaneState).timeframe) === "[object String]" && ('' + (store.state[this.paneId] as ChartPaneState).timeframe).indexOf('v') > 0
-        if( isVolumeTimeframe ){
-            console.log('fetchMore stopped manually')
-            return
-        }
-        console.log('fetchMore', visibleLogicalRange)
         const logicalRangeId = `${visibleLogicalRange.from},${visibleLogicalRange.to}`
 
         if (
@@ -2684,17 +2611,10 @@ export default class Chart {
             return
         }
 
-        
-        let timeframe = +(store.state[this.paneId] as ChartPaneState).timeframe
-
-        if (isVolumeTimeframe) {
-            timeframe = 30 // seconds
-        }
-
         const rangeToFetch = {
             from:
                 this.chartCache.cacheRange.from -
-                barsToLoad * timeframe,
+                barsToLoad * store.state[this.paneId].timeframe,
             to: this.chartCache.cacheRange.from - 1
         }
 
