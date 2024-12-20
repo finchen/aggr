@@ -3,6 +3,7 @@ node_modules
 /dist
 src-tauri
 stats.html
+dev-dist
 
 # local env files
 .env.local
@@ -21,3 +22,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+dist-server/*
+
+dist-server/daemon/aggr.err.log
+dist-server/daemon/aggr.out.log
+dist-server/daemon/aggr.wrapper.log
+dist-server/daemon/aggr.xml

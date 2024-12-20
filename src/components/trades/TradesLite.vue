@@ -158,6 +158,7 @@ export default class TradesLite extends Mixins(PaneMixin) {
     [type: string]: { buy: AudioFunction; sell: AudioFunction }[]
   }
 
+  private baseSizingCurrency: boolean
   private filters: {
     [key in TradeType]: boolean
   }
@@ -182,6 +183,7 @@ export default class TradesLite extends Mixins(PaneMixin) {
   private addedVolumeBySide: { buy: number; sell: number }
   private offset: number
   private maxCount: number
+  private showAvgPrice: boolean
   private limit: number
   private batchSize = 1
 
@@ -343,7 +345,7 @@ export default class TradesLite extends Mixins(PaneMixin) {
         pair: trades[i].pair,
         amount: trades[i].amount,
         count: trades[i].count,
-        price: trades[i].price,
+        price: this.showAvgPrice ? trades[i].avgPrice : trades[i].price,
         side: trades[i].side,
         time: null
       }
@@ -401,6 +403,9 @@ export default class TradesLite extends Mixins(PaneMixin) {
       [TradeType.trade]: this.$store.state[this.paneId].showTrades,
       [TradeType.liquidation]: this.$store.state[this.paneId].showLiquidations
     }
+
+    this.baseSizingCurrency =
+      !this.$store.state.settings.preferQuoteCurrencySize
 
     if (checkRequirements) {
       // check for unused or missing colors / audio
@@ -719,6 +724,7 @@ export default class TradesLite extends Mixins(PaneMixin) {
     this.maxHistory = pane.maxRows
     this.showHistograms = pane.showHistograms
     this.showPairs = pane.showPairs
+    this.showAvgPrice = pane.showAvgPrice
     this.renderTrades =
       !pane.showHistograms || this.height > window.innerHeight / 24
     this.showPrices = pane.showPrices
@@ -966,7 +972,7 @@ export default class TradesLite extends Mixins(PaneMixin) {
   drawPrice(trade, market, height) {
     this.ctx.textAlign = 'left'
     this.ctx.fillText(
-      formatMarketPrice(trade.price, market),
+      formatMarketPrice(trade.avgPrice, market),
       this.priceOffset,
       this.drawOffset + height / 2 + 1,
       this.maxWidth
@@ -980,9 +986,12 @@ export default class TradesLite extends Mixins(PaneMixin) {
       new RegExp(`^(${this.fontSize}px)`),
       'bold $1'
     )
+    const amount = this.baseSizingCurrency
+      ? Math.round(trade.amount * 1e6) / 1e6
+      : formatAmount(trade.amount)
+
     this.ctx.fillText(
-      formatAmount(trade.amount) +
-        (liquidation ? (trade.side === 'buy' ? '🐻' : '🐂') : ''),
+      amount + (liquidation ? (trade.side === 'buy' ? '🐻' : '🐂') : ''),
       this.amountOffset,
       this.drawOffset + height / 2 + 1,
       this.maxWidth
@@ -1108,7 +1117,7 @@ export default class TradesLite extends Mixins(PaneMixin) {
   onScroll(event) {
     event.preventDefault()
 
-    const direction = Math.sign(event.deltaY) * (event.shiftKey ? 4 : 2)
+    const direction = Math.sign(event.deltaY) * (event.shiftKey ? 2 : 1)
 
     const offset = Math.max(
       0,

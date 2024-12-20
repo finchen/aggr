@@ -3,8 +3,8 @@ import dialogService from './dialogService'
 import workspacesService from './workspacesService'
 import SettingsImportConfirmation from '../components/settings/ImportConfirmation.vue'
 import store from '@/store'
-import { slugify, uniqueName } from '../utils/helpers'
-import { IndicatorSettings } from '../store/panesSettings/chart'
+import notificationService from './notificationService'
+import { PaneType } from '../store/panes'
 
 class ImportService {
   getJSON(file: File) {
@@ -60,16 +60,21 @@ class ImportService {
       throw new Error('Preset is empty')
     }
 
+    const type = preset.name.split(':')[0]
+    const isPresetAPane = Object.values(PaneType).includes(type as PaneType)
+
     await workspacesService.savePreset(preset, presetType)
 
-    store.dispatch('panes/addPane', {
-      type: preset.type,
-      settings: preset.data,
-      markets: preset.markets
-    })
+    if (isPresetAPane) {
+      store.dispatch('panes/addPane', {
+        type: preset.type,
+        settings: preset.data,
+        markets: preset.markets
+      })
+    }
 
     store.dispatch('app/showNotice', {
-      title: `Imported preset ${preset.name}`,
+      title: `Imported ${preset.name} as preset for ${type}`,
       type: 'info'
     })
 
@@ -124,56 +129,103 @@ class ImportService {
     return null
   }
 
-  async importIndicator(json) {
-    let chartPaneId
-
-    if (
-      store.state.app.focusedPaneId &&
-      store.state.panes.panes[store.state.app.focusedPaneId].type === 'chart'
-    ) {
-      chartPaneId = store.state.app.focusedPaneId
-    } else {
-      for (const id in store.state.panes.panes) {
-        if (store.state.panes.panes[id].type === 'chart') {
-          chartPaneId = id
-          break
-        }
-      }
-    }
-
-    if (!chartPaneId) {
-      throw new Error('No chart found')
-    }
-
-    const ids = await workspacesService.getIndicatorsIds()
-    const name = json.name.split(':').slice(1).join(':')
-    const id = uniqueName(slugify(name), ids)
+  async importIndicator(
+    json,
+    { save = false, addToChart = false, openLibrary = false }
+  ) {
+    const name = json.name.replace(/^indicators?:/, '')
     const now = Date.now()
-    const indicator: IndicatorSettings = {
-      id: id,
-      name: name,
+    let indicator = {
+      id: null,
+      name,
+      displayName: json.data.displayName || name,
+      author: json.data.author || null,
       script: json.data.script || '',
       options: json.data.options || {},
       description: json.data.description || null,
       createdAt: json.data.createdAt || now,
-      updatedAt: json.data.updatedAt || now,
-      unsavedChanges: true
+      updatedAt: json.data.updatedAt || json.data.createdAt || now,
+      preview: json.data.preview || null
     }
 
-    store.dispatch(chartPaneId + '/addIndicator', indicator)
+    openLibrary =
+      dialogService.mountedComponents['indicator-library'] || openLibrary
 
-    dialogService.openIndicator(chartPaneId, indicator.id)
+    if (save || openLibrary) {
+      indicator = await workspacesService.saveIndicator(indicator)
+    }
+
+    if (indicator.id && json.data.presets) {
+      for (const preset of json.data.presets) {
+        await workspacesService.savePreset({
+          ...preset,
+          name: preset.name.replace(
+            `:${json.data.libraryId}:`,
+            `:${indicator.id}:`
+          )
+        })
+      }
+    }
+
+    if (openLibrary) {
+      if (!dialogService.isDialogOpened('indicator-library')) {
+        dialogService.open(
+          (await import('@/components/indicators/IndicatorLibraryDialog.vue'))
+            .default,
+          {},
+          'indicator-library'
+        )
+      }
+
+      const indicatorLibraryDialog =
+        dialogService.mountedComponents['indicator-library']
+
+      store.dispatch('app/showNotice', {
+        title: `indicator "${indicator.id}" imported successfully`
+      })
+
+      if (indicatorLibraryDialog) {
+        indicatorLibraryDialog.setSelection(indicator)
+      }
+    }
+
+    if (addToChart) {
+      const paneId = store.getters['panes/getFocusedPaneId']('chart')
+
+      if (paneId) {
+        store.dispatch(paneId + '/addIndicator', indicator)
+      }
+    }
   }
 
   async importAnything(file: File) {
     if (file.type === 'application/json' || file.type === 'text/plain') {
       const json = await this.getJSON(file)
 
+      if (!notificationService.hasDismissed('import-security-warning')) {
+        if (
+          !(await dialogService.confirm({
+            title: 'Security Warning',
+            message: `⚠️ Proceed with <strong>Caution</strong>!<br><br>
+            <p>Importing a custom script into AGGR poses security risks and AGGR is not liable for any consequences; ensure you trust the source and understand the risks before proceeding.</p>`,
+            ok: `Accept and Proceed`,
+            requireScroll: true,
+            html: true
+          }))
+        ) {
+          return
+        }
+
+        notificationService.dismiss('import-security-warning')
+      }
+
       if (json.formatName) {
         await this.importDatabase(file)
       } else if (json.type && json.data) {
         if (json.type === 'indicator' && json.name.split(':').length < 3) {
-          this.importIndicator(json)
+          this.importIndicator(json, {
+            addToChart: true
+          })
         } else {
           await this.importPreset(file)
         }
@@ -201,7 +253,7 @@ class ImportService {
       return
     }
 
-    ;(await import('dexie')) as any
+    await import('dexie')
     const { importDB } = await import('dexie-export-import')
 
     const currentWorkspaceId = workspacesService.workspace.id

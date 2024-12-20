@@ -1,7 +1,7 @@
 import { MutationTree, ActionTree, GetterTree, Module } from 'vuex'
 
 import Vue from 'vue'
-import { randomString } from '@/utils/helpers'
+import { parseAmount, randomString } from '@/utils/helpers'
 import { formatMarketPrice } from '@/services/productsService'
 import { ModulesState } from '..'
 import { getLogShade, joinRgba, splitColorCode } from '@/utils/colors'
@@ -40,6 +40,7 @@ export interface TradesPaneState {
   monochromeLogos: boolean
   multipliers: { [identifier: string]: number }
   thresholdsMultipler: number
+  showAvgPrice: boolean
 }
 
 const getters = {
@@ -75,7 +76,8 @@ const state = {
   showTimeAgo: true,
   showPrices: true,
   showHistograms: true,
-  thresholdsMultipler: 1
+  thresholdsMultipler: 1,
+  showAvgPrice: true
 } as TradesPaneState
 
 const actions = {
@@ -123,63 +125,52 @@ const actions = {
   generateSwatch(
     { state },
     {
-      buyColor,
-      sellColor,
+      color,
+      side,
       type = 'thresholds',
       baseVariance = 0.15
     }: {
-      buyColor: string
-      sellColor: string
+      color: string
+      side: 'buy' | 'sell'
       type: 'thresholds' | 'liquidations'
       baseVariance: number
     }
   ) {
     const count = state[type].length
     const baseMultipler = (count / 2) * -baseVariance
-    const buyRgb = buyColor ? splitColorCode(buyColor) : null
-    const sellRgb = sellColor ? splitColorCode(sellColor) : null
+    const colorRgb = color ? splitColorCode(color) : null
+    const name = `${side}Color`
+
+    if (!colorRgb) {
+      return
+    }
 
     for (let i = 0; i < count; i++) {
-      if (buyRgb) {
-        if (i === 1) {
-          state[type][i].buyColor = joinRgba([
-            buyRgb[0],
-            buyRgb[1],
-            buyRgb[2],
-            (buyRgb[3] || 1) * 0.8
-          ])
-        } else {
-          const buyScaled = getLogShade(
-            buyRgb,
-            baseMultipler + baseVariance * (i ? i : -0.5)
-          )
-          if (!i) {
-            buyScaled[3] = 0.5
-          }
-          state[type][i].buyColor = joinRgba(buyScaled)
+      if (i === 1) {
+        state[type][i][name] = joinRgba([
+          colorRgb[0],
+          colorRgb[1],
+          colorRgb[2],
+          (colorRgb[3] || 1) * 0.8
+        ])
+      } else {
+        const buyScaled = getLogShade(
+          colorRgb,
+          baseMultipler + baseVariance * (i ? i : -0.5)
+        )
+        if (!i) {
+          buyScaled[3] = 0.5
         }
-      }
-
-      if (sellColor) {
-        if (i === 1) {
-          state[type][i].sellColor = joinRgba([
-            sellRgb[0],
-            sellRgb[1],
-            sellRgb[2],
-            (sellRgb[3] || 1) * 0.8
-          ])
-        } else {
-          const sellScaled = getLogShade(
-            sellRgb,
-            baseMultipler + baseVariance * i
-          )
-          if (!i) {
-            sellScaled[3] = 0.5
-          }
-          state[type][i].sellColor = joinRgba(sellScaled)
-        }
+        state[type][i][name] = joinRgba(buyScaled)
       }
     }
+  },
+  upgradeToLite({ state }) {
+    this.dispatch('panes/resetPane', {
+      id: state._id,
+      data: state,
+      type: 'trades-lite'
+    })
   }
 } as ActionTree<TradesPaneState, ModulesState>
 
@@ -231,15 +222,7 @@ const mutations = {
     const threshold = this.getters[state._id + '/getThreshold'](id)
 
     if (threshold) {
-      if (typeof value === 'string' && /m|k$/i.test(value)) {
-        if (/m$/i.test(value)) {
-          threshold.amount = parseFloat(value) * 1000000
-        } else {
-          threshold.amount = parseFloat(value) * 1000
-        }
-      } else {
-        threshold.amount = +value
-      }
+      threshold.amount = parseAmount(value)
     }
   },
   TOGGLE_THRESHOLD_MAX(state, id) {
@@ -281,6 +264,10 @@ const mutations = {
     }
   },
   SET_THRESHOLD_COLOR(state, { id, side, value }) {
+    if (!id) {
+      return
+    }
+
     const threshold = this.getters[state._id + '/getThreshold'](id)
 
     if (threshold) {

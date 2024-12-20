@@ -1,6 +1,12 @@
-import { AggregatedTrade, Connection, Trade, Volumes } from '@/types/types'
+import {
+  AggregatedTrade,
+  Connection,
+  Ticker,
+  Trade,
+  Volumes
+} from '@/types/types'
 import { exchanges, getExchangeById } from './exchanges'
-import { getHms, parseMarket } from './helpers/utils'
+import { calculateSlippage, getHms, parseMarket } from './helpers/utils'
 import settings from './settings'
 
 class Aggregator {
@@ -12,25 +18,20 @@ class Aggregator {
   connectionsCount = 0
   connectionChange = 0
 
-  private tickerDelay = 10
+  private tickersDelay = 10
   private baseAggregationTimeout = 50
   private onGoingAggregations: { [identifier: string]: AggregatedTrade } = {}
   private aggregationTimeouts: { [identifier: string]: number } = {}
   private pendingTrades: Trade[] = []
-  private marketsStats: {
-    [marketId: string]: {
-      initialPrice?: number
-      decimals?: number
-      price: number
-      volume?: number
-      volumeDelta?: number
-    }
+  private tickers: {
+    [marketId: string]: Ticker
   } = {}
+
   private _connectionChangeNoticeTimeout: number
 
   constructor(worker: Worker) {
     this.bindExchanges()
-    this.startPriceInterval()
+    this.startTickersInterval()
     this.ctx = worker
     this.ctx.postMessage({
       op: 'hello'
@@ -169,12 +170,15 @@ class Aggregator {
       const trade = trades[i]
       const marketKey = trade.exchange + ':' + trade.pair
 
-      if (!this.connections[marketKey]) {
+      if (!this.connections[marketKey] || !trade.size || !trade.price) {
         continue
       }
 
       if (settings.calculateSlippage) {
-        trade.originalPrice = this.marketsStats[marketKey].price || trade.price
+        trade.slippage = calculateSlippage(
+          this.tickers[marketKey].price || trade.price,
+          trade.price
+        )
       }
 
       trade.count = trade.count || 1
@@ -194,20 +198,29 @@ class Aggregator {
     for (let i = 0; i < trades.length; i++) {
       const trade = trades[i] as unknown as AggregatedTrade
       const marketKey = trade.exchange + ':' + trade.pair
-
-      if (!this.connections[marketKey]) {
+      
+      if (!this.connections[marketKey] || (trade.exchange !== 'ORDERBOOK' && (!trade.size || !trade.price))) {
         continue
       }
 
-      if (this.onGoingAggregations[marketKey]) {
+      if (trade.exchange !== 'ORDERBOOK' && this.onGoingAggregations[marketKey]) {
         const aggTrade = this.onGoingAggregations[marketKey]
 
         if (
           aggTrade.timestamp + settings.aggregationLength > trade.timestamp &&
           aggTrade.side === trade.side
         ) {
+          if (settings.calculateSlippage) {
+            if (aggTrade.price !== trade.price) {
+              aggTrade.slippage += calculateSlippage(
+                aggTrade.price,
+                trade.price
+              )
+            }
+          }
           aggTrade.size += trade.size
           aggTrade.price = trade.price
+          aggTrade.value += trade.price * trade.size
           aggTrade.count += trade.count || 1
           continue
         } else {
@@ -215,11 +228,15 @@ class Aggregator {
         }
       }
 
-      trade.originalPrice = this.marketsStats[marketKey].price || trade.price
-
+  
+      trade.originalPrice = this.tickers[marketKey].price || trade.price
+      trade.value = trade.price * trade.size
+      
       trade.count = trade.count || 1
       this.aggregationTimeouts[marketKey] = now + this.baseAggregationTimeout
+      
       this.onGoingAggregations[marketKey] = trade
+
     }
   }
 
@@ -262,6 +279,7 @@ class Aggregator {
           aggTrade.side === trade.side
         ) {
           aggTrade.size += trade.size
+          aggTrade.value += trade.price * trade.size
           aggTrade.count++
           continue
         } else {
@@ -270,51 +288,55 @@ class Aggregator {
       }
 
       trade.count = 1
+      trade.value = trade.price * trade.size
       this.aggregationTimeouts[tradeKey] = now + this.baseAggregationTimeout
       this.onGoingAggregations[tradeKey] = trade
     }
   }
 
-  processTrade(trade: Trade): Trade {
+  isAggregatedTrade(trade: Trade | AggregatedTrade): trade is AggregatedTrade {
+    return !!(trade as AggregatedTrade).value
+  }
+
+  processTrade(trade: AggregatedTrade | Trade): Trade {
     const marketKey = trade.exchange + ':' + trade.pair
 
-    if (settings.calculateSlippage) {
+    if (trade.slippage) {
       if (settings.calculateSlippage === 'price') {
         trade.slippage =
           Math.round(
             (trade.price - trade.originalPrice + Number.EPSILON) * 10
           ) / 10
-        if (Math.abs(trade.slippage) / trade.price < 0.00025) {
-          trade.slippage = null
+        if (Math.abs(trade.slippage) / trade.price < 0.000025) {
+          trade.slippage = 0
         }
       } else if (settings.calculateSlippage === 'bps') {
-        if (trade.side === 'buy') {
-          trade.slippage = Math.floor(
-            ((trade.price - trade.originalPrice) / trade.originalPrice) * 10000
-          )
-        } else {
-          trade.slippage = Math.floor(
-            ((trade.originalPrice - trade.price) / trade.price) * 10000
-          )
-        }
+        trade.slippage = Math.round(
+          ((trade.price - trade.originalPrice) / trade.originalPrice) * 1e4
+        )
       }
     }
 
+    trade.avgPrice = this.isAggregatedTrade(trade)
+      ? trade.value / trade.size
+      : trade.price
+
     trade.amount =
-      (settings.preferQuoteCurrencySize ? trade.price : 1) * trade.size
+      (settings.preferQuoteCurrencySize ? trade.avgPrice : 1) * trade.size
 
-    this.marketsStats[marketKey].volume += trade.amount
-    this.marketsStats[marketKey].volumeDelta +=
+    trade.avgPrice =
+      trade.count > 1
+        ? (trade as AggregatedTrade).prices / trade.size
+        : trade.price
+
+    this.tickers[marketKey].updated = true
+    this.tickers[marketKey].volume += trade.amount
+    this.tickers[marketKey].volumeDelta +=
       trade.amount * (trade.side === 'buy' ? 1 : -1)
+    this.tickers[marketKey].price = trade.price
 
-    this.marketsStats[marketKey].price = trade.price
-
-    if (this.marketsStats[marketKey].initialPrice === null) {
+    if (this.tickers[marketKey].initialPrice === null) {
       this.emitInitialPrice(marketKey, trade.price)
-    }
-
-    if (settings.aggregationLength > 0) {
-      trade.price = Math.max(trade.price, trade.originalPrice)
     }
 
     if (this.connections[marketKey].bucket) {
@@ -330,6 +352,10 @@ class Aggregator {
 
     trade.amount =
       (settings.preferQuoteCurrencySize ? trade.price : 1) * trade.size
+
+    trade.avgPrice = this.isAggregatedTrade(trade)
+      ? trade.value / trade.size
+      : trade.price
 
     if (this.connections[marketKey].bucket) {
       this.connections[marketKey].bucket['l' + trade.side] += trade.amount
@@ -359,7 +385,7 @@ class Aggregator {
   }
 
   emitInitialPrice(marketKey: string, price: number) {
-    this.marketsStats[marketKey].initialPrice = price
+    this.tickers[marketKey].initialPrice = price
 
     this.ctx.postMessage({
       op: 'price',
@@ -418,14 +444,31 @@ class Aggregator {
     }
   }
 
-  emitPrices() {
+  emitTickers() {
     if (this.connectionsCount) {
-      this.ctx.postMessage({ op: 'prices', data: this.marketsStats })
+      const updatedTickers = {}
+      for (const marketKey in this.tickers) {
+        if (!this.tickers[marketKey].updated) {
+          continue
+        }
+
+        updatedTickers[marketKey] = {
+          price: this.tickers[marketKey].price,
+          volume: this.tickers[marketKey].volume,
+          volumeDelta: this.tickers[marketKey].volumeDelta
+        }
+
+        this.tickers[marketKey].updated = false
+        this.tickers[marketKey].volume = 0
+        this.tickers[marketKey].volumeDelta = 0
+      }
+
+      this.ctx.postMessage({ op: 'tickers', data: updatedTickers })
     }
 
-    this['_priceInterval'] = self.setTimeout(
-      () => this.emitPrices(),
-      this.tickerDelay
+    this['_tickersInterval'] = self.setTimeout(
+      () => this.emitTickers(),
+      this.tickersDelay
     )
   }
 
@@ -443,7 +486,7 @@ class Aggregator {
       timestamp: null
     }
 
-    this.marketsStats[marketKey] = {
+    this.tickers[marketKey] = {
       volume: 0,
       volumeDelta: 0,
       initialPrice: null,
@@ -471,7 +514,7 @@ class Aggregator {
 
     this.noticeConnectionChange(1)
 
-    this.refreshTickerDelay()
+    this.refreshTickersDelay()
   }
 
   onUnsubscribed(exchangeId, pair) {
@@ -483,7 +526,7 @@ class Aggregator {
 
     if (this.connections[identifier]) {
       delete this.connections[identifier]
-      delete this.marketsStats[identifier]
+      delete this.tickers[identifier]
 
       this.connectionsCount = Object.keys(this.connections).length
 
@@ -497,7 +540,7 @@ class Aggregator {
 
       this.noticeConnectionChange(-1)
 
-      this.refreshTickerDelay()
+      this.refreshTickersDelay()
     }
   }
 
@@ -727,11 +770,11 @@ class Aggregator {
     }
   }
 
-  startPriceInterval() {
-    if (this['_priceInterval']) {
+  startTickersInterval() {
+    if (this['_tickersInterval']) {
       return
     }
-    this.emitPrices()
+    this.emitTickers()
   }
 
   startAggrInterval() {
@@ -807,7 +850,6 @@ class Aggregator {
     if (key === 'aggregationLength') {
       const signChange = (this.baseAggregationTimeout || 1) * (value || 1) < 0
       this.baseAggregationTimeout = value
-      // update trades event handler (if 0 mean simple trade emit else group inc trades)
       this.bindTradesEvent()
 
       if (signChange) {
@@ -841,19 +883,19 @@ class Aggregator {
     }
   }
 
-  getHits(data, trackingId: string) {
-    this.ctx.postMessage({
-      op: 'getHits',
-      trackingId: trackingId,
-      data: exchanges.reduce((hits, exchanges) => hits + exchanges.count, 0)
-    })
-  }
-
-  refreshTickerDelay() {
+  refreshTickersDelay() {
     const count = Object.keys(this.connections).length
 
-    this.tickerDelay = Math.log(Math.exp(count / 20 + 1) * 200) * 100
-    return this.tickerDelay
+    this.tickersDelay = Math.log(Math.exp(count / 20 + 1) * 200) * 100
+    return this.tickersDelay
+  }
+
+  getAllTickers(payload, trackingId) {
+    this.ctx.postMessage({
+      op: 'getAllTickers',
+      trackingId: trackingId,
+      data: this.tickers
+    })
   }
 }
 

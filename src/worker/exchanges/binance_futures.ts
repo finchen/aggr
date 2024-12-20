@@ -1,5 +1,6 @@
 import Exchange from '../exchange'
 import { sleep } from '../helpers/utils'
+import settings from '../settings'
 
 export default class BINANCE_FUTURES extends Exchange {
   id = 'BINANCE_FUTURES'
@@ -72,8 +73,8 @@ export default class BINANCE_FUTURES extends Exchange {
     }
 
     this.subscriptions[pair] = ++this.lastSubscriptionId
-
-    const params = [pair + '@aggTrade', pair + '@forceOrder']
+    const channel = settings.aggregationLength === -1 ? 'trade' : 'aggTrade'
+    const params = [pair + '@' + channel, pair + '@forceOrder']
 
     api.send(
       JSON.stringify({
@@ -98,7 +99,8 @@ export default class BINANCE_FUTURES extends Exchange {
       return
     }
 
-    const params = [pair + '@aggTrade', pair + '@forceOrder']
+    const channel = settings.aggregationLength === -1 ? 'trade' : 'aggTrade'
+    const params = [pair + '@' + channel, pair + '@forceOrder']
 
     api.send(
       JSON.stringify({
@@ -119,13 +121,13 @@ export default class BINANCE_FUTURES extends Exchange {
     if (!json) {
       return
     } else {
-      if (json.e === 'aggTrade' && json.X !== 'INSURANCE_FUND') {
+      if (json.T && (!json.X || json.X === 'MARKET')) {
+        const symbol = json.s.toLowerCase()
+        const price = +json.p
         let size = +json.q
 
-        const symbol = json.s.toLowerCase()
-
         if (typeof this.specs[symbol] === 'number') {
-          size = (size * this.specs[symbol]) / json.p
+          size = (size * this.specs[symbol]) / price
         }
 
         return this.emitTrades(api.id, [
@@ -133,7 +135,7 @@ export default class BINANCE_FUTURES extends Exchange {
             exchange: this.id,
             pair: symbol,
             timestamp: json.T,
-            price: +json.p,
+            price: +price,
             size: size,
             side: json.m ? 'sell' : 'buy',
             count: json.l - json.f + 1

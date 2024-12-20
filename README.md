@@ -15,7 +15,7 @@ This tool shows **markets orders** LIVE on the crypto market(s) of your choice.
 - Filter noise by aggregating trades with the same timestamp
 - Calculate rolling sums over defined periods
 - Chart whatever is received from api (so only trades data for now)
-- Dynamic audio based on trade volume and side 
+- Dynamic audio based on trade volume and size 
 
 Checkout [CHANGELOG.md](CHANGELOG.md) for details about the recent updates.
 
@@ -83,9 +83,9 @@ build your own aggr client docker:
 ```bash
 git clone https://github.com/Tucsky/aggr
 cd aggr
-docker build -t aggr-chart .
+docker-compose -f "docker\docker-compose.yml" up -d --build # prod
 ```
-you need to set the API_URL as environment variable for your own installation, if you want to use that.
+ If you want to use aggr-server as your local data source, load the docker-compose.dev.yml instead.
 
 ## Configuration
 

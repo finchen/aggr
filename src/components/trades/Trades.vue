@@ -5,6 +5,23 @@
       ref="paneHeader"
       :settings="() => import('@/components/trades/TradesDialog.vue')"
     >
+      <template v-slot:menu>
+        <button
+          type="button"
+          class="dropdown-item"
+          @click="upgradeToLite"
+          title="✨ Upgrade to the canvas based feed for better performance ✨"
+          v-tippy="{
+            placement: 'left',
+            boundary: 'window',
+            followCursor: true,
+            distance: 32
+          }"
+        >
+          🚀
+          <span class="ml8">Upgrade</span>
+        </button>
+      </template>
       <hr />
       <dropdown v-model="sliderDropdownTrigger" interactive no-scroll>
         <slider
@@ -42,7 +59,7 @@
         <i class="icon-gauge"></i>
       </button>
     </pane-header>
-    <div
+    <ul
       ref="tradesContainer"
       class="trades-list"
       :class="[
@@ -50,7 +67,7 @@
         this.showLogos && '-logos',
         !this.monochromeLogos && '-logos-colors'
       ]"
-    ></div>
+    ></ul>
     <trades-placeholder
       v-if="showPlaceholder"
       :paneId="paneId"
@@ -224,6 +241,7 @@ export default class Trades extends Mixins(PaneMixin) {
         exchange,
         pair,
         price,
+        avgPrice: price,
         amount,
         size,
         side
@@ -238,6 +256,10 @@ export default class Trades extends Mixins(PaneMixin) {
 
     this.feed.clear()
     this.feed.processTradesSilent(trades)
+  }
+
+  upgradeToLite() {
+    this.$store.dispatch(`${this.paneId}/upgradeToLite`)
   }
 }
 </script>
@@ -337,7 +359,7 @@ export default class Trades extends Mixins(PaneMixin) {
   background-size: cover;
   background-blend-mode: overlay;
   position: relative;
-  padding: 0 2rem 0 1.5rem;
+  padding: 0 2rem 0 1.25rem;
 
   &:after {
     content: '';
@@ -432,7 +454,6 @@ export default class Trades extends Mixins(PaneMixin) {
     font-size: 75%;
   }
 
-  .icon-currency,
   .icon-quote,
   .icon-base {
     line-height: 0;
@@ -455,10 +476,13 @@ export default class Trades extends Mixins(PaneMixin) {
       display: inline-block;
       vertical-align: top;
       padding: 0.2em 0.25em;
+      direction: ltr;
     }
   }
 
   .trade__amount {
+    flex-grow: 1.25;
+
     .trade__amount__base {
       display: none;
       padding: 0 0.5em;
@@ -484,6 +508,10 @@ export default class Trades extends Mixins(PaneMixin) {
     &.-fixed {
       font-size: 87.5%;
     }
+  }
+
+  .trade__price {
+    direction: rtl;
   }
 }
 

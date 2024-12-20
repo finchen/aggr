@@ -1,9 +1,7 @@
 import 'vite/client'
 
-import { PaneType } from '@/store/panes'
-
 export type SlippageMode = false | 'price' | 'bps'
-export type AggregationLength = 0 | 1 | 10 | 100 | 1000
+export type AggregationLength = 0 | 1 | 10 | 100 | 1000 | -1
 
 declare module 'test.worker' {
   // You need to change `Worker`, if you specified a different value for the `workerType` option
@@ -22,10 +20,6 @@ export interface AggregatorPayload {
   trackingId?: string
 }
 
-export interface AggregatedTrade extends Trade {
-  originalPrice: number
-}
-
 export interface AggregatorSettings {
   aggregationLength: AggregationLength
   calculateSlippage?: SlippageMode
@@ -40,6 +34,8 @@ export interface Market {
   pair: string
 }
 
+type PriceVolumeTuple = [number, number]
+
 export interface Trade {
   exchange: string
   pair: string
@@ -47,15 +43,19 @@ export interface Trade {
   price: number
   size: number
   side: 'buy' | 'sell'
+  originalPrice?: number
+  avgPrice?: number
   amount?: number
   count?: number
-  originalPrice?: number
-  liquidation?: boolean
-  slippage?: number
+  zlevels?: { bids: Array<PriceVolumeTuple>; asks: Array<PriceVolumeTuple> }
+  zbids?: Array<number>
+  zasks?: Array<number>
+  zupdates?: number
+  zalert?: Array<any>
 }
 
-export interface QueuedTrade extends Trade {
-  timeout?: number
+export interface AggregatedTrade extends Trade {
+  value: number // cumulative price * size
 }
 
 export interface Volumes {
@@ -97,11 +97,9 @@ export interface Workspace {
   states: { [id: string]: any }
 }
 
-export type PresetType = ('audio' | 'colors' | 'indicator') | PaneType
-
 export interface Preset {
   name: string
-  type: PresetType
+  type?: 'preset'
   data: any
   createdAt: number
   updatedAt: number
@@ -119,4 +117,12 @@ export interface PreviousSearchSelection {
   label: string
   count: number
   markets: string[]
+}
+
+export interface Ticker {
+  updated?: boolean
+  initialPrice?: number
+  price: number
+  volume?: number
+  volumeDelta?: number
 }

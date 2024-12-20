@@ -114,23 +114,22 @@ class AlertService {
   async syncTriggeredAlerts() {
     this._promiseOfSync = new Promise<void>(resolve => {
       // recover recent triggers
-      navigator.serviceWorker.ready.then(async registration => {
-        await this.markAlertsAsTriggered(
-          (
-            await registration.getNotifications()
-          ).map(notification => ({
+      navigator.serviceWorker && navigator.serviceWorker.ready.then(async registration => {
+        const notifications = (await registration.getNotifications()).map(
+          notification => ({
             price: notification.data.price,
             direction: notification.data.direction,
             message: notification.data.message,
             market: notification.data.market
-          }))
+          })
         )
+        await this.markAlertsAsTriggered(notifications)
 
         resolve()
       })
     }).then(() => {
       // subscribe to triggers
-      navigator.serviceWorker.addEventListener('message', event => {
+      navigator.serviceWorker && navigator.serviceWorker.addEventListener('message', event => {
         this.markAlertsAsTriggered([event.data])
 
         aggregatorService.emit('alert', {
@@ -199,7 +198,10 @@ class AlertService {
     }
 
     if ('serviceWorker' in navigator) {
-      const register = await navigator.serviceWorker.getRegistration('sw.js')
+      const base_url = import.meta.env.VITE_APP_BASE_PATH || '/'
+      const register = await navigator.serviceWorker.getRegistration(
+        `${base_url}sw.js`
+      )
 
       this.pushSubscription = JSON.parse(
         JSON.stringify(
@@ -258,20 +260,6 @@ class AlertService {
     }
 
     return data
-  }
-
-  getPrice(market): Promise<number> {
-    return new Promise(resolve => {
-      aggregatorService.once('prices', marketsStats => {
-        const stats = marketsStats[market]
-
-        if (!stats) {
-          return resolve(null)
-        }
-
-        resolve(marketsStats[market].price)
-      })
-    })
   }
 
   async toggleAlert(
@@ -339,9 +327,7 @@ class AlertService {
 
     if (askMessage) {
       createdAlert.message = await dialogService.openAsPromise(
-        (
-          await import('@/components/alerts/CreateAlertDialog.vue')
-        ).default,
+        (await import('@/components/alerts/CreateAlertDialog.vue')).default,
         {
           price: +formatMarketPrice(createdAlert.price, createdAlert.market)
         }

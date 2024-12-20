@@ -24,6 +24,7 @@ import Mexc from './mexc'
 import Gateio from './gateio'
 import CryptoCom from './cryptocom'
 import Bitmart from './bitmart'
+import Orderbook from './orderbook'
 
 export const exchanges = [
   new Aggr(),
@@ -49,7 +50,8 @@ export const exchanges = [
   new Mexc(),
   new Gateio(),
   new CryptoCom(),
-  new Bitmart()
+  new Bitmart(),
+  new Orderbook()
 ] as Exchange[]
 
 export function getExchangeById(id: string) {

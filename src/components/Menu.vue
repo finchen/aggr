@@ -91,6 +91,16 @@
         </button>
         <button
           class="dropdown-item dropdown-item--space-between"
+          @click="addPane('ratios')"
+        >
+          <div>
+            <div>OB Ratios</div>
+            <div class="dropdown-item__subtitle">Orderbook Ratios</div>
+          </div>
+          <i class="icon-plus" />
+        </button>
+        <button
+          class="dropdown-item dropdown-item--space-between"
           @click="addPane('counters')"
         >
           <div>
@@ -263,29 +273,30 @@ export default class Menu extends Vue {
   }
 
   async toggleFullscreen() {
-    const element = document.body
+    const doc = document as any
+    const body = doc.body
 
-    ;(element as any).requestFullscreen =
-      (element as any).requestFullscreen ||
-      (element as any).webkitRequestFullscreen ||
+    body.requestFullscreen =
+      body.requestFullscreen ||
+      body.webkitRequestFullscreen ||
       function () {
         return false
       }
-    ;(document as any).cancelFullscreen =
-      (document as any).exitFullscreen ||
-      (document as any).webkitExitFullscreen ||
-      (document as any).cancelFullScreen ||
-      (document as any).webkitCancelFullScreen ||
-      (document as any).mozCancelFullScreen ||
+    doc.cancelFullscreen =
+      doc.exitFullscreen ||
+      doc.webkitExitFullscreen ||
+      doc.cancelFullScreen ||
+      doc.webkitCancelFullScreen ||
+      doc.mozCancelFullScreen ||
       function () {
         return false
       }
 
     if (this.isFullscreen) {
-      ;(document as any).cancelFullscreen()
+      doc.cancelFullscreen()
       this.isFullscreen = false
     } else {
-      ;(element as any).requestFullscreen()
+      body.requestFullscreen()
       this.isFullscreen = true
     }
   }
