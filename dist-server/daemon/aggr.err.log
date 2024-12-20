@@ -1,0 +1,33 @@
+TypeError: path must be absolute or specify root to res.sendFile
+    at ServerResponse.sendFile (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\response.js:441:11)
+    at file:///C:/Users/Laptop/Documents/aggr_finchen/dist-server/index.mjs:14:7
+    at Layer.handle [as handle_request] (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:421:3)
+TypeError: path must be absolute or specify root to res.sendFile
+    at ServerResponse.sendFile (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\response.js:441:11)
+    at file:///C:/Users/Laptop/Documents/aggr_finchen/dist-server/index.mjs:14:7
+    at Layer.handle [as handle_request] (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:421:3)
+TypeError: path must be absolute or specify root to res.sendFile
+    at ServerResponse.sendFile (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\response.js:441:11)
+    at file:///C:/Users/Laptop/Documents/aggr_finchen/dist-server/index.mjs:14:7
+    at Layer.handle [as handle_request] (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:284:15
+    at param (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:365:14)
+    at param (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (C:\Users\Laptop\Documents\aggr_finchen\node_modules\express\lib\router\index.js:421:3)
