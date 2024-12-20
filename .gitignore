@@ -22,5 +22,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-dist-server/
+dist-server/*
 
+dist-server/daemon/aggr.err.log
+dist-server/daemon/aggr.out.log
+dist-server/daemon/aggr.wrapper.log
+dist-server/daemon/aggr.xml
