@@ -163,6 +163,7 @@ export default class Panes extends Vue {
     const item = this.layout.find(item => item.i === id)
     this.$store.commit('panes/UPDATE_ITEM', item)
   }
+
   onLayoutUpdated(gridItems: GridItem[]) {
     this.$store.commit('panes/UPDATE_LAYOUT', gridItems)
   }

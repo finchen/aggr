@@ -175,10 +175,7 @@ class Aggregator {
       }
 
       if (settings.calculateSlippage) {
-        trade.slippage = calculateSlippage(
-          this.tickers[marketKey].price || trade.price,
-          trade.price
-        )
+        trade.originalPrice = this.tickers[marketKey].price || trade.price
       }
 
       trade.count = trade.count || 1
@@ -228,10 +225,9 @@ class Aggregator {
         }
       }
 
-  
       trade.originalPrice = this.tickers[marketKey].price || trade.price
       trade.value = trade.price * trade.size
-      
+
       trade.count = trade.count || 1
       this.aggregationTimeouts[marketKey] = now + this.baseAggregationTimeout
       
@@ -323,11 +319,6 @@ class Aggregator {
 
     trade.amount =
       (settings.preferQuoteCurrencySize ? trade.avgPrice : 1) * trade.size
-
-    trade.avgPrice =
-      trade.count > 1
-        ? (trade as AggregatedTrade).prices / trade.size
-        : trade.price
 
     this.tickers[marketKey].updated = true
     this.tickers[marketKey].volume += trade.amount

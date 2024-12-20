@@ -52,6 +52,8 @@ export interface Trade {
   zasks?: Array<number>
   zupdates?: number
   zalert?: Array<any>
+  liquidation?: boolean
+  slippage?: number
 }
 
 export interface AggregatedTrade extends Trade {

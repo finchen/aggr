@@ -313,6 +313,7 @@ Cleaned up vite/vue config files (commit: c3e5d8f9)
 - Never unload present chunks (> minimum visible range)
 - Trim chart after 30min
 - Set maximum stored bars to 100 bars * 100 chunks (10000 bars, 1 bar = 1 exchange at time)
+
 ### Added
 
 - Inline code editor for input function
@@ -352,6 +353,7 @@ Cleaned up vite/vue config files (commit: c3e5d8f9)
 - Webpack dev server with proxy
 - Stats histogram type for multi counters (when input is an array)
 - Choose serie type (line, bar, candlestick, histogram) in serie dialog (experimental)
+
 ### Changed
 
 - Fixed aggegation accuracy

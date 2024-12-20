@@ -252,6 +252,7 @@ const actions = {
     } catch (error) {
       // empty
     }
+
     if (state.indicators[id] && state.indicators[id].options[key] === value) {
       return
     }

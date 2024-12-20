@@ -14,6 +14,8 @@ import { ORDERBOOK_API_URL } from '@/worker/exchanges/orderbook'
 export type InitialPrices = { [market: string]: number }
 
 
+export type InitialPrices = { [market: string]: number }
+
 export interface HistoricalResponse {
   from: number
   to: number
