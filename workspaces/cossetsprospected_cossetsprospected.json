@@ -1,0 +1,2818 @@
+{
+  "version": 7,
+  "createdAt": 1702500916748,
+  "updatedAt": 1729044158204,
+  "name": "CossetsProspected",
+  "id": "cossetsprospected",
+  "states": {
+    "panes": {
+      "_id": "panes",
+      "locked": false,
+      "layout": [
+        {
+          "i": "chart copy 1",
+          "type": "chart",
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 24,
+          "moved": false
+        }
+      ],
+      "panes": {
+        "chart copy 1": {
+          "id": "chart copy 1",
+          "name": "",
+          "type": "chart",
+          "settings": {
+            "indicatorsErrors": {},
+            "indicators": {
+              "cvd": {
+                "enabled": true,
+                "name": "CVD",
+                "description": "Cumulative Volume Delta",
+                "script": "plotline(cum(vbuy - vsell))",
+                "options": {
+                  "priceScaleId": "cvd",
+                  "priceFormat": {
+                    "type": "volume"
+                  },
+                  "color": "rgba(209,212,220,0.81)",
+                  "scaleMargins": {
+                    "top": 0.01,
+                    "bottom": 0
+                  },
+                  "visible": true,
+                  "lineWidth": 1,
+                  "priceLineStyle": 1,
+                  "lineStyle": 1
+                },
+                "id": "cvd",
+                "createdAt": 1700269685372,
+                "updatedAt": 1700776986089,
+                "series": [
+                  "cvd"
+                ],
+                "unsavedChanges": false,
+                "preview": {},
+                "optionsDefinitions": {}
+              },
+              "liquidations": {
+                "enabled": true,
+                "name": "Liquidations",
+                "description": "Liquidations by side",
+                "script": "plothistogram(lbuy, color=options.upColor)\nplothistogram(-lsell, color=options.downColor)",
+                "options": {
+                  "priceFormat": {
+                    "type": "volume"
+                  },
+                  "priceScaleId": "volume_liquidations",
+                  "upColor": "rgb(255,76,243)",
+                  "downColor": "rgb(255,183,77)",
+                  "scaleMargins": {
+                    "top": 0,
+                    "bottom": 0.85
+                  },
+                  "visible": true
+                },
+                "id": "liquidations",
+                "createdAt": 1700269685372,
+                "updatedAt": 1700815523685,
+                "series": [
+                  "liquidations",
+                  "gbdjywj5"
+                ],
+                "preview": {},
+                "unsavedChanges": false,
+                "optionsDefinitions": {}
+              },
+              "price": {
+                "enabled": true,
+                "name": "Price",
+                "script": "src = { sources: { \"BINANCE_FUTURES:btcusdt\":BINANCE_FUTURES:btcusdt }, localTimestamp: time }\r\n\r\nvar ohlc = options.useHeikinAshi ? avg_heikinashi(src) : options.useGaps ? avg_ohlc_with_gaps(src) : avg_ohlc(src)\r\n\r\nplotcandlestick(ohlc, id=price)",
+                "options": {
+                  "priceScaleId": "right",
+                  "priceFormat": {
+                    "auto": true,
+                    "precision": 1,
+                    "minMove": 0.1
+                  },
+                  "priceLineVisible": true,
+                  "lastValueVisible": true,
+                  "borderVisible": true,
+                  "upColor": "rgb(59,202,109)",
+                  "downColor": "rgb(214,40,40)",
+                  "borderUpColor": "rgb(59,202,109)",
+                  "borderDownColor": "rgb(239,67,82)",
+                  "wickUpColor": "rgb(223,211,144)",
+                  "wickDownColor": "rgb(239,67,82)",
+                  "useGaps": false,
+                  "useHeikinAshi": false,
+                  "scaleMargins": {
+                    "top": 0.15,
+                    "bottom": 0.26
+                  },
+                  "visible": true
+                },
+                "id": "price",
+                "createdAt": 1700269685372,
+                "updatedAt": 1701119093921,
+                "series": [
+                  "price"
+                ],
+                "unsavedChanges": true,
+                "preview": {},
+                "optionsDefinitions": {}
+              },
+              "volume": {
+                "enabled": true,
+                "name": "Volume",
+                "description": "Volume + delta",
+                "script": "if (upColor === 0) {\n  if (options.showDelta) {\n    upColor = options.upBgColor\n    downColor = options.downBgColor\n  } else {\n    upColor = options.upColor\n    downColor = options.downColor\n  }\n}\n\nif (options.showDelta) {\n  plothistogram({ time: time, value: Math.abs(vbuy-vsell), color: vbuy - vsell > 0 ? options.upColor : options.downColor})\n}\n\nplothistogram({ time: time, value: vbuy + vsell, color: vbuy > vsell ? upColor : downColor })",
+                "options": {
+                  "priceScaleId": "volume",
+                  "priceFormat": {
+                    "type": "volume"
+                  },
+                  "upColor": "rgba(76,175,80,0.62)",
+                  "downColor": "rgba(242,54,69,0.71)",
+                  "scaleMargins": {
+                    "top": 0.13,
+                    "bottom": 0.81
+                  },
+                  "showDelta": true,
+                  "upBgColor": "rgba(178,181,190,0.33)",
+                  "downBgColor": "rgba(93,96,107,0.38)",
+                  "visible": false,
+                  "lastValueVisible": true,
+                  "color": "rgba(195,168,122,0.54)",
+                  "showDeltaOnly": true,
+                  "showBoth": true
+                },
+                "id": "volume",
+                "createdAt": 1700269685372,
+                "updatedAt": 1700777392542,
+                "series": [
+                  "volume",
+                  "qjd1vzrd"
+                ],
+                "unsavedChanges": false,
+                "preview": {},
+                "optionsDefinitions": {}
+              },
+              "keltner": {
+                "script": "close = BINANCE_FUTURES:btcusdt.close\n\nrange = BINANCE_FUTURES:btcusdt.high - BINANCE_FUTURES:btcusdt.low\naverageRange = sma(range, options.length)\n\nbasis = ema(close, options.length)\ndev = options.mult * averageRange\nupper = basis + dev\nlower = basis - dev\n\nplotline(basis, color=options.basisColor)\nplotcloudarea(lower, upper)",
+                "id": "keltner",
+                "name": "keltner",
+                "options": {
+                  "priceScaleId": "right",
+                  "length": 55,
+                  "mult": 4,
+                  "positiveColor": "rgba(35,37,35,0.1)",
+                  "negativeColor": "rgba(192,174,174,0.1)",
+                  "higherLineColor": "rgba(137,141,138,0.25)",
+                  "lowerLineColor": "rgba(223,210,210,0.16)",
+                  "basisColor": "rgba(228,224,218,0.34)",
+                  "scaleMargins": {
+                    "top": 0.15,
+                    "bottom": 0.26
+                  }
+                },
+                "description": null,
+                "createdAt": 1666924136794,
+                "updatedAt": 1701125933340,
+                "unsavedChanges": false,
+                "series": [
+                  "keltner",
+                  "as40gkdx"
+                ],
+                "displayName": "keltner",
+                "preview": {},
+                "optionsDefinitions": {}
+              },
+              "relative-volume": {
+                "script": "volume = vbuy + vsell\nvolumeAvg = ema(volume, options.volumeAvgPeriod)\nhighVolume = volume > volumeAvg*options.volumeAvgMult\nnotHighVolume = volume < volumeAvg*options.volumeAvgMult\n\nplothistogram({ time: time, value: volume, color: notHighVolume? options.neutralColor : vbuy > vsell ? options.upColor : options.downColor})",
+                "id": "relative-volume",
+                "name": "Relative Volume",
+                "options": {
+                  "priceScaleId": "volume",
+                  "priceFormat": {
+                    "type": "volume"
+                  },
+                  "upColor": "rgba(59,202,109,0.62)",
+                  "downColor": "rgba(235,30,47,0.57)",
+                  "visible": false,
+                  "neutralColor": "rgba(135,135,135,0.6)",
+                  "volumeAvgPeriod": 20,
+                  "volumeAvgMult": 1.5,
+                  "scaleMargins": {
+                    "top": 0.9,
+                    "bottom": 0
+                  }
+                },
+                "description": null,
+                "createdAt": 1656411382050,
+                "updatedAt": 1701126177682,
+                "unsavedChanges": false,
+                "series": [
+                  "relative-volume"
+                ],
+                "displayName": "Relative Volume",
+                "preview": {},
+                "optionsDefinitions": {}
+              },
+              "obv-spots": {
+                "script": "var _close = source(close, type=spot)\r\nvar _open = source(open, type=spot)\r\nvar _vbuy = source(vbuy, type=spot)\r\nvar _vsell = source(vsell, type=spot)\r\n\r\nvar sign = _close > _open ? 1 : -1\r\nvar volume = _vbuy + _vsell\r\n\r\nvar obv = cum(sign * volume)\r\nplotline(obv, title=\"S\")",
+                "id": "obv-spots",
+                "name": "OBV spots",
+                "options": {
+                  "priceScaleId": "obv-copy-1",
+                  "visible": true,
+                  "scaleMargins": {
+                    "top": 0.64,
+                    "bottom": 0
+                  },
+                  "lineStyle": 1,
+                  "color": "rgba(255,235,59,0.81)"
+                },
+                "description": null,
+                "createdAt": 1701126053261,
+                "updatedAt": 1701126059594,
+                "unsavedChanges": false,
+                "series": [
+                  "obv-spots"
+                ],
+                "displayName": "OBV spots",
+                "preview": {},
+                "optionsDefinitions": {}
+              },
+              "obv-perps": {
+                "script": "var _close = source(close, type=perp)\r\nvar _open = source(open, type=perp)\r\nvar _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)\r\n\r\nvar sign = _close > _open ? 1 : -1\r\nvar volume = _vbuy + _vsell\r\n\r\nvar obv = cum(sign * volume)\r\nplotline(obv, title=\"P\")",
+                "id": "obv-perps",
+                "name": "OBV perps",
+                "options": {
+                  "priceScaleId": "obv",
+                  "visible": true,
+                  "scaleMargins": {
+                    "top": 0.64,
+                    "bottom": 0
+                  },
+                  "lineStyle": 0,
+                  "color": "rgb(41,98,255)",
+                  "lineWidth": 1
+                },
+                "description": null,
+                "createdAt": 1701126013797,
+                "updatedAt": 1701126025858,
+                "unsavedChanges": false,
+                "series": [
+                  "obv-perps"
+                ],
+                "displayName": "OBV perps",
+                "optionsDefinitions": {}
+              },
+              "mondays": {
+                "script": "",
+                "name": "Mondays",
+                "priceScaleId": "right",
+                "id": "mondays",
+                "options": {
+                  "priceScaleId": "right",
+                  "pivotLength": 14,
+                  "strokeWidth": 1,
+                  "visible": true,
+                  "strokeColor": "rgba(255,255,255,0.6)",
+                  "scaleMargins": {
+                    "top": 0.15,
+                    "bottom": 0.26
+                  }
+                },
+                "series": [],
+                "displayName": "Mondays",
+                "unsavedChanges": false,
+                "preview": {},
+                "createdAt": 1701224825127,
+                "updatedAt": 1701224825127,
+                "optionsDefinitions": {}
+              },
+              "volume copy 1": {
+                "script": "if (upColor === 0) {\r\n  if (options.showDelta) {\r\n    upColor = options.upBgColor\r\n    downColor = options.downBgColor\r\n  } else {\r\n    upColor = options.upColor\r\n    downColor = options.downColor\r\n  }\r\n}\r\n\r\nvar _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)\r\n\r\nif (options.showDelta) {\r\n  plothistogram({ time: time, value: Math.abs(_vbuy-_vsell), color: _vbuy - _vsell > 0 ? options.upColor : options.downColor})\r\n}\r\n\r\nif ( (options.showBoth || false) == true ) {\r\n  plothistogram({ time: time, value: _vbuy + _vsell, color: _vbuy > _vsell ? upColor : downColor })\r\n}",
+                "enabled": true,
+                "name": "Volume",
+                "description": "Volume + delta",
+                "options": {
+                  "priceScaleId": "volume",
+                  "priceFormat": {
+                    "type": "volume"
+                  },
+                  "upColor": "rgba(76,175,80,0.62)",
+                  "downColor": "rgba(242,54,69,0.71)",
+                  "scaleMargins": {
+                    "top": 0.13,
+                    "bottom": 0.81
+                  },
+                  "showDelta": true,
+                  "upBgColor": "rgba(178,181,190,0.33)",
+                  "downBgColor": "rgba(93,96,107,0.38)",
+                  "visible": false,
+                  "lastValueVisible": true,
+                  "color": "rgba(195,168,122,0.54)",
+                  "showDeltaOnly": true,
+                  "showBoth": false
+                },
+                "id": "volume copy 1",
+                "createdAt": 1700269685372,
+                "updatedAt": 1701814537965,
+                "series": [
+                  "volume copy 1",
+                  "ti21qwo1"
+                ],
+                "unsavedChanges": true,
+                "preview": {},
+                "displayName": "Volume",
+                "optionsDefinitions": {}
+              }
+            },
+            "indicatorOrder": [
+              "cvd",
+              "liquidations",
+              "price",
+              "volume",
+              "keltner",
+              "relative-volume",
+              "obv-spots",
+              "obv-perps",
+              "mondays",
+              "volume copy 1"
+            ],
+            "priceScales": {
+              "right": {
+                "scaleMargins": {
+                  "top": 0.15,
+                  "bottom": 0.26
+                },
+                "priceFormat": {
+                  "precision": 1,
+                  "minMove": 0.1
+                },
+                "indicators": [
+                  "Price"
+                ]
+              },
+              "cvd": {
+                "scaleMargins": {
+                  "top": 0.39,
+                  "bottom": 0.48
+                }
+              },
+              "volume_liquidations": {
+                "scaleMargins": {
+                  "top": 0,
+                  "bottom": 0.85
+                },
+                "indicators": [
+                  "Liquidations"
+                ]
+              },
+              "volume": {
+                "scaleMargins": {
+                  "top": 0.84,
+                  "bottom": 0
+                }
+              },
+              "left": {
+                "scaleMargins": {
+                  "top": 0.04,
+                  "bottom": 0.22
+                },
+                "indicators": [
+                  "Price"
+                ]
+              },
+              "obv": {
+                "scaleMargins": {
+                  "top": 0.64,
+                  "bottom": 0
+                },
+                "indicators": [
+                  "obv"
+                ]
+              },
+              "obv-copy-1": {
+                "scaleMargins": {
+                  "top": 0.64,
+                  "bottom": 0
+                },
+                "indicators": [
+                  "OBV perps"
+                ]
+              }
+            },
+            "layouting": false,
+            "showIndicators": true,
+            "timeframe": "3600",
+            "refreshRate": 1000,
+            "showAlerts": true,
+            "showAlertsLabel": true,
+            "showLegend": true,
+            "fillGapsWithEmpty": true,
+            "showHorizontalGridlines": false,
+            "horizontalGridlinesColor": "rgba(255,255,255,.1)",
+            "showVerticalGridlines": false,
+            "verticalGridlinesColor": "rgba(255,255,255,.1)",
+            "showWatermark": false,
+            "watermarkColor": "rgba(255,255,255,.1)",
+            "showBorder": true,
+            "borderColor": null,
+            "showLeftScale": false,
+            "showRightScale": true,
+            "showTimeScale": false,
+            "hiddenMarkets": {},
+            "barSpacing": 5.5261077014324105,
+            "navigationState": {
+              "tab": "script",
+              "optionsQuery": "",
+              "fontSizePx": 14
+            }
+          },
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "COINBASE:ETH-PERP-INTX",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL"
+          ]
+        }
+      },
+      "syncedWithParentFrame": []
+    },
+    "chart copy 1": {
+      "indicatorsErrors": {},
+      "indicators": {
+        "cvd": {
+          "enabled": true,
+          "name": "CVD",
+          "description": "Cumulative Volume Delta",
+          "script": "plotline(cum(vbuy - vsell))",
+          "options": {
+            "priceScaleId": "cvd",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "color": "rgba(209,212,220,0.81)",
+            "scaleMargins": {
+              "top": 0.01,
+              "bottom": 0
+            },
+            "visible": false,
+            "lineWidth": 1,
+            "priceLineStyle": 1,
+            "lineStyle": 1
+          },
+          "id": "cvd",
+          "createdAt": 1700269685372,
+          "updatedAt": 1700776986089,
+          "series": [
+            "cvd"
+          ],
+          "unsavedChanges": false,
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "liquidations": {
+          "enabled": true,
+          "name": "Liquidations",
+          "description": "Liquidations by side",
+          "script": "plothistogram(lbuy, color=options.upColor)\nplothistogram(-lsell, color=options.downColor)",
+          "options": {
+            "priceFormat": {
+              "type": "volume"
+            },
+            "priceScaleId": "volume_liquidations",
+            "upColor": "rgb(255,76,243)",
+            "downColor": "rgb(255,183,77)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.85
+            },
+            "visible": false
+          },
+          "id": "liquidations",
+          "createdAt": 1700269685372,
+          "updatedAt": 1700815523685,
+          "series": [
+            "liquidations",
+            "0j5lclvi"
+          ],
+          "preview": {},
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "price": {
+          "enabled": true,
+          "name": "Price",
+          "script": "src = { sources: { \"BINANCE_FUTURES:btcusdt\":BINANCE_FUTURES:btcusdt }, localTimestamp: time }\r\n\r\nvar ohlc = options.useHeikinAshi ? avg_heikinashi(src) : options.useGaps ? avg_ohlc_with_gaps(src) : avg_ohlc(src)\r\n\r\nplotcandlestick(ohlc, id=price)",
+          "options": {
+            "priceScaleId": "right",
+            "priceFormat": {
+              "auto": true,
+              "precision": 1,
+              "minMove": 0.1
+            },
+            "priceLineVisible": true,
+            "lastValueVisible": true,
+            "borderVisible": true,
+            "upColor": "rgb(59,202,109)",
+            "downColor": "rgb(214,40,40)",
+            "borderUpColor": "rgb(59,202,109)",
+            "borderDownColor": "rgb(239,67,82)",
+            "wickUpColor": "rgb(223,211,144)",
+            "wickDownColor": "rgb(239,67,82)",
+            "useGaps": false,
+            "useHeikinAshi": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "visible": true
+          },
+          "id": "price",
+          "createdAt": 1700269685372,
+          "updatedAt": 1722907646752,
+          "series": [
+            "price"
+          ],
+          "unsavedChanges": true,
+          "preview": {},
+          "optionsDefinitions": {},
+          "libraryId": "price"
+        },
+        "volume": {
+          "enabled": true,
+          "name": "Volume",
+          "description": "Volume + delta",
+          "script": "var _vbuy = source(vbuy, type=perp)\nvar _vsell = source(vsell, type=perp)\n\nif (upColor === 0) {\n  if (options.showDelta) {\n    upColor = options.upBgColor\n    downColor = options.downBgColor\n  } else {\n    upColor = options.upColor\n    downColor = options.downColor\n  }\n}\n\nif (options.showDelta) {\n  plothistogram({ time: time, value: Math.abs(_vbuy-_vsell), color: _vbuy - _vsell > 0 ? options.upColor : options.downColor})\n}\n\nplothistogram({ time: time, value: _vbuy + _vsell, color: _vbuy > _vsell ? upColor : downColor })",
+          "options": {
+            "priceScaleId": "volume",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "upColor": "rgba(76,175,80,0.62)",
+            "downColor": "rgba(242,54,69,0.71)",
+            "scaleMargins": {
+              "top": 0.13,
+              "bottom": 0.81
+            },
+            "showDelta": true,
+            "upBgColor": "rgba(178,181,190,0.37)",
+            "downBgColor": "rgba(93,96,107,0.38)",
+            "visible": true,
+            "lastValueVisible": false,
+            "color": "rgba(195,168,122,0.54)",
+            "showDeltaOnly": true,
+            "showBoth": true
+          },
+          "id": "volume",
+          "createdAt": 1700269685372,
+          "updatedAt": 1728939416418,
+          "series": [
+            "volume",
+            "5jwskigt"
+          ],
+          "unsavedChanges": false,
+          "preview": {},
+          "optionsDefinitions": {},
+          "libraryId": "volume"
+        },
+        "keltner": {
+          "script": "close = BINANCE_FUTURES:btcusdt.close\n\nrange = BINANCE_FUTURES:btcusdt.high - BINANCE_FUTURES:btcusdt.low\naverageRange = sma(range, options.length)\n\nbasis = ema(close, options.length)\ndev = options.mult * averageRange\nupper = basis + dev\nlower = basis - dev\n\nplotline(basis, color=options.basisColor)\nplotcloudarea(lower, upper)",
+          "id": "keltner",
+          "name": "keltner",
+          "options": {
+            "priceScaleId": "right",
+            "length": 55,
+            "mult": 4,
+            "positiveColor": "rgba(35,37,35,0.1)",
+            "negativeColor": "rgba(192,174,174,0.1)",
+            "higherLineColor": "rgba(137,141,138,0.25)",
+            "lowerLineColor": "rgba(223,210,210,0.16)",
+            "basisColor": "rgba(228,224,218,0.34)",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "visible": false
+          },
+          "description": null,
+          "createdAt": 1666924136794,
+          "updatedAt": 1701125933340,
+          "unsavedChanges": false,
+          "series": [
+            "keltner",
+            "hltyo3kg"
+          ],
+          "displayName": "keltner",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "relative-volume": {
+          "script": "volume = vbuy + vsell\nvolumeAvg = ema(volume, options.volumeAvgPeriod)\nhighVolume = volume > volumeAvg*options.volumeAvgMult\nnotHighVolume = volume < volumeAvg*options.volumeAvgMult\n\nplothistogram({ time: time, value: volume, color: notHighVolume? options.neutralColor : vbuy > vsell ? options.upColor : options.downColor})",
+          "id": "relative-volume",
+          "name": "Relative Volume",
+          "options": {
+            "priceScaleId": "volume",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "upColor": "rgba(59,202,109,0.62)",
+            "downColor": "rgba(235,30,47,0.57)",
+            "visible": false,
+            "neutralColor": "rgba(135,135,135,0.6)",
+            "volumeAvgPeriod": 20,
+            "volumeAvgMult": 1.5,
+            "scaleMargins": {
+              "top": 0.9,
+              "bottom": 0
+            }
+          },
+          "description": null,
+          "createdAt": 1656411382050,
+          "updatedAt": 1701126177682,
+          "unsavedChanges": false,
+          "series": [
+            "relative-volume"
+          ],
+          "displayName": "Relative Volume",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "obv-spots": {
+          "script": "if (markers === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n  // Source\r\n  quote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\n  exchange = option(default=null,type=exchange,rebuild=true)\r\n  type = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n  \r\n  // create a var to store already drawn markers\r\n  markers = []\r\n\r\n  // contain the last marker that can change as the bar update\r\n  repaintableMarker = null\r\n\r\n  // if candle body has a price percent change less than bodyPercentWatch, we start a refinement\r\n  bodyPercentWatch = options.bodyPercentWatch || 0.3\r\n\r\n  // if a wick is x times greater than the other, we might use it to refine change the side\r\n  wickRatioThreshold = options.wickRatioThreshold || 1.5\r\n\r\n  // paint a marker when OBV has been refined (changed of direction)\r\n  toggleDebug = options.toggleDebug || false\r\n\r\n  // when on, we calculate the wick percent difference and keep only that volume to add to OBV \r\n  toggleVolumeWick = options.toggleVolumeWick || false\r\n\r\n  togglePrintNormalObv = options.togglePrintNormalObv || false\r\n\r\n\r\n  // Pivots\r\n  pivotsMax = 20\r\n  phPositions = []\r\n  plPositions = []\r\n  phVals = []\r\n  plVals = []\r\n\r\n\r\n}\r\nif ( options.toggleDebug && repaintableMarker && repaintableMarker.time < time) {\r\n  // bar is +1 since active marker was added, lock it in the array\r\n  markers.push(repaintableMarker)\r\n\r\n  // free up active marker\r\n  repaintableMarker = null\r\n}\r\n\r\nvar newMarker = null\r\n\r\nvar _vbuy = source(vbuy, quote=quote,type=type,exchange=exchange)\r\nvar _vsell = source(vsell, quote=quote,type=type,exchange=exchange)\r\nvar _open = $price.open\r\nvar _high = $price.high\r\nvar _low = $price.low\r\nvar _close = $price.close\r\n\r\nvar sign = _close > _open ? 1 : -1\r\nvar volume = _vbuy + _vsell\r\n\r\nvar bodySize = Math.abs(_close - _open);\r\nvar priceChange = (_close - _open) / _open; // Percentage change\r\n\r\nif( togglePrintNormalObv ){\r\n    plotline(cum(sign * volume), title=\"Original\", color=options.originalObvColor)\r\n}\r\n\r\nvar improved = false\r\n\r\n// Check if price change is less than 0.4%\r\nif (options.toggleRefine && Math.abs(priceChange) < bodyPercentWatch/100 ) {\r\n    var upperWickSize = _high - _close;\r\n    var lowerWickSize = _close - _low;\r\n\r\n    // Calculate the thresholds\r\n    var upperWickThreshold = wickRatioThreshold * lowerWickSize;\r\n    var lowerWickThreshold = wickRatioThreshold * upperWickSize;\r\n\r\n    // Check if upper and lower wicks have similar sizes\r\n    if (upperWickSize < upperWickThreshold && lowerWickSize < lowerWickThreshold) {\r\n        // Neutral move, don't add volume\r\n        sign = 0\r\n        improved = true\r\n    }else{\r\n        // Calculate the thresholds\r\n        var upperWickThreshold = wickRatioThreshold * lowerWickSize;\r\n        var lowerWickThreshold = wickRatioThreshold * upperWickSize;\r\n\r\n        // Determine the side based on wick sizes\r\n        // upper: 500, lower 100\r\n        if (upperWickSize > upperWickThreshold) {\r\n            improved = sign !== -1\r\n            // More selling happened, add volume as negative\r\n            sign = -1\r\n            if( toggleVolumeWick ) {\r\n                improved = true\r\n                var percentageDifference = ((upperWickSize - lowerWickSize) / upperWickSize);\r\n                volume = percentageDifference * volume\r\n                \r\n            }\r\n        } else if (lowerWickSize > lowerWickThreshold) {\r\n            improved = sign !== 1\r\n            // More buying happened, add volume as positive\r\n            sign = 1\r\n            if( toggleVolumeWick ) {\r\n                improved = true\r\n                var percentageDifference = ((lowerWickSize - upperWickSize) / lowerWickSize);\r\n                volume = percentageDifference * volume\r\n            }\r\n        }\r\n    }\r\n\r\n    if( improved && toggleDebug){\r\n        if (sign == -1) {\r\n            // newMarker is a temporary variable (not included in the indicator state)\r\n            // to avoid it being treated as persistent variable we wrap it inside parenthesis\r\n            (newMarker) = {\r\n                time: time,\r\n                position: 'aboveBar',\r\n                color: 'red',\r\n                shape: 'arrowDown'\r\n            }\r\n        }\r\n\r\n        if (sign == 1) {\r\n            (newMarker) = {\r\n                time: time,\r\n                position: 'belowBar',\r\n                color: 'lime',\r\n                shape: 'arrowUp'\r\n            }\r\n        } \r\n    }\r\n}\r\n\r\n\r\nif ( options.toggleDebug && (newMarker || (repaintableMarker && !newMarker))) {\r\n  // override persistent variable repaintable marker\r\n  repaintableMarker = newMarker\r\n  \r\n  if (series[0].setMarkers) {\r\n    series[0].setMarkers(markers.concat(repaintableMarker))\r\n    series[1].setMarkers(markers.concat(repaintableMarker))\r\n  }\r\n}\r\n\r\nobv = 0 + cum(sign * volume)\r\nplotline(obv, title=options.title, color=options.refinedObvColor)\r\nif( options.toggleShowPricePivot ){\r\n  plotline(obv, color=transparent)\r\n}\r\n\r\n\r\nif (options.showDivs) {\r\n  \r\n  // <markers utils>\r\n  if (markersDiv === 0) {\r\n    markersDiv = []\r\n  }\r\n  if (markersPivot === 0) {\r\n    markersPivot = []\r\n  }\r\n  \r\n  if (pendingMarkerDiv && pendingMarkerDiv.time < time) {\r\n    markersDiv.push(pendingMarkerDiv)\r\n    pendingMarkerDiv = null\r\n  }\r\n\r\n  if (pendingMarkerPivot && pendingMarkerPivot.time < time) {\r\n    markersPivot.push(pendingMarkerPivot)\r\n    pendingMarkerPivot = null\r\n  }\r\n  \r\n  var newMarkerDiv = null\r\n  var newMarkerPivot = null\r\n  // </markers utils>\r\n  \r\n  // Check if we get new Pivot High Or Pivot Low\r\n\r\n  // find pivots low (cvd and price)\r\n  plCvd = pivot_low(obv, options.pivotLeftLength, options.pivotRightLength)\r\n  plPrice = pivot_low($price.low, options.pivotLeftLength, options.pivotRightLength)\r\n\r\n  // find pivots high (cvd and price)\r\n  phCvd = pivot_high(obv, options.pivotLeftLength, options.pivotRightLength)\r\n  phPrice = pivot_high($price.high, options.pivotLeftLength, options.pivotRightLength)\r\n  \r\n  if( plPrice ){\r\n    plPositions.unshift(bar.length)\r\n    plVals.unshift(plPrice)\r\n    if( plPositions.length > pivotsMax ){\r\n      plPositions.pop();\r\n      plVals.pop()\r\n    }\r\n\r\n    var foundDiv = false\r\n    var startPoint = 0\r\n    obv[300]\r\n    for( var i = 0; i < (options.ppCheck || 10); i++ ){ \r\n      if( i > plPositions.length || plPositions[i] == 0){\r\n        break\r\n      }\r\n      var len = bar.length - plPositions[i] + options.pivotRightLength\r\n      if( len > (options.maxbars || 100)){\r\n        break\r\n      }\r\n      //console.log(obv[200])\r\n      \r\n      // Price lower than previous pivot but OBV is higher\r\n      if( len > 5 && plPrice < (plVals[i] || 0) && obv > obv[len]){\r\n         console.log('PL', plPositions[i], len, obv, obv[len], $price.high, plVals[i])\r\n         foundDiv = true\r\n\r\n         newMarkerDiv = { \r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.refinedObvColor,\r\n          position: 'belowBar',\r\n          //shape: 'arrowDown',\r\n          text: '▲' + (options.togglePivotAgo ? i : '')\r\n        }\r\n        break\r\n      }\r\n    }\r\n\r\n    if( !foundDiv && options.toggleShowPricePivot){\r\n      newMarkerPivot = {\r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.refinedObvColor,\r\n          position: 'belowBar',\r\n          //shape: 'arrowUp',\r\n          text:  'L'\r\n        }\r\n    }\r\n  }\r\n\r\n  if( phPrice ){\r\n \r\n    phPositions.unshift(bar.length)\r\n    phVals.unshift(phPrice)\r\n    if( phPositions.length > pivotsMax ){\r\n      phPositions.pop();\r\n      phVals.pop()\r\n    }\r\n\r\n    var foundDiv = false\r\n    var startPoint = 0\r\n    obv[300]\r\n    for( var i = 0; i < (options.ppCheck || 10); i++ ){ \r\n      if( i > phPositions.length || phPositions[i] == 0){\r\n        break\r\n      }\r\n      var len = bar.length - phPositions[i] + options.pivotRightLength\r\n      if( len > (options.maxbars || 100)){\r\n        break\r\n      }\r\n      //console.log(obv[200])\r\n\r\n      // Price greater than previous pivot but OBV lower\r\n      if( len > 5 && phPrice > (phVals[i] || Infinity) && obv < obv[len]){\r\n         console.log('PH', phPositions[i], len, obv, obv[len], $price.high, phVals[i])\r\n        foundDiv = true\r\n         newMarkerDiv = { \r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.refinedObvColor,\r\n          position: 'aboveBar',\r\n          //shape: 'arrowDown',\r\n          text: '▼' + (options.togglePivotAgo ? i : '')\r\n        }\r\n        break\r\n      }\r\n    }\r\n\r\n   // console.log(time, $price.high);\r\n    if( !foundDiv  && options.toggleShowPricePivot ){\r\n        newMarkerPivot = { \r\n            time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n            color: options.refinedObvColor,\r\n            position: 'aboveBar',\r\n            //shape: 'arrowDown',\r\n            text: 'H'\r\n          }\r\n    }\r\n  }\r\n  \r\n  // <markers utils>\r\n  if (newMarkerDiv || (pendingMarkerDiv && !newMarkerDiv)) {\r\n      pendingMarkerDiv = newMarkerDiv\r\n    \r\n    if (markersDiv.length > 100) {\r\n        markersDiv.splice(0, 1)\r\n    }\r\n      \r\n    if (series[0].setMarkers) {\r\n      series[0].setMarkers(markersDiv.concat(pendingMarkerDiv))\r\n    }\r\n    if (series[1].setMarkers) {\r\n      series[1].setMarkers(markersDiv.concat(pendingMarkerDiv))\r\n    }\r\n  }\r\n\r\n  if (newMarkerPivot || (pendingMarkerPivot && !newMarkerPivot)) {\r\n      pendingMarkerPivot = newMarkerPivot\r\n    \r\n    if (markersPivot.length > 100) {\r\n        markersPivot.splice(0, 1)\r\n    }\r\n      \r\n    if (options.toggleShowPricePivot && series[2].setMarkers) {\r\n      series[2].setMarkers(markersPivot.concat(pendingMarkerPivot))\r\n    }\r\n  }\r\n\r\n  // </markers utils>\r\n}",
+          "id": "obv-spots",
+          "name": "OBV spots",
+          "options": {
+            "priceScaleId": "obv-copy-1",
+            "visible": true,
+            "scaleMargins": {
+              "top": 0.64,
+              "bottom": 0.06
+            },
+            "lineStyle": 1,
+            "color": "rgba(255,235,59,0.81)",
+            "bodyPercentWatch": 0.3,
+            "wickDiffPercent": 90,
+            "debug": null,
+            "toggleDebug": false,
+            "toggleVolumeWick": true,
+            "wickRatioThreshold": 1.5,
+            "togglePrintNormalObv": false,
+            "originalObvColor": "rgb(178,181,190)",
+            "refinedObvColor": "rgb(255,235,59)",
+            "showDivs": false,
+            "pivotLeftLength": 5,
+            "pivotRightLength": 5,
+            "DivcolorUp": "rgb(8,153,129)",
+            "DivcolorDn": "rgb(242,54,69)",
+            "maxbars": null,
+            "ppCheck": 5,
+            "refineToggle": null,
+            "toggleRefine": true,
+            "toggleShowPricePivot": false,
+            "togglePivotAgo": true,
+            "quote": 0,
+            "exchange": 0,
+            "type": "spot",
+            "title": "S"
+          },
+          "description": null,
+          "createdAt": 1701126053261,
+          "updatedAt": 1720166165175,
+          "unsavedChanges": true,
+          "series": [
+            "obv-spots",
+            "52m6ryxl",
+            "onsfd7do"
+          ],
+          "displayName": "OBV spots",
+          "preview": {},
+          "optionsDefinitions": {
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            }
+          },
+          "libraryId": "obv-spots"
+        },
+        "obv-perps": {
+          "script": "if (markers === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n  // Source\r\n  quote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\n  exchange = option(default=null,type=exchange,rebuild=true)\r\n  type = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n  \r\n  // create a var to store already drawn markers\r\n  markers = []\r\n\r\n  // contain the last marker that can change as the bar update\r\n  repaintableMarker = null\r\n\r\n  // if candle body has a price percent change less than bodyPercentWatch, we start a refinement\r\n  bodyPercentWatch = options.bodyPercentWatch || 0.3\r\n\r\n  // if a wick is x times greater than the other, we might use it to refine change the side\r\n  wickRatioThreshold = options.wickRatioThreshold || 1.5\r\n\r\n  // paint a marker when OBV has been refined (changed of direction)\r\n  toggleDebug = options.toggleDebug || false\r\n\r\n  // when on, we calculate the wick percent difference and keep only that volume to add to OBV \r\n  toggleVolumeWick = options.toggleVolumeWick || false\r\n\r\n  togglePrintNormalObv = options.togglePrintNormalObv || false\r\n\r\n\r\n  // Pivots\r\n  pivotsMax = 20\r\n  phPositions = []\r\n  plPositions = []\r\n  phVals = []\r\n  plVals = []\r\n\r\n\r\n}\r\nif ( options.toggleDebug && repaintableMarker && repaintableMarker.time < time) {\r\n  // bar is +1 since active marker was added, lock it in the array\r\n  markers.push(repaintableMarker)\r\n\r\n  // free up active marker\r\n  repaintableMarker = null\r\n}\r\n\r\nvar newMarker = null\r\n\r\nvar _vbuy = source(vbuy, quote=quote,type=type,exchange=exchange)\r\nvar _vsell = source(vsell, quote=quote,type=type,exchange=exchange)\r\nvar _open = $price.open\r\nvar _high = $price.high\r\nvar _low = $price.low\r\nvar _close = $price.close\r\n\r\nvar sign = _close > _open ? 1 : -1\r\nvar volume = _vbuy + _vsell\r\n\r\nvar bodySize = Math.abs(_close - _open);\r\nvar priceChange = (_close - _open) / _open; // Percentage change\r\n\r\nif( togglePrintNormalObv ){\r\n    plotline(cum(sign * volume), title=\"Original\", color=options.originalObvColor)\r\n}\r\n\r\nvar improved = false\r\n\r\n// Check if price change is less than 0.4%\r\nif (options.toggleRefine && Math.abs(priceChange) < bodyPercentWatch/100 ) {\r\n    var upperWickSize = _high - _close;\r\n    var lowerWickSize = _close - _low;\r\n\r\n    // Calculate the thresholds\r\n    var upperWickThreshold = wickRatioThreshold * lowerWickSize;\r\n    var lowerWickThreshold = wickRatioThreshold * upperWickSize;\r\n\r\n    // Check if upper and lower wicks have similar sizes\r\n    if (upperWickSize < upperWickThreshold && lowerWickSize < lowerWickThreshold) {\r\n        // Neutral move, don't add volume\r\n        sign = 0\r\n        improved = true\r\n    }else{\r\n        // Calculate the thresholds\r\n        var upperWickThreshold = wickRatioThreshold * lowerWickSize;\r\n        var lowerWickThreshold = wickRatioThreshold * upperWickSize;\r\n\r\n        // Determine the side based on wick sizes\r\n        // upper: 500, lower 100\r\n        if (upperWickSize > upperWickThreshold) {\r\n            improved = sign !== -1\r\n            // More selling happened, add volume as negative\r\n            sign = -1\r\n            if( toggleVolumeWick ) {\r\n                improved = true\r\n                var percentageDifference = ((upperWickSize - lowerWickSize) / upperWickSize);\r\n                volume = percentageDifference * volume\r\n                \r\n            }\r\n        } else if (lowerWickSize > lowerWickThreshold) {\r\n            improved = sign !== 1\r\n            // More buying happened, add volume as positive\r\n            sign = 1\r\n            if( toggleVolumeWick ) {\r\n                improved = true\r\n                var percentageDifference = ((lowerWickSize - upperWickSize) / lowerWickSize);\r\n                volume = percentageDifference * volume\r\n            }\r\n        }\r\n    }\r\n\r\n    if( improved && toggleDebug){\r\n        if (sign == -1) {\r\n            // newMarker is a temporary variable (not included in the indicator state)\r\n            // to avoid it being treated as persistent variable we wrap it inside parenthesis\r\n            (newMarker) = {\r\n                time: time,\r\n                position: 'aboveBar',\r\n                color: 'red',\r\n                shape: 'arrowDown'\r\n            }\r\n        }\r\n\r\n        if (sign == 1) {\r\n            (newMarker) = {\r\n                time: time,\r\n                position: 'belowBar',\r\n                color: 'lime',\r\n                shape: 'arrowUp'\r\n            }\r\n        } \r\n    }\r\n}\r\n\r\n\r\nif ( options.toggleDebug && (newMarker || (repaintableMarker && !newMarker))) {\r\n  // override persistent variable repaintable marker\r\n  repaintableMarker = newMarker\r\n  \r\n  if (series[0].setMarkers) {\r\n    series[0].setMarkers(markers.concat(repaintableMarker))\r\n    series[1].setMarkers(markers.concat(repaintableMarker))\r\n  }\r\n}\r\n\r\nobv = 0 + cum(sign * volume)\r\nplotline(obv, title=options.title, color=options.refinedObvColor)\r\nif( options.toggleShowPricePivot ){\r\n  plotline(obv, color=transparent)\r\n}\r\n\r\n\r\nif (options.showDivs) {\r\n  \r\n  // <markers utils>\r\n  if (markersDiv === 0) {\r\n    markersDiv = []\r\n  }\r\n  if (markersPivot === 0) {\r\n    markersPivot = []\r\n  }\r\n  \r\n  if (pendingMarkerDiv && pendingMarkerDiv.time < time) {\r\n    markersDiv.push(pendingMarkerDiv)\r\n    pendingMarkerDiv = null\r\n  }\r\n\r\n  if (pendingMarkerPivot && pendingMarkerPivot.time < time) {\r\n    markersPivot.push(pendingMarkerPivot)\r\n    pendingMarkerPivot = null\r\n  }\r\n  \r\n  var newMarkerDiv = null\r\n  var newMarkerPivot = null\r\n  // </markers utils>\r\n  \r\n  // Check if we get new Pivot High Or Pivot Low\r\n\r\n  // find pivots low (cvd and price)\r\n  plCvd = pivot_low(obv, options.pivotLeftLength, options.pivotRightLength)\r\n  plPrice = pivot_low($price.low, options.pivotLeftLength, options.pivotRightLength)\r\n\r\n  // find pivots high (cvd and price)\r\n  phCvd = pivot_high(obv, options.pivotLeftLength, options.pivotRightLength)\r\n  phPrice = pivot_high($price.high, options.pivotLeftLength, options.pivotRightLength)\r\n  \r\n  if( plPrice ){\r\n    plPositions.unshift(bar.length)\r\n    plVals.unshift(plPrice)\r\n    if( plPositions.length > pivotsMax ){\r\n      plPositions.pop();\r\n      plVals.pop()\r\n    }\r\n\r\n    var foundDiv = false\r\n    var startPoint = 0\r\n    obv[300]\r\n    for( var i = 0; i < (options.ppCheck || 10); i++ ){ \r\n      if( i > plPositions.length || plPositions[i] == 0){\r\n        break\r\n      }\r\n      var len = bar.length - plPositions[i] + options.pivotRightLength\r\n      if( len > (options.maxbars || 100)){\r\n        break\r\n      }\r\n      //console.log(obv[200])\r\n      \r\n      // Price lower than previous pivot but OBV is higher\r\n      if( len > 5 && plPrice < (plVals[i] || 0) && obv > obv[len]){\r\n         console.log('PL', plPositions[i], len, obv, obv[len], $price.high, plVals[i])\r\n         foundDiv = true\r\n\r\n         newMarkerDiv = { \r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.refinedObvColor,\r\n          position: 'belowBar',\r\n          //shape: 'arrowDown',\r\n          text: '▲' + (options.togglePivotAgo ? i : '')\r\n        }\r\n        break\r\n      }\r\n    }\r\n\r\n    if( !foundDiv && options.toggleShowPricePivot){\r\n      newMarkerPivot = {\r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.refinedObvColor,\r\n          position: 'belowBar',\r\n          //shape: 'arrowUp',\r\n          text:  'L'\r\n        }\r\n    }\r\n  }\r\n\r\n  if( phPrice ){\r\n \r\n    phPositions.unshift(bar.length)\r\n    phVals.unshift(phPrice)\r\n    if( phPositions.length > pivotsMax ){\r\n      phPositions.pop();\r\n      phVals.pop()\r\n    }\r\n\r\n    var foundDiv = false\r\n    var startPoint = 0\r\n    obv[300]\r\n    for( var i = 0; i < (options.ppCheck || 10); i++ ){ \r\n      if( i > phPositions.length || phPositions[i] == 0){\r\n        break\r\n      }\r\n      var len = bar.length - phPositions[i] + options.pivotRightLength\r\n      if( len > (options.maxbars || 100)){\r\n        break\r\n      }\r\n      //console.log(obv[200])\r\n\r\n      // Price greater than previous pivot but OBV lower\r\n      if( len > 5 && phPrice > (phVals[i] || Infinity) && obv < obv[len]){\r\n         console.log('PH', phPositions[i], len, obv, obv[len], $price.high, phVals[i])\r\n        foundDiv = true\r\n         newMarkerDiv = { \r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.refinedObvColor,\r\n          position: 'aboveBar',\r\n          //shape: 'arrowDown',\r\n          text: '▼' + (options.togglePivotAgo ? i : '')\r\n        }\r\n        break\r\n      }\r\n    }\r\n\r\n   // console.log(time, $price.high);\r\n    if( !foundDiv  && options.toggleShowPricePivot ){\r\n        newMarkerPivot = { \r\n            time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n            color: options.refinedObvColor,\r\n            position: 'aboveBar',\r\n            //shape: 'arrowDown',\r\n            text: 'H'\r\n          }\r\n    }\r\n  }\r\n  \r\n  // <markers utils>\r\n  if (newMarkerDiv || (pendingMarkerDiv && !newMarkerDiv)) {\r\n      pendingMarkerDiv = newMarkerDiv\r\n    \r\n    if (markersDiv.length > 100) {\r\n        markersDiv.splice(0, 1)\r\n    }\r\n      \r\n    if (series[0].setMarkers) {\r\n      series[0].setMarkers(markersDiv.concat(pendingMarkerDiv))\r\n    }\r\n    if (series[1].setMarkers) {\r\n      series[1].setMarkers(markersDiv.concat(pendingMarkerDiv))\r\n    }\r\n  }\r\n\r\n  if (newMarkerPivot || (pendingMarkerPivot && !newMarkerPivot)) {\r\n      pendingMarkerPivot = newMarkerPivot\r\n    \r\n    if (markersPivot.length > 100) {\r\n        markersPivot.splice(0, 1)\r\n    }\r\n      \r\n    if (options.toggleShowPricePivot && series[2].setMarkers) {\r\n      series[2].setMarkers(markersPivot.concat(pendingMarkerPivot))\r\n    }\r\n  }\r\n\r\n  // </markers utils>\r\n}",
+          "id": "obv-perps",
+          "name": "OBV perps",
+          "options": {
+            "priceScaleId": "obv",
+            "visible": true,
+            "scaleMargins": {
+              "top": 0.64,
+              "bottom": 0.06
+            },
+            "lineStyle": 0,
+            "color": "rgb(41,98,255)",
+            "lineWidth": 1,
+            "bodyPercentWatch": 0.3,
+            "wickRatioThreshold": 1.5,
+            "toggleDebug": false,
+            "toggleVolumeWick": true,
+            "togglePrintNormalObv": false,
+            "refinedObvColor": "rgb(41,98,255)",
+            "originalObvColor": "rgb(255,255,255)",
+            "quote": 0,
+            "exchange": 0,
+            "type": "perp",
+            "toggleRefine": true,
+            "showDivs": false,
+            "pivotLeftLength": 14,
+            "pivotRightLength": 14,
+            "ppCheck": null,
+            "maxbars": null,
+            "togglePivotAgo": null,
+            "toggleShowPricePivot": null,
+            "title": "P"
+          },
+          "description": null,
+          "createdAt": 1701126013797,
+          "updatedAt": 1723528043746,
+          "unsavedChanges": false,
+          "series": [
+            "obv-perps",
+            "yk25okxh",
+            "bssc5opr"
+          ],
+          "displayName": "OBV perps",
+          "optionsDefinitions": {
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            }
+          },
+          "libraryId": "obv-perps"
+        },
+        "mondays": {
+          "script": "",
+          "name": "Mondays",
+          "priceScaleId": "right",
+          "id": "mondays",
+          "options": {
+            "priceScaleId": "right",
+            "pivotLength": 14,
+            "strokeWidth": 1,
+            "visible": false,
+            "strokeColor": "rgba(255,255,255,0.6)",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "series": [],
+          "displayName": "Mondays",
+          "unsavedChanges": false,
+          "preview": {},
+          "createdAt": 1701224825127,
+          "updatedAt": 1701224825127,
+          "optionsDefinitions": {}
+        },
+        "volume copy 1": {
+          "script": "if (upColor === 0) {\r\n  if (options.showDelta) {\r\n    upColor = options.upBgColor\r\n    downColor = options.downBgColor\r\n  } else {\r\n    upColor = options.upColor\r\n    downColor = options.downColor\r\n  }\r\n}\r\n\r\nvar _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)\r\n\r\nif (options.showDelta) {\r\n  plothistogram({ time: time, value: Math.abs(_vbuy-_vsell), color: _vbuy - _vsell > 0 ? options.upColor : options.downColor})\r\n}\r\n\r\nif ( (options.showBoth || false) == true ) {\r\n  plothistogram({ time: time, value: _vbuy + _vsell, color: _vbuy > _vsell ? upColor : downColor })\r\n}",
+          "enabled": true,
+          "name": "Volume",
+          "description": "Volume + delta",
+          "options": {
+            "priceScaleId": "volume",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "upColor": "rgba(76,175,80,0.62)",
+            "downColor": "rgba(242,54,69,0.71)",
+            "scaleMargins": {
+              "top": 0.13,
+              "bottom": 0.81
+            },
+            "showDelta": true,
+            "upBgColor": "rgba(178,181,190,0.33)",
+            "downBgColor": "rgba(93,96,107,0.38)",
+            "visible": false,
+            "lastValueVisible": true,
+            "color": "rgba(195,168,122,0.54)",
+            "showDeltaOnly": true,
+            "showBoth": false
+          },
+          "id": "volume copy 1",
+          "createdAt": 1700269685372,
+          "updatedAt": 1701814537965,
+          "series": [
+            "volume copy 1",
+            "4sopbhfw"
+          ],
+          "unsavedChanges": true,
+          "preview": {},
+          "displayName": "Volume",
+          "optionsDefinitions": {}
+        },
+        "cvd-btc-perp": {
+          "script": "var _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)\r\n\r\nline(cum(_vbuy - _vsell), title=PERP)",
+          "id": "cvd-btc-perp",
+          "name": "CVD (BTC PERP)",
+          "options": {
+            "priceScaleId": "cvdperp",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "color": "rgb(41,98,255)",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.51
+            },
+            "visible": false
+          },
+          "description": "CVD specific markets",
+          "createdAt": 1700269685372,
+          "updatedAt": 1702411437377,
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "displayName": "CVD (BTC PERP)",
+          "series": [
+            "cvd-btc-perp"
+          ]
+        },
+        "cvd-btc-spot": {
+          "script": "var _vbuy = source(vbuy, type=spot)\r\nvar _vsell = source(vsell, type=spot)\r\n\r\nline(cum(_vbuy - _vsell), title=SPOT)",
+          "id": "cvd-btc-spot",
+          "name": "CVD (BTC SPOT)",
+          "options": {
+            "priceScaleId": "cvdspot",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "color": "rgb(255,235,59)",
+            "scaleMargins": {
+              "top": 0.28,
+              "bottom": 0.51
+            },
+            "visible": false
+          },
+          "description": "CVD specific markets",
+          "createdAt": 1700269685372,
+          "updatedAt": 1702411428080,
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "displayName": "CVD (BTC SPOT)",
+          "series": [
+            "cvd-btc-spot"
+          ]
+        },
+        "extra copy 1": {
+          "script": "var _close = source(close)\r\nvar _open = source(open)\r\nvar _high = source(high)\r\nvar _low = source(low)\r\nvar _vbuy = source(vbuy)\r\nvar _vsell = source(vsell)\r\n\r\nvar price = (_high + _low + _close) / 3\r\nvar sumPV = sum((_vbuy + _vsell) * price , 10)\r\nvar sumV = sum((_vbuy + _vsell), 10)\r\n\r\nline(ema(price, 30))\r\n\r\nline(sumPV / sumV, color = options.vwmaColor)",
+          "id": "extra copy 1",
+          "name": "extra",
+          "options": {
+            "priceScaleId": "right",
+            "color": "rgb(178,40,51)",
+            "vwma": null,
+            "vwmaColor": "rgb(255,255,255)",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "description": null,
+          "createdAt": 1702505517228,
+          "updatedAt": 1702505517228,
+          "unsavedChanges": false,
+          "optionsDefinitions": {},
+          "displayName": "extra",
+          "series": [
+            "extra copy 1",
+            "755ri8cc"
+          ]
+        },
+        "alerts copy 1": {
+          "script": "// markers needs a serie to get attached to\r\ncandlestick($price, color=transparent)\r\n\r\nif (markers === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n\r\n  // create a var to store already drawn markers\r\n  markers = []\r\n\r\n  // contain the last marker that can change as the bar update\r\n  repaintableMarker = null\r\n}\r\n\r\nif (repaintableMarker && repaintableMarker.time < time) {\r\n  // bar is +1 since active marker was added, lock it in the array\r\n  markers.push(repaintableMarker)\r\n\r\n  // free up active marker\r\n  repaintableMarker = null\r\n}\r\n\r\nvar newMarker = null\r\nvar myalert = ORDERBOOK:AGGRSPOT-BTCUSDLEVELS.zalert\r\n\r\nif( myalert && myalert.length ) {\r\n  console.log(myalert)\r\n  // big money strategy\r\n  var bearSignal = myalert[2] == 'sell'\r\n  var bullSignal = myalert[2] == 'buy'\r\n\r\n  if (bearSignal) {\r\n    //myColor1 = myalert[3] === 'strong' ? 'red' : 'orange'\r\n\r\n    // newMarker is a temporary variable (not included in the indicator state)\r\n    // to avoid it being treated as persistent variable we wrap it inside parenthesis\r\n    (newMarker) = {\r\n      time: time,\r\n      position: 'aboveBar',\r\n      color: 'orange',\r\n      shape: 'arrowDown',\r\n    }\r\n  }\r\n\r\n  if (bullSignal) {\r\n    var myColor2 = 'yellow'\r\n    if( myalert[3] === 'strong' ){\r\n      myColor2 = 'lime'\r\n    }\r\n    (newMarker) = {\r\n      time: time,\r\n      position: 'belowBar',\r\n      color:  myColor2,\r\n      shape: 'arrowUp',\r\n    }\r\n  }\r\n}\r\n\r\nif (newMarker || (repaintableMarker && !newMarker)) {\r\n  // override persistent variable repaintable marker\r\n  repaintableMarker = newMarker\r\n  \r\n  if (series[0].setMarkers) {\r\n    series[0].setMarkers(markers.concat(repaintableMarker))\r\n  }\r\n}",
+          "id": "alerts copy 1",
+          "name": "Alerts",
+          "options": {
+            "priceScaleId": "right",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "visible": false
+          },
+          "description": null,
+          "createdAt": 1702507582257,
+          "updatedAt": 1702507582257,
+          "unsavedChanges": false,
+          "optionsDefinitions": {},
+          "series": [
+            "alerts copy 1"
+          ],
+          "displayName": "Alerts"
+        },
+        "obv-spots-copy-3": {
+          "script": "var _open = source(open, type=perp)\r\nvar _close = source(close, type=perp)\r\nvar _high = source(high, type=perp)\r\nvar _low = source(low, type=perp)\r\nvar _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)\r\n\r\nvar isHammer = Math.abs(_close-_open) < _close * 0.01 / 100 \r\n\r\n\r\n\r\nvar sign = isHammer ? 1 : _close > _open ? 1 : -1\r\nvolume = /*isHammer ? _vbuy - _vsell :*/ _vbuy + _vsell\r\n//volume = _vbuy - _vsell\r\n\r\n//var obv = cum(sign * volume)//\r\n\r\n//plotline(obv, title=\"S\")\r\n\r\n//volume = _close > _open ? _vbuy : _vsell\r\nvar priceChange = ((_close-_low) -(_high-_close)) / (_high-_low)\r\n\r\nvar weight = _high - _low// price change\r\n\r\nweightedVolume = (priceChange * volume)\r\n\r\n// normal\r\n// Give us value of obv from 0 to obvLength. eg. 4000\r\n// overall buying or selling pressure in the market\r\nobv      = sum( weightedVolume , options.obvLength || 40)\r\n\r\n// CMF = n-day Sum of [(((C - L) - (H - C)) / (H - L)) x Vol] / n-day Sum of Vol\r\n// delta\r\n//obv      = sum(volume * Math.sign(_close-_open), options.obvLength || 40)\r\n\r\n// Normalisation. create a value from 0 to 1\r\n// When the OBV oscillator is close to 1, \r\n// it indicates strong buying pressure relative to the total volume. \r\n// When it's close to 0, it indicates strong selling pressure relative to the total volume.\r\nobv_osc  = obv / sum(volume, options.obvLength || 40)\r\n// delta\r\n//obv_osc  = obv / sum(volume * Math.sign(_close-_open), options.obvLength || 40)\r\n\r\nobv_ema_fast = ema(obv_osc, options.emaFast || 7) \r\nobv_ema_slow = ema(obv_osc, options.emaSlow || 21) \r\n\r\nline(0)\r\nline(0.5)\r\nline(-0.5)\r\n\r\nline(obv_osc, color=options.obvColor)\r\n\r\n//plotline(obv_ema_fast, color = options.fastColor, title=\"fast\") \r\n//plotline(obv_ema_slow, color = options.slowColor, title=\"slow\")\r\ncloudarea( obv_ema_slow, obv_ema_fast,)",
+          "id": "obv-spots-copy-3",
+          "name": "OBV spots copy 3",
+          "options": {
+            "priceScaleId": "obv-spots-copy-1",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.59,
+              "bottom": 0.12
+            },
+            "lineStyle": 1,
+            "color": "rgba(242,54,69,0.81)",
+            "slowColor": "rgb(242,54,69)",
+            "emaFast": 7,
+            "emaSlow": 40,
+            "obvLength": 50,
+            "obvColor": "rgb(149,152,161)"
+          },
+          "description": null,
+          "unsavedChanges": false,
+          "series": [
+            "obv-spots-copy-3",
+            "o3jgev98",
+            "7uzkbfjw",
+            "7v9pcoe4",
+            "3t2iamu6"
+          ],
+          "displayName": "OBV spots copy 3",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "delta-reg": {
+          "script": "_open = source(open, type=spot)\r\n_close = source(close, type=spot)\r\n_high = source(high, type=spot)\r\n_low = source(low, type=spot)\r\nvar _vbuy = source(vbuy, type=spot)\r\nvar _vsell = source(vsell, type=spot)\r\n\r\ndelta =  _vbuy - _vsell\r\nvolume =  _vbuy + _vsell\r\n\r\nconst range1 = _high - _low;\r\nconst range2 = Math.abs(_high - _close[1]);\r\nconst range3 = Math.abs(_low - _close[1]);\r\n\r\n\r\n//var priceWeight = Math.abs((_close-_low) -(_high-_close)) / (_high-_low)\r\nvar priceWeight = (_high-_low)/Math.max(range1, range2, range3)\r\n\r\ncvd      = sum( delta * priceWeight , options.obvLength || 40)\r\ncvd_osc  = cvd / sum(volume, options.obvLength || 40)\r\n\r\nema_fast = ema(cvd_osc, options.emaFast || 7) \r\nema_slow = ema(cvd_osc, options.emaSlow || 21) \r\n\r\nline(0)\r\n\r\nline(cvd_osc, color=options.obvColor)\r\n\r\ncloudarea( ema_slow, ema_fast,)",
+          "id": "delta-reg",
+          "name": "delta  reg",
+          "options": {
+            "priceScaleId": "obv-spots-copy-2",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.59,
+              "bottom": 0.05
+            },
+            "lineStyle": 1,
+            "color": "rgba(242,54,69,0.81)",
+            "slowColor": "rgb(242,54,69)",
+            "emaFast": 7,
+            "emaSlow": 21,
+            "obvLength": 50,
+            "obvColor": "rgb(149,152,161)"
+          },
+          "description": null,
+          "unsavedChanges": false,
+          "series": [
+            "delta-reg",
+            "byklqyfm",
+            "1nawlt3s"
+          ],
+          "displayName": "delta  reg",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "delta-reg-copy-1": {
+          "script": "_open = source(open, type=spot)\r\n_close = source(close, type=spot)\r\n_high = source(high, type=spot)\r\n_low = source(low, type=spot)\r\nvar _vbuy = source(vbuy, type=spot)\r\nvar _vsell = source(vsell, type=spot)\r\n\r\ndelta = _close > _open ? _vbuy : _vsell\r\nvolume =  _vbuy + _vsell\r\n\r\nconst range1 = _high - _low;\r\nconst range2 = Math.abs(_high - _close[1]);\r\nconst range3 = Math.abs(_low - _close[1]);\r\n\r\n\r\n//var priceWeight = Math.abs((_close-_low) -(_high-_close)) / (_high-_low)\r\nvar priceWeight = (_high-_low)/ Math.max(range1, range2, range3)\r\n\r\ncvd      = sum( delta * Math.sign(_close - _open), options.obvLength || 40)\r\ncvd_osc  = cvd / priceWeight\r\n\r\nema_fast = ema(cvd_osc, options.emaFast || 7) \r\nema_slow = ema(cvd_osc, options.emaSlow || 21) \r\n\r\nline(0)\r\n\r\nline(cvd_osc, color=options.obvColor)\r\n\r\ncloudarea( ema_slow, ema_fast,)",
+          "id": "delta-reg-copy-1",
+          "name": "delta  reg copy 1",
+          "options": {
+            "priceScaleId": "obv-spots-copy-2",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.59,
+              "bottom": 0.05
+            },
+            "lineStyle": 1,
+            "color": "rgba(242,54,69,0.81)",
+            "slowColor": "rgb(242,54,69)",
+            "emaFast": 7,
+            "emaSlow": 21,
+            "obvLength": 50,
+            "obvColor": "rgb(149,152,161)"
+          },
+          "description": null,
+          "unsavedChanges": false,
+          "series": [
+            "delta-reg-copy-1",
+            "rzg486he",
+            "t6nx1tf7"
+          ],
+          "displayName": "delta  reg copy 1",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "obv-regression": {
+          "script": "/*var _open = source(open, type=perp)\r\nvar _close = source(close, type=perp)\r\nvar _high = source(high, type=perp)\r\nvar _low = source(low, type=perp)\r\nvar _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)*/\r\nvar _vbuy = source(vbuy, type=perp)\r\nvar _vsell = source(vsell, type=perp)\r\nvar _open = $price.open\r\nvar _high = $price.high\r\nvar _low = $price.low\r\nvar _close = $price.close\r\n\r\nvar isHammer = Math.abs(_close-_open) < _close * 0.01 / 100 \r\n\r\n\r\n\r\nvar sign = isHammer ? 1 : _close > _open ? 1 : -1\r\nvolume = /*isHammer ? _vbuy - _vsell :*/ _vbuy + _vsell\r\n//volume = _vbuy - _vsell\r\n\r\n//var obv = cum(sign * volume)//\r\n\r\n//plotline(obv, title=\"S\")\r\n\r\n//volume = _close > _open ? _vbuy : _vsell\r\n\r\nvar weight = _high - _low// price change\r\nvar delta = Math.abs(vbuy - _vsell)\r\n\r\nweightedVolume = (volume  )\r\n\r\n// normal\r\n// Give us value of obv from 0 to obvLength. eg. 4000\r\n// overall buying or selling pressure in the market\r\nobv      = sum( weightedVolume * Math.sign(_close-_open) , options.obvLength || 40)\r\n// delta\r\n//obv      = sum(volume * Math.sign(_close-_open), options.obvLength || 40)\r\n\r\n// Normalisation. create a value from 0 to 1\r\n// When the OBV oscillator is close to 1, \r\n// it indicates strong buying pressure relative to the total volume. \r\n// When it's close to 0, it indicates strong selling pressure relative to the total volume.\r\nobv_osc  = obv / sum(weightedVolume, options.obvLength || 40)\r\n// delta\r\n//obv_osc  = obv / sum(volume * Math.sign(_close-_open), options.obvLength || 40)\r\n\r\nobv_ema_fast = ema(obv_osc, options.emaFast || 7) \r\nobv_ema_slow = ema(obv_osc, options.emaSlow || 21) \r\n\r\nline(0)\r\nline(0.5)\r\nline(-0.5)\r\n\r\nline(obv_osc, color=options.obvColor)\r\n\r\n//plotline(obv_ema_fast, color = options.fastColor, title=\"fast\") \r\n//plotline(obv_ema_slow, color = options.slowColor, title=\"slow\")\r\ncloudarea( obv_ema_slow, obv_ema_fast,)",
+          "id": "obv-regression",
+          "name": "OBV regression",
+          "options": {
+            "priceScaleId": "obv-regression",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.75
+            },
+            "lineStyle": 1,
+            "color": "rgba(242,54,69,0.81)",
+            "slowColor": "rgb(242,54,69)",
+            "emaFast": 7,
+            "emaSlow": 40,
+            "obvLength": 50,
+            "obvColor": "rgb(149,152,161)"
+          },
+          "description": null,
+          "unsavedChanges": false,
+          "series": [
+            "obv-regression",
+            "vhb3xe5n",
+            "k7ar057e",
+            "n9da3tus",
+            "bmguwwpo"
+          ],
+          "displayName": "OBV regression",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "cumulative-volume-delta-tv": {
+          "script": "var _open = source(open, type=spot)\r\nvar _close = source(close, type=spot)\r\nvar _high = source(high, type=spot)\r\nvar _low = source(low, type=spot)\r\nvar _vbuy = source(vbuy, type=spot)\r\nvar _vsell = source(vsell, type=spot)\r\n\r\n\r\nemaBuy = ema(_vbuy, options.length)\r\nemaSell = ema(_vsell, options.length)\r\nvolumeStrength = emaBuy > emaSell ? emaBuy : emaSell\r\nemaStrength = ema(volumeStrength, options.length)\r\n\r\ncloudarea(emaSell, emaBuy)\r\nline(emaStrength,color=options.strengthColor)\r\n\r\ncumDelta = emaBuy - emaSell\r\nhistogram(cumDelta, color=options.histoColor)",
+          "id": "cumulative-volume-delta-tv",
+          "name": "Cumulative volume delta (TV)",
+          "options": {
+            "priceScaleId": "obv-spots-copy-1",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.59,
+              "bottom": 0.12
+            },
+            "lineStyle": 1,
+            "color": "rgba(242,54,69,0.81)",
+            "slowColor": "rgb(242,54,69)",
+            "emaFast": 7,
+            "emaSlow": 40,
+            "obvLength": 50,
+            "obvColor": "rgb(149,152,161)",
+            "buyColor": "rgb(76,175,80)",
+            "sellColor": "rgb(242,54,69)",
+            "strengthColor": "rgb(255,255,255)",
+            "length": 15,
+            "histoColor": "rgba(42,46,57,0.6)"
+          },
+          "description": null,
+          "unsavedChanges": false,
+          "series": [
+            "cumulative-volume-delta-tv",
+            "judxmtgb",
+            "ox9ylut4"
+          ],
+          "displayName": "Cumulative volume delta (TV)",
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "weekends": {
+          "script": "var candleTime = new Date(time*1000);\r\nvar isWeekend = new Intl.Locale(\"en-US\").weekInfo.weekend.includes(candleTime.getUTCDay()||7)\r\n\r\nif( isWeekend ){\r\n brokenarea({\r\n   time: time, \r\n   lowerValue: $price.low - 500,\r\n   higherValue: $price.high + 500,\r\n   extendRight: false,\r\n   color: options.weekendColor\r\n })\r\n}",
+          "name": "weekends",
+          "priceScaleId": "right",
+          "id": "weekends",
+          "options": {
+            "priceScaleId": "right",
+            "weekendColor": "rgba(93,96,107,0.56)",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "weekends"
+          ],
+          "displayName": "weekends",
+          "unsavedChanges": true
+        },
+        "obv-regression-refined": {
+          "script": "quote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\nexchange = option(default=null,type=exchange,rebuild=true)\r\ntype = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\npair = option(default=btc,type=list,options=[null, \"btc\", \"eth\"],rebuild=true)\r\nuseTimeframe = option(default=chart,type=list,options=[null, \"chart\", \"2d\"],rebuild=true)\r\nobvSource = option(default=close,type=list,options=[null, \"close\", \"ohlc4\"],rebuild=true)\r\n\r\nif (markers === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n\r\n  // create a var to store already drawn markers\r\n  markers = []\r\n\r\n  // contain the last marker that can change as the bar update\r\n  repaintableMarker = null\r\n\r\n  // if candle body has a price percent change less than bodyPercentWatch, we start a refinement\r\n  bodyPercentWatch = options.bodyPercentWatch || 0.3\r\n\r\n  // if a wick is x times greater than the other, we might use it to refine change the side\r\n  wickRatioThreshold = options.wickRatioThreshold || 1.5\r\n\r\n  // paint a marker when OBV has been refined (changed of direction)\r\n  toggleDebug = options.toggleDebug || false\r\n\r\n  // when on, we calculate the wick percent difference and keep only that volume to add to OBV \r\n  toggleVolumeWick = options.toggleVolumeWick || false\r\n\r\n  //quote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\n  //exchange = option(default=null,type=exchange,rebuild=true)\r\n  //type = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n  pairReg = pair === 'btc' ? new RegExp(/^BTC/) : ( pair === 'eth' ? new RegExp(/^ETH/) : new RegExp(/^.*/) )\r\n  \r\n  volumeSum(100) = 0 \r\n  ohlc4(2) = 0\r\n}\r\n\r\nvar customSrc = source(name=/^BTC/, quote=quote,type=type,exchange=exchange)\r\nvar price = avg_ohlc_with_gaps(customSrc)\r\n\r\n// initialise 2 days array\r\nif( !twodays ){\r\n  twodays(100) = price\r\n}\r\n\r\nvar sourceBuy = source(vbuy, name=/^BTC/, quote=quote,type=type,exchange=exchange) \r\nvar sourceSell = source(vsell, name=/^BTC/, quote=quote,type=type,exchange=exchange)\r\n\r\nif (repaintableMarker && repaintableMarker.time < time) {\r\n  // bar is +1 since active marker was added, lock it in the array\r\n  markers.push(repaintableMarker)\r\n\r\n  // free up active marker\r\n  repaintableMarker = null\r\n}\r\n\r\nvar dayOfWeek = new Date(time*1000).getDay()\r\n// every second day\r\nif( dayOfWeek % 2 ){\r\n  // start a new 2 days\r\n  twodays = twodays[0]\r\n\r\n  twodays[0] = { \r\n    time: price.time, \r\n    open: price.open, \r\n    high: price.high, \r\n    low: price.low, \r\n    close: price.close,  \r\n    volume: sourceBuy + sourceSell\r\n  }\r\n  volumeSum =  sourceBuy + sourceSell\r\n  return\r\n}else{\r\n  // merge with day before\r\n  twodays[0] = { \r\n    time: twodays[0].time, \r\n    open: twodays[0].open, \r\n    high: Math.max(twodays[0].high, price.high), \r\n    low: Math.min(twodays[0].low, price.low), \r\n    close: price.close,\r\n    volume: twodays[0].volume + sourceBuy + sourceSell\r\n  }\r\n\r\n  volumeSum[0] += sourceBuy + sourceSell\r\n\r\n}\r\n\r\n\r\n\r\nvar newMarker = null\r\nvar _vbuy =  sourceBuy \r\nvar _vsell = sourceSell \r\nvar _open = useTimeframe === 'chart' ? $price.open  : twodays.open\r\nvar _high = useTimeframe === 'chart' ? $price.high  : twodays.high\r\nvar _low = useTimeframe === 'chart' ? $price.low : twodays.low\r\nvar _close = useTimeframe === 'chart' ? $price.close : twodays.close\r\n\r\nvar sign = (_close > _open ? 1 : -1)\r\nif( obvSource === 'ohlc4' ){\r\n  ohlc4 = (_open + _high + _low + _close) / 4\r\n  sign = (ohlc4 > ohlc4[1] ? 1 : -1)\r\n}\r\nvar volume = useTimeframe === 'chart' ? _vbuy + _vsell : volumeSum\r\n\r\nvar bodySize = Math.abs(_close - _open);\r\nvar priceChange = (_close - _open) / _open; // Percentage change\r\n\r\nvar improved = false\r\n\r\n// Check if price change is less than 0.4%\r\nif (options.toggleImprove && Math.abs(priceChange) < bodyPercentWatch/100 ) {\r\n    var upperWickSize = _high - _close;\r\n    var lowerWickSize = _close - _low;\r\n\r\n    // Calculate the thresholds\r\n    var upperWickThreshold = wickRatioThreshold * lowerWickSize;\r\n    var lowerWickThreshold = wickRatioThreshold * upperWickSize;\r\n\r\n    // Check if upper and lower wicks have similar sizes\r\n    if (upperWickSize < upperWickThreshold && lowerWickSize < lowerWickThreshold) {\r\n        // Neutral move, don't add volume\r\n        sign = 0\r\n        improved = true\r\n    }else{\r\n        // Calculate the thresholds\r\n        var upperWickThreshold = wickRatioThreshold * lowerWickSize;\r\n        var lowerWickThreshold = wickRatioThreshold * upperWickSize;\r\n\r\n        // Determine the side based on wick sizes\r\n        // upper: 500, lower 100\r\n        if (upperWickSize > upperWickThreshold) {\r\n            improved = sign !== -1\r\n            // More selling happened, add volume as negative\r\n            sign = -1\r\n            if( toggleVolumeWick ) {\r\n                improved = true\r\n                var percentageDifference = ((upperWickSize - lowerWickSize) / upperWickSize);\r\n                volume = percentageDifference * volume\r\n            }\r\n        } else if (lowerWickSize > lowerWickThreshold) {\r\n            improved = sign !== 1\r\n            // More buying happened, add volume as positive\r\n            sign = 1\r\n            if( toggleVolumeWick ) {\r\n                improved = true\r\n                var percentageDifference = ((lowerWickSize - upperWickSize) / lowerWickSize);\r\n                volume = percentageDifference * volume\r\n            }\r\n        }\r\n    }\r\n\r\n    \r\n}\r\n\r\nobv = sum( volume * sign , options.obvLength || 40)\r\n\r\n// Normalisation. create a value from 0 to 1\r\n// When the OBV oscillator is close to 1, \r\n// it indicates strong buying pressure relative to the total volume. \r\n// When it's close to 0, it indicates strong selling pressure relative to the total volume.\r\nobv_osc  = obv / sum(volume, options.obvLength || 40)\r\n\r\n\r\nobv_ema_fast = ema(obv_osc, options.emaFast || 7) \r\nobv_ema_slow = ema(obv_osc, options.emaSlow || 21) \r\n\r\nline(obv_osc, color=options.obvColor)\r\n\r\n//plotline(obv_ema_fast, color = options.fastColor, title=\"fast\") \r\n//plotline(obv_ema_slow, color = options.slowColor, title=\"slow\")\r\ncloudarea( obv_ema_slow, obv_ema_fast,)\r\n\r\nvar obvBuyCrossing = obv_ema_fast[2] < obv_ema_slow[2] && obv_ema_fast[1] > obv_ema_slow[1] && obv_ema_fast > obv_ema_slow\r\nvar obvSellCrossing = obv_ema_fast[2] > obv_ema_slow[2] && obv_ema_fast[1] < obv_ema_slow[1] && obv_ema_fast < obv_ema_slow\r\nvar obvBuy = obv_ema_fast > obv_ema_slow\r\nvar obvSell = obv_ema_fast < obv_ema_slow\r\n\r\n// $supertrendDir.value === -1\r\n\r\nif( obvBuyCrossing ){\r\n  (newMarker) = {\r\n            time: time,\r\n            position: 'belowBar',\r\n            color: 'lime',\r\n            shape: 'arrowUp'\r\n        }\r\n}\r\nif(  obvSellCrossing ){         \r\n    (newMarker) = {\r\n        time: time,\r\n        position: 'aboveBar',\r\n        color: 'red',\r\n        shape: 'arrowDown'\r\n    }\r\n}\r\n\r\nif (newMarker || (repaintableMarker && !newMarker)) {\r\n  // override persistent variable repaintable marker\r\n  repaintableMarker = newMarker\r\n\r\n  if (series[1].setMarkers) {\r\n    series[1].setMarkers(markers.concat(repaintableMarker))\r\n  }\r\n}",
+          "id": "obv-regression-refined",
+          "name": "OBV regression [entry]",
+          "options": {
+            "priceScaleId": "obv-regression-refined",
+            "visible": true,
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.69
+            },
+            "lineStyle": 1,
+            "color": "rgba(242,54,69,0.81)",
+            "slowColor": "rgb(242,54,69)",
+            "emaFast": 18,
+            "emaSlow": 42,
+            "obvLength": 42,
+            "obvColor": "rgb(149,152,161)",
+            "bodyPercentWatch": 0.6,
+            "wickRatioThreshold": 2,
+            "toggleDebug": false,
+            "toggleVolumeWick": true,
+            "togglePrintNormalObv": false,
+            "improveToggle": null,
+            "toggleImprove": true,
+            "quote": "USD",
+            "exchange": "COINBASE",
+            "type": "spot",
+            "multiplier": 2,
+            "period": 10,
+            "pair": "btc",
+            "useTimeframe": "2d",
+            "obvSource": "ohlc4"
+          },
+          "description": null,
+          "unsavedChanges": true,
+          "series": [
+            "obv-regression-refined",
+            "z4kokard"
+          ],
+          "displayName": "OBV regression [entry]",
+          "preview": {},
+          "optionsDefinitions": {
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            },
+            "pair": {
+              "default": "btc",
+              "type": "list",
+              "options": [
+                null,
+                "btc",
+                "eth"
+              ],
+              "rebuild": true
+            },
+            "useTimeframe": {
+              "default": "chart",
+              "type": "list",
+              "options": [
+                null,
+                "chart",
+                "2d"
+              ],
+              "rebuild": true
+            },
+            "obvSource": {
+              "default": "close",
+              "type": "list",
+              "options": [
+                null,
+                "close",
+                "ohlc4"
+              ],
+              "rebuild": true
+            }
+          },
+          "libraryId": "obv-regression-refined",
+          "createdAt": 1703106867818,
+          "updatedAt": 1724301641255
+        },
+        "cvd-w-divs": {
+          "script": "_buy = BINANCE_FUTURES:btcusdt.vbuy+BINANCE_FUTURES:btcusd_perp.vbuy+BITFINEX:BTCF0:USTF0.vbuy+BITMEX:XBTUSD.vbuy+BYBIT:BTCUSD.vbuy+BYBIT:BTCUSDT.vbuy+DERIBIT:BTC-PERPETUAL.vbuy+FTX:BTC-PERP.vbuy+HUOBI:BTC-USD.vbuy+KRAKEN:PI_XBTUSD.vbuy+OKEX:BTC-USDT-SWAP.vbuy+OKEX:BTC-USD-SWAP.vbuy\n_sell = BINANCE_FUTURES:btcusdt.vsell+BINANCE_FUTURES:btcusd_perp.vsell+BITFINEX:BTCF0:USTF0.vsell+BITMEX:XBTUSD.vsell+BYBIT:BTCUSD.vsell+BYBIT:BTCUSDT.vsell+DERIBIT:BTC-PERPETUAL.vsell+FTX:BTC-PERP.vsell+HUOBI:BTC-USD.vsell+KRAKEN:PI_XBTUSD.vsell+OKEX:BTC-USDT-SWAP.vsell+OKEX:BTC-USD-SWAP.vsell \n_xbuyUp = BINANCE_FUTURES:btcusdt.vbuy\n_xsellUp = BINANCE_FUTURES:btcusdt.vsell\n_xbuyDn = (BINANCE:btcusdt.vbuy+BINANCE_FUTURES:btcusdt.vbuy)/2\n_xsellDn = (BINANCE:btcusdt.vsell+BINANCE_FUTURES:btcusdt.vsell)/2\nsrcTop = BINANCE:btcusdt.high\nsrcBot = BINANCE:btcusdt.low\ncvdUp = cum(_xbuyDn-_xsellDn)\ncvdDn = cum(_xbuyDn-_xsellDn)\nline($price.close)\nbrokenarea(options.thresholdUp, options.thresholdLow, color=options.thresholdColor)\n\nif (options.showDivs) {\n  // <markers utils>\n  if (markers === 0) {\n    markers = []\n  }\n  \n  if (pendingMarker && pendingMarker.time < time) {\n    markers.push(pendingMarker)\n    pendingMarker = null\n  }\n  \n  var newMarker = null\n  // </markers utils>\n  \n  // find pivots low (cvd and price)\n  plCvd = pivot_low(cvdUp, options.pivotLeftLength, options.pivotRightLength)\n  plPrice = pivot_low(srcBot, options.pivotLeftLength, options.pivotRightLength)\n\n  // find pivots high (cvd and price)\n  phCvd = pivot_high(cvdDn, options.pivotLeftLength, options.pivotRightLength)\n  phPrice = pivot_high(srcTop, options.pivotLeftLength, options.pivotRightLength)\n\n  // big money strategy\n\n\n  \n  if (plCvd && plCvd !== _plCvd) {\n    if (plCvd < _plCvd && plPrice > _plPrice) {\n      newMarker = {\n        time: time - options.pivotRightLength * bar.timeframe,\n        color: options.DivcolorUp,\n        position: 'belowBar',\n        shape: 'arrowUp',\n        text: 'Bull'\n      }\n    }\n    _plCvd = plCvd\n    _plPrice = plPrice\n  }\n\n  if (phCvd && phCvd !== _phCvd) {\n    if (phCvd > _phCvd && phPrice < _phPrice) {\n      newMarker = {\n        time: time - options.pivotRightLength * bar.timeframe,\n        color: options.DivcolorDn,\n        position: 'aboveBar',\n        shape: 'arrowDown',\n        text: 'Bear'\n      }\n    }\n\n    _phCvd = phCvd\n    _phPrice = phPrice\n    \n  }\n  \n  // <markers utils>\n  if (newMarker || (pendingMarker && !newMarker)) {\n    pendingMarker = newMarker\n  \n  if (markers.length > 100) {\n      markers.splice(0, 1)\n  }\n    \n  if (series[0].setMarkers) {\n    series[0].setMarkers(markers.concat(pendingMarker))\n  }\n}\n  // </markers utils>\n}",
+          "id": "cvd-w-divs",
+          "name": "CVD w/DIVS",
+          "options": {
+            "priceScaleId": "right",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "thresholdColor": "rgba(102,187,106,0.1)",
+            "color": "rgba(165,214,167,0)",
+            "length": 10,
+            "pivotLeftLength": 100,
+            "pivotRightLength": 3,
+            "thresholdLow": 10,
+            "thresholdUp": 90,
+            "showDivs": true,
+            "visible": false,
+            "Divcolor": "rgb(12,251,60)",
+            "DivcolorDn": "rgb(255,152,0)",
+            "DivcolorUp": "rgb(231,119,208)"
+          },
+          "description": null,
+          "createdAt": 1675709181062,
+          "updatedAt": 1623024000000,
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "series": [
+            "cvd-w-divs",
+            "0u08uhno"
+          ],
+          "displayName": "CVD w/DIVS"
+        },
+        "testvar": {
+          "script": "myvar=$price.close\r\nvar change = myvar - myvar[1]\r\nhistogram(sma(change, 14))\r\n\r\nconsole.log(change) // output the difference\r\nconsole.log(myvar) // output the last close\r\nconsole.log(myvar[0]) // same\r\nconsole.log(myvar[5]) // output previous close\r\nconsole.log(#myvar) // prefixing the var name with a '#' will give you the full values of that var [number, number]\r\nconsole.log(avg(#myvar)) // the # is perfect for avg function which require a set of values",
+          "name": "testvar",
+          "priceScaleId": "right",
+          "id": "testvar",
+          "options": {
+            "priceScaleId": "right",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "testvar copy 2"
+          ],
+          "displayName": "testvar",
+          "unsavedChanges": false
+        },
+        "td-sequential": {
+          "script": "// <STARTUP>\nif (!pendingMarkers) {\n  // runs only once\n  markers = []\n  pendingMarkers = []\n  lastIndex = null\n\n  upCount = 0\n  downCount = 0\n  upCountdown = 0\n  downCountdown = 0\n} else if (pendingMarkers.length) {\n  markers = markers.concat(pendingMarkers)\n  if (series[0].setMarkers) {\n    series[0].setMarkers(markers)\n  }\n  pendingMarkers = []\n}\nif (bar.length === lastIndex) {\n  // ignore same candle, only process previous candle on new candle\n  return\n}\n// </STARTUP>\n\ncandlestick($price, border = false, upColor = transparent, downColor = transparent, wickColor = transparent) // ghost price for markers\n\ntimes = time\nclose = $price.close\nhigh = $price.high\nlow = $price.low\n// only analyze bar once it's already printed\n// this why we offset everything by 1\nvar currentTime = times[1]\nvar currentClose = close[1]\nvar currentHigh = high[1]\nvar currentLow = low[1]\nvar closeCompare = close[5]\nvar highCompare = high[3]\nvar lowCompare = low[3]\n\nif (!downCountdown && !upCountdown) {\n  if (currentClose >= closeCompare) {\n    upCount = upCount + 1\n    downCount = 0\n\n    if (upCount === 9) {\n      pendingMarkers.push({\n        time: currentTime,\n        position: 'aboveBar',\n        color: 'red',\n        text: upCount.toString(),\n      })\n      upCount = 0\n      upCountdown = 1\n    }\n  } else if (currentClose <= closeCompare) {\n    downCount = downCount + 1\n    upCount = 0\n\n    if (downCount === 9) {\n      pendingMarkers.push({\n        time: currentTime,\n        position: 'belowBar',\n        color: 'red',\n        text: downCount.toString(),\n      })\n      downCount = 0\n      downCountdown = 1\n    }\n  }\n}\n\nif (upCountdown > 0) {\n  if (currentClose > highCompare) {\n    upCountdown = upCountdown + 1\n  }\n\n  if (upCountdown === 13) {\n    pendingMarkers.push({\n      time: currentTime,\n      position: 'aboveBar',\n      color: 'red',\n      text: '🔻',\n    })\n    upCountdown = 0\n  }\n} else if (downCountdown > 0) {\n  if (currentClose < lowCompare) {\n    downCountdown = downCountdown + 1\n  }\n\n  if (downCountdown === 13) {\n    pendingMarkers.push({\n      time: currentTime,\n      position: 'belowBar',\n      color: 'red',\n      text: '🔺',\n    })\n    downCountdown = 0\n  }\n}\n\nlastIndex = bar.length",
+          "id": "td-sequential",
+          "name": "TD Sequential",
+          "options": {
+            "priceScaleId": "right",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "description": null,
+          "createdAt": 1704847309933,
+          "updatedAt": 1704850434925,
+          "unsavedChanges": false,
+          "optionsDefinitions": {},
+          "series": [
+            "td-sequential"
+          ],
+          "displayName": "TD Sequential"
+        },
+        "_f8dx7t03whaig4hs": {
+          "id": "_f8dx7t03whaig4hs",
+          "libraryId": "liquidation-heatmap copy 1",
+          "name": "Liquidation Heatmap",
+          "description": "Visualizes potential liquidation levels",
+          "script": "leverages = option(default=5|20|100,type=text)\nthreshold = option(default=0,type=range,min=0,max=220,log=true)\nfadeOut = option(default=0,type=range,min=0,max=1,log=true,step=0.001)\nstepScale = option(default=0.5,type=range,min=0,max=2,step=0.01)\nstepValue = option(default=\"\",type=text,placeholder=\"empty = ATR\")\nstrength = option(default=0.25,type=range,min=0,max=10,step=0.01,log=true)\nquote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\nexchange = option(default=null,type=exchange,rebuild=true)\ntype = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\nsrc = option(default=\"high/low\",type=list,options=[\"open\", \"high\", \"low\", \"close\",\"hl2\",\"ohl3\",\"ohlc4\",\"hlcc4\",\"high/low\",\"low/high\"])\ncolor0 = option(default=rgba(0,0,0,0),type=color)\ncolor1 = option(default=rgb(63,16,87),type=color)\ncolor2 = option(default=rgb(76,152,134),type=color)\ncolor3 = option(default=rgb(240,218,24),type=color)\nvolLength = option(default=20,type=range,min=1,max=200, step=1)\natrLength = option(default=20,type=range,min=1,max=200, step=1)\nuseHK = option(default=true,type=checkbox,description=\"Use heikinashi as source\")\nuseLog = option(default=true,type=checkbox)\nstrokeWidth = option(default=0,type=number,description=\"For debug purpose\")\n\nif (!liquidityAtPrices) {\n  // init\n\n  lastIndex = null\n  freeSlots = []\n  usedSlots = []\n  boundaries = {}\n  liquidityAtPrices = {}\n  resistances = []\n  supports = []\n  pendingRedraws = []\n  var shortLeverage = options.leverages.toString().split(/[|,]/).map(a => +a)\n  var longLeverage = shortLeverage.map(a => -a)\n  resolvedLeverages = shortLeverage.concat(longLeverage)\n  steps = null\n\n  for (var i = 0; i < series.length; i++) {\n    if (series[i].seriesType() !== 'BrokenArea') {\n      continue\n    }\n\n    // register each available series as a slot \n    freeSlots.push({\n    index: i,\n    redrawAt: 0\n    })\n\n    // bind boundaries reference\n    // boundaries: { [cellId: string]: *bar index* }\n    series[i].setExtensionsBoundaries(boundaries)\n  }\n}\n\n\n// process only on new candle\nif (bar.length === lastIndex) {\n  return\n}\n\nvar customSrc = source(quote=quote,type=type,exchange=exchange)\nvar price = useHK ? avg_heikinashi(customSrc) : avg_ohlc_with_gaps(customSrc)\n\npriceRef = price\n\n// grid size\nif (stepValue) {\n  // absolute\n  steps = stepValue\n} else {\n  // calculated with atr\n  var hl = price.high - price.low\n  var hc = Math.abs(price.high - priceRef[1].close)\n  var lc = Math.abs(price.low - priceRef[1].close)\n  var atr = sma(Math.max(hl, hc, lc), atrLength)\n\n  if (bar.length < atrLength) {\n    return\n  }\n\n  if (!steps) {\n    steps = atr * stepScale\n  }\n}\n\nbuyVolume = source(vbuy, quote=quote,type=type,exchange=exchange)\nsellVolume = source(vsell, quote=quote,type=type,exchange=exchange)\nvol = buyVolume + sellVolume\n\n// since we only run this indi once per bar (for performance)\n// only analyze volume data of the previous bar (vol[1], buyVolume[1], sellVolume[1])\nconst avgBuyVolume = sma(buyVolume[1] || 0, volLength) || 0.0001;\nconst avgSellVolume = sma(sellVolume[1] || 0, volLength) || 0.0001;\n\nvar buyRatio = (buyVolume[1] || 0) / avgBuyVolume;\nvar sellRatio = (sellVolume[1] || 0) / avgSellVolume;\nif (useLog) {\n  buyRatio = Math.log(buyRatio + 1)\n  sellRatio = Math.log(sellRatio + 1)\n}\n\n// custom src\nvar resolvedSrc  = priceRef[1][options.src]\nif (resolvedSrc === undefined) {\n  if (options.src === 'hl2') {\n    resolvedSrc = (priceRef[1].high + priceRef[1].low) / 2\n  } else if (options.src === 'ohl3') {\n    resolvedSrc = (priceRef[1].open + priceRef[1].high + priceRef[1].low) / 3\n  } else if (options.src === 'ohlc4') {\n    resolvedSrc = (priceRef[1].open + priceRef[1].high + priceRef[1].low + priceRef[1].close) / 4\n  } else if (options.src === 'hlcc4') {\n    resolvedSrc = (priceRef[1].high + priceRef[1].low + priceRef[1].close + priceRef[1].close) / 4\n  }\n}\n\nfor (let i = 0; i < resolvedLeverages.length; i++) {\n  var lev = (resolvedLeverages)[i]\n\n  if (options.src === 'high/low') {\n    resolvedSrc = lev > 0 ? priceRef[1].high : priceRef[1].low\n  } else if (options.src === 'low/high') {\n    resolvedSrc = lev > 0 ? priceRef[1].low : priceRef[1].high\n  }\n\n  // liquidation price (from resolvedSrc + % to leverages[i]) \n  var lp = (resolvedSrc + resolvedSrc * (100 / lev / 100))\n  \n  // rounded lp median (the cell id)\n  var slp = Math.ceil(lp / steps) * steps\n  \n  if (!liquidityAtPrices[slp]) {\n    // register cell\n    var top = slp + steps / 2\n    var bottom = slp - steps / 2\n    liquidityAtPrices[slp] = {\n      strength: 0,\n      count: 0,\n      top: top,\n      bottom: bottom\n    }\n    \n    if (lev > 0) {\n        resistances.push(slp)\n        resistances.sort((a, b) => a - b)\n    } else {\n        supports.push(slp)\n        supports.sort((a, b) => b - a)\n    }\n  }\n  \n  // update cell\n  liquidityAtPrices[slp].count++\n  liquidityAtPrices[slp].strength += lev > 0 ? sellRatio : buyRatio\n  \n  var ratio = Math.min(1, liquidityAtPrices[slp].strength * liquidityAtPrices[slp].count * (options.strength / 100))\n\n  if (ratio < 0.001) {\n    continue\n  }\n  \n  liquidityAtPrices[slp].color = interpolate(ratio, color0, color1, color2, color3)\n\n  if (liquidityAtPrices[slp].strength > options.threshold) {\n    if (pendingRedraws.indexOf(slp) === -1) {\n      pendingRedraws.push(slp)\n    }\n  }\n}\n\nif (pendingRedraws.length) {\n\n  // round of used slot(s)\n  var slotsToRelease = []\n  for (var i = 0; i < pendingRedraws.length; i++) {\n    var cell = liquidityAtPrices[pendingRedraws[i]]\n    var slot = freeSlots.find(slot => slot.redrawAt < bar.length)\n\n    if (slot) {\n      var usedIndex = freeSlots.splice(freeSlots.indexOf(slot), 1)[0].index\n      usedSlots.push(usedIndex)\n\n      if (cell.id) {\n        boundaries[cell.id] = bar.length\n      }\n      \n      cell.id = Math.random().toString()\n      renderer.indicators[indicatorId].series[usedIndex] ={\n        id: cell.id,\n        time: time,\n        lowerValue: cell.top,\n        higherValue: cell.bottom,\n        extendRight: true,\n        color: cell.color\n      }\n\n      pendingRedraws.splice(i--, 1)\n      slotsToRelease.push(usedIndex)\n    }\n  }\n  for (let i = 0; i < slotsToRelease.length; i++) {\n    var plotIndexToFree = usedSlots.splice(usedSlots.indexOf(slotsToRelease[i]), 1)[0]\n    \n    freeSlots.push({\n      index: plotIndexToFree,\n      redrawAt: bar.length + 1\n    })\n  }\n}\n\nfor (let i = 0; i < supports.length; i++) {\n  if (\n   price.low <= supports[i] || liquidityAtPrices[supports[i]].count <= 0\n  ) {\n    boundaries[liquidityAtPrices[supports[i]].id] = bar.length\n    delete liquidityAtPrices[supports[i]]\n    supports.splice(i--, 1)\n  } else {\n    if (fadeOut) {\n      liquidityAtPrices[supports[i]].count -= fadeOut\n    } else {\n      break;\n    }\n  }\n}\n\nfor (let i = 0; i < resistances.length; i++) {\n  if (\n   price.high >= resistances[i] || liquidityAtPrices[resistances[i]].count <= 0\n  ) {\n    boundaries[liquidityAtPrices[resistances[i]].id] = bar.length\n    delete liquidityAtPrices[resistances[i]]\n    resistances.splice(i--, 1)\n  } else {\n    if (fadeOut) {\n      liquidityAtPrices[resistances[i]].count -= fadeOut\n    } else {\n      break;\n    }\n  }\n}\n\n// set reference to bar index : avoid process next tick\nlastIndex = bar.length\n\n// define available series\nif (renderer.indicators[indicatorId].series[0]) {\n  brokenarea(renderer.indicators[indicatorId].series[0] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[1]) {\n  brokenarea(renderer.indicators[indicatorId].series[1] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[2]) {\n  brokenarea(renderer.indicators[indicatorId].series[2] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[3]) {\n  brokenarea(renderer.indicators[indicatorId].series[3] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[4]) {\n  brokenarea(renderer.indicators[indicatorId].series[4] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[5]) {\n  brokenarea(renderer.indicators[indicatorId].series[5] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[6]) {\n  brokenarea(renderer.indicators[indicatorId].series[6] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[7]) {\n  brokenarea(renderer.indicators[indicatorId].series[7] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[8]) {\n  brokenarea(renderer.indicators[indicatorId].series[8] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[9]) {\n  brokenarea(renderer.indicators[indicatorId].series[9] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[10]) {\n  brokenarea(renderer.indicators[indicatorId].series[10] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[11]) {\n  brokenarea(renderer.indicators[indicatorId].series[11] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[12]) {\n  brokenarea(renderer.indicators[indicatorId].series[12] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[13]) {\n  brokenarea(renderer.indicators[indicatorId].series[13] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[14]) {\n  brokenarea(renderer.indicators[indicatorId].series[14] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[15]) {\n  brokenarea(renderer.indicators[indicatorId].series[15] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}\nif (renderer.indicators[indicatorId].series[16]) {\n  brokenarea(renderer.indicators[indicatorId].series[16] || { time: time }, strokeColor=options.strokeColor, strokeWidth=options.strokeWidth)\n}",
+          "createdAt": 1703543399433,
+          "updatedAt": 1705005829007,
+          "options": {
+            "priceScaleId": "right",
+            "leverages": "50|100",
+            "threshold": 0,
+            "fadeOut": 0,
+            "stepScale": 0.11,
+            "stepValue": "",
+            "strength": 0.15,
+            "quote": 0,
+            "exchange": 0,
+            "type": "perp",
+            "src": "high/low",
+            "volLength": 20,
+            "atrLength": 20,
+            "useHK": false,
+            "useLog": true,
+            "strokeWidth": 0,
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "optionsDefinitions": {
+            "leverages": {
+              "default": "5|20|100",
+              "type": "text"
+            },
+            "threshold": {
+              "default": 0,
+              "type": "range",
+              "min": 0,
+              "max": 220,
+              "log": true
+            },
+            "fadeOut": {
+              "default": 0,
+              "type": "range",
+              "min": 0,
+              "max": 1,
+              "log": true,
+              "step": 0.001
+            },
+            "stepScale": {
+              "default": 0.5,
+              "type": "range",
+              "min": 0,
+              "max": 2,
+              "step": 0.01
+            },
+            "stepValue": {
+              "default": "",
+              "type": "text",
+              "placeholder": "empty = ATR"
+            },
+            "strength": {
+              "default": 0.25,
+              "type": "range",
+              "min": 0,
+              "max": 10,
+              "step": 0.01,
+              "log": true
+            },
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            },
+            "src": {
+              "default": "high/low",
+              "type": "list",
+              "options": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "hl2",
+                "ohl3",
+                "ohlc4",
+                "hlcc4",
+                "high/low",
+                "low/high"
+              ]
+            },
+            "color0": {
+              "default": "rgba(0,0,0,0)",
+              "type": "color"
+            },
+            "color1": {
+              "default": "rgb(63,16,87)",
+              "type": "color"
+            },
+            "color2": {
+              "default": "rgb(76,152,134)",
+              "type": "color"
+            },
+            "color3": {
+              "default": "rgb(240,218,24)",
+              "type": "color"
+            },
+            "volLength": {
+              "default": 20,
+              "type": "range",
+              "min": 1,
+              "max": 200,
+              "step": 1
+            },
+            "atrLength": {
+              "default": 20,
+              "type": "range",
+              "min": 1,
+              "max": 200,
+              "step": 1
+            },
+            "useHK": {
+              "default": true,
+              "type": "checkbox",
+              "description": "Use heikinashi as source"
+            },
+            "useLog": {
+              "default": true,
+              "type": "checkbox"
+            },
+            "strokeWidth": {
+              "default": 0,
+              "type": "number",
+              "description": "For debug purpose"
+            }
+          },
+          "series": [
+            "liquidation-heatmap copy 1",
+            "t6o8ijcy",
+            "309zqp34",
+            "d94xv73q",
+            "ksqwoixk",
+            "dck1d5w0",
+            "0y3mfpad",
+            "qnqeqh9o",
+            "tb45jcyn",
+            "h2zb8l6l",
+            "iq5jcm3t",
+            "tbb63j50",
+            "2a95heaw",
+            "gf8njchh",
+            "qdxkg8yv",
+            "s3p8dp7x",
+            "am4uwk4u"
+          ],
+          "displayName": "Liquidation Heatmap",
+          "unsavedChanges": false
+        },
+        "_rbw1dtk9t8hd9lgg": {
+          "id": "_rbw1dtk9t8hd9lgg",
+          "libraryId": "shm copy 1",
+          "name": "SHM",
+          "description": "Stochastic Heat Map",
+          "script": "// © Violent\n// https://www.tradingview.com/script/7PRbCBjk-Stochastic-Heat-Map/\n\nvar stoch1 = ema(stoch($price.close, $price.high, $price.low, 1 * options.stochMultiplier), 1 + options.emaLength)\nvar stoch2 = ema(stoch($price.close, $price.high, $price.low, 2 * options.stochMultiplier), 2 + options.emaLength)\nvar stoch3 = ema(stoch($price.close, $price.high, $price.low, 3 * options.stochMultiplier), 3 + options.emaLength)\nvar stoch4 = ema(stoch($price.close, $price.high, $price.low, 4 * options.stochMultiplier), 4 + options.emaLength)\nvar stoch5 = ema(stoch($price.close, $price.high, $price.low, 5 * options.stochMultiplier), 5 + options.emaLength)\nvar stoch6 = ema(stoch($price.close, $price.high, $price.low, 6 * options.stochMultiplier), 6 + options.emaLength)\nvar stoch7 = ema(stoch($price.close, $price.high, $price.low, 7 * options.stochMultiplier), 7 + options.emaLength)\nvar stoch8 = ema(stoch($price.close, $price.high, $price.low, 8 * options.stochMultiplier), 8 + options.emaLength)\nvar stoch9 = ema(stoch($price.close, $price.high, $price.low, 9 * options.stochMultiplier), 9 + options.emaLength)\nvar stoch10 = ema(stoch($price.close, $price.high, $price.low, 10 * options.stochMultiplier), 10 + options.emaLength)\nvar stoch11 = ema(stoch($price.close, $price.high, $price.low, 15 * options.stochMultiplier), 11 + options.emaLength)\nvar stoch12 = ema(stoch($price.close, $price.high, $price.low, 20 * options.stochMultiplier), 12 + options.emaLength)\nvar stoch13 = ema(stoch($price.close, $price.high, $price.low, 25 * options.stochMultiplier), 13 + options.emaLength)\nvar stoch14 = ema(stoch($price.close, $price.high, $price.low, 30 * options.stochMultiplier), 14 + options.emaLength)\nvar stoch15 = ema(stoch($price.close, $price.high, $price.low, 35 * options.stochMultiplier), 15 + options.emaLength)\nvar stoch16 = ema(stoch($price.close, $price.high, $price.low, 40 * options.stochMultiplier), 16 + options.emaLength)\nvar stoch17 = ema(stoch($price.close, $price.high, $price.low, 45 * options.stochMultiplier), 17 + options.emaLength)\nvar stoch18 = ema(stoch($price.close, $price.high, $price.low, 50 * options.stochMultiplier), 18 + options.emaLength)\nvar stoch19 = ema(stoch($price.close, $price.high, $price.low, 55 * options.stochMultiplier), 19 + options.emaLength)\nvar stoch20 = ema(stoch($price.close, $price.high, $price.low, 60 * options.stochMultiplier), 20 + options.emaLength)\nvar stoch21 = ema(stoch($price.close, $price.high, $price.low, 70 * options.stochMultiplier), 21 + options.emaLength)\nvar stoch22 = ema(stoch($price.close, $price.high, $price.low, 80 * options.stochMultiplier), 22 + options.emaLength)\nvar stoch23 = ema(stoch($price.close, $price.high, $price.low, 90 * options.stochMultiplier), 23 + options.emaLength)\nvar stoch24 = ema(stoch($price.close, $price.high, $price.low, 100 * options.stochMultiplier), 24 + options.emaLength)\nvar stoch25 = ema(stoch($price.close, $price.high, $price.low, 110 * options.stochMultiplier), 25 + options.emaLength)\nvar stoch26 = ema(stoch($price.close, $price.high, $price.low, 120 * options.stochMultiplier), 26 + options.emaLength)\nvar stoch27 = ema(stoch($price.close, $price.high, $price.low, 140 * options.stochMultiplier), 27 + options.emaLength)\nvar stoch28 = ema(stoch($price.close, $price.high, $price.low, 160 * options.stochMultiplier), 28 + options.emaLength)\n\nvar colour1 =  stoch1>=94 ? options.topColor:stoch1>=90? (options.pColor1):stoch1 >= 80 ? (options.pColor2):stoch1 >= 70 ? (options.pColor3):stoch1 >= 10 ? (options.pColor4):stoch1 >= 50 ? (options.pColor5):stoch1 >= 40 ? (options.nColor5):stoch1 >= 30 ? (options.nColor4):stoch1 >= 20 ? (options.nColor3):stoch1 >= 10 ? (options.nColor2):stoch1 >= 5 ? (options.nColor1):options.bottomColor\nvar colour2 =  stoch2>=94 ? options.topColor:stoch2>=90? (options.pColor1):stoch2 >= 80 ? (options.pColor2):stoch2 >= 70 ? (options.pColor3):stoch2 >= 20 ? (options.pColor4):stoch2 >= 50 ? (options.pColor5):stoch2 >= 40 ? (options.nColor5):stoch2 >= 30 ? (options.nColor4):stoch2 >= 20 ? (options.nColor3):stoch2 >= 10 ? (options.nColor2):stoch2 >= 5 ? (options.nColor1):options.bottomColor\nvar colour3 =  stoch3>=94 ? options.topColor:stoch3>=90? (options.pColor1):stoch3 >= 80 ? (options.pColor2):stoch3 >= 70 ? (options.pColor3):stoch3 >= 30 ? (options.pColor4):stoch3 >= 50 ? (options.pColor5):stoch3 >= 40 ? (options.nColor5):stoch3 >= 30 ? (options.nColor4):stoch3 >= 20 ? (options.nColor3):stoch3 >= 10 ? (options.nColor2):stoch3 >= 5 ? (options.nColor1):options.bottomColor\nvar colour4 =  stoch4>=94 ? options.topColor:stoch4>=90? (options.pColor1):stoch4 >= 80 ? (options.pColor2):stoch4 >= 70 ? (options.pColor3):stoch4 >= 40 ? (options.pColor4):stoch4 >= 50 ? (options.pColor5):stoch4 >= 40 ? (options.nColor5):stoch4 >= 30 ? (options.nColor4):stoch4 >= 20 ? (options.nColor3):stoch4 >= 10 ? (options.nColor2):stoch4 >= 5 ? (options.nColor1):options.bottomColor\nvar colour5 =  stoch5>=94 ? options.topColor:stoch5>=90? (options.pColor1):stoch5 >= 80 ? (options.pColor2):stoch5 >= 70 ? (options.pColor3):stoch5 >= 50 ? (options.pColor4):stoch5 >= 50 ? (options.pColor5):stoch5 >= 40 ? (options.nColor5):stoch5 >= 30 ? (options.nColor4):stoch5 >= 20 ? (options.nColor3):stoch5 >= 10 ? (options.nColor2):stoch5 >= 5 ? (options.nColor1):options.bottomColor\nvar colour6 =  stoch6>=94 ? options.topColor:stoch6>=90? (options.pColor1):stoch6 >= 80 ? (options.pColor2):stoch6 >= 70 ? (options.pColor3):stoch6 >= 60 ? (options.pColor4):stoch6 >= 50 ? (options.pColor5):stoch6 >= 40 ? (options.nColor5):stoch6 >= 30 ? (options.nColor4):stoch6 >= 20 ? (options.nColor3):stoch6 >= 10 ? (options.nColor2):stoch6 >= 5 ? (options.nColor1):options.bottomColor\nvar colour7 =  stoch7>=94 ? options.topColor:stoch7>=90? (options.pColor1):stoch7 >= 80 ? (options.pColor2):stoch7 >= 70 ? (options.pColor3):stoch7 >= 60 ? (options.pColor4):stoch7 >= 50 ? (options.pColor5):stoch7 >= 40 ? (options.nColor5):stoch7 >= 30 ? (options.nColor4):stoch7 >= 20 ? (options.nColor3):stoch7 >= 10 ? (options.nColor2):stoch7 >= 5 ? (options.nColor1):options.bottomColor\nvar colour8 =  stoch8>=94 ? options.topColor:stoch8>=90? (options.pColor1):stoch8 >= 80 ? (options.pColor2):stoch8 >= 70 ? (options.pColor3):stoch8 >= 60 ? (options.pColor4):stoch8 >= 50 ? (options.pColor5):stoch8 >= 40 ? (options.nColor5):stoch8 >= 30 ? (options.nColor4):stoch8 >= 20 ? (options.nColor3):stoch8 >= 10 ? (options.nColor2):stoch8 >= 5 ? (options.nColor1):options.bottomColor\nvar colour9 =  stoch9>=94 ? options.topColor:stoch9>=90? (options.pColor1):stoch9 >= 80 ? (options.pColor2):stoch9 >= 70 ? (options.pColor3):stoch9 >= 60 ? (options.pColor4):stoch9 >= 50 ? (options.pColor5):stoch9 >= 40 ? (options.nColor5):stoch9 >= 30 ? (options.nColor4):stoch9 >= 20 ? (options.nColor3):stoch9 >= 10 ? (options.nColor2):stoch9 >= 5 ? (options.nColor1):options.bottomColor\nvar colour10 = stoch10>=94 ? options.topColor:stoch10>=90? (options.pColor1):stoch10 >= 80 ? (options.pColor2):stoch10 >= 70 ? (options.pColor3):stoch10 >= 60 ? (options.pColor4):stoch10 >= 50 ? (options.pColor5):stoch10 >= 40 ? (options.nColor5):stoch10 >= 30 ? (options.nColor4):stoch10 >= 20 ? (options.nColor3):stoch10 >= 10 ? (options.nColor2):stoch10 >= 5 ? (options.nColor1):options.bottomColor\nvar colour11 = stoch11>=94 ? options.topColor:stoch11>=90? (options.pColor1):stoch11 >= 80 ? (options.pColor2):stoch11 >= 70 ? (options.pColor3):stoch11 >= 60 ? (options.pColor4):stoch11 >= 50 ? (options.pColor5):stoch11 >= 40 ? (options.nColor5):stoch11 >= 30 ? (options.nColor4):stoch11 >= 20 ? (options.nColor3):stoch11 >= 10 ? (options.nColor2):stoch11 >= 5 ? (options.nColor1):options.bottomColor\nvar colour12 = stoch12>=94 ? options.topColor:stoch12>=90? (options.pColor1):stoch12 >= 80 ? (options.pColor2):stoch12 >= 70 ? (options.pColor3):stoch12 >= 60 ? (options.pColor4):stoch12 >= 50 ? (options.pColor5):stoch12 >= 40 ? (options.nColor5):stoch12 >= 30 ? (options.nColor4):stoch12 >= 20 ? (options.nColor3):stoch12 >= 10 ? (options.nColor2):stoch12 >= 5 ? (options.nColor1):options.bottomColor\nvar colour13 = stoch13>=94 ? options.topColor:stoch13>=90? (options.pColor1):stoch13 >= 80 ? (options.pColor2):stoch13 >= 70 ? (options.pColor3):stoch13 >= 60 ? (options.pColor4):stoch13 >= 50 ? (options.pColor5):stoch13 >= 40 ? (options.nColor5):stoch13 >= 30 ? (options.nColor4):stoch13 >= 20 ? (options.nColor3):stoch13 >= 10 ? (options.nColor2):stoch13 >= 5 ? (options.nColor1):options.bottomColor\nvar colour14 = stoch14>=94 ? options.topColor:stoch14>=90? (options.pColor1):stoch14 >= 80 ? (options.pColor2):stoch14 >= 70 ? (options.pColor3):stoch14 >= 60 ? (options.pColor4):stoch14 >= 50 ? (options.pColor5):stoch14 >= 40 ? (options.nColor5):stoch14 >= 30 ? (options.nColor4):stoch14 >= 20 ? (options.nColor3):stoch14 >= 10 ? (options.nColor2):stoch14 >= 5 ? (options.nColor1):options.bottomColor\nvar colour15 = stoch15>=94 ? options.topColor:stoch15>=90? (options.pColor1):stoch15 >= 80 ? (options.pColor2):stoch15 >= 70 ? (options.pColor3):stoch15 >= 60 ? (options.pColor4):stoch15 >= 50 ? (options.pColor5):stoch15 >= 40 ? (options.nColor5):stoch15 >= 30 ? (options.nColor4):stoch15 >= 20 ? (options.nColor3):stoch15 >= 10 ? (options.nColor2):stoch15 >= 5 ? (options.nColor1):options.bottomColor\nvar colour16 = stoch16>=94 ? options.topColor:stoch16>=90? (options.pColor1):stoch16 >= 80 ? (options.pColor2):stoch16 >= 70 ? (options.pColor3):stoch16 >= 60 ? (options.pColor4):stoch16 >= 50 ? (options.pColor5):stoch16 >= 40 ? (options.nColor5):stoch16 >= 30 ? (options.nColor4):stoch16 >= 20 ? (options.nColor3):stoch16 >= 10 ? (options.nColor2):stoch16 >= 5 ? (options.nColor1):options.bottomColor\nvar colour17 = stoch17>=94 ? options.topColor:stoch17>=90? (options.pColor1):stoch17 >= 80 ? (options.pColor2):stoch17 >= 70 ? (options.pColor3):stoch17 >= 60 ? (options.pColor4):stoch17 >= 50 ? (options.pColor5):stoch17 >= 40 ? (options.nColor5):stoch17 >= 30 ? (options.nColor4):stoch17 >= 20 ? (options.nColor3):stoch17 >= 10 ? (options.nColor2):stoch17 >= 5 ? (options.nColor1):options.bottomColor\nvar colour18 = stoch18>=94 ? options.topColor:stoch18>=90? (options.pColor1):stoch18 >= 80 ? (options.pColor2):stoch18 >= 70 ? (options.pColor3):stoch18 >= 60 ? (options.pColor4):stoch18 >= 50 ? (options.pColor5):stoch18 >= 40 ? (options.nColor5):stoch18 >= 30 ? (options.nColor4):stoch18 >= 20 ? (options.nColor3):stoch18 >= 10 ? (options.nColor2):stoch18 >= 5 ? (options.nColor1):options.bottomColor\nvar colour19 = stoch19>=94 ? options.topColor:stoch19>=90? (options.pColor1):stoch19 >= 80 ? (options.pColor2):stoch19 >= 70 ? (options.pColor3):stoch19 >= 60 ? (options.pColor4):stoch19 >= 50 ? (options.pColor5):stoch19 >= 40 ? (options.nColor5):stoch19 >= 30 ? (options.nColor4):stoch19 >= 20 ? (options.nColor3):stoch19 >= 10 ? (options.nColor2):stoch19 >= 5 ? (options.nColor1):options.bottomColor\nvar colour20 = stoch20>=94 ? options.topColor:stoch20>=90? (options.pColor1):stoch20 >= 80 ? (options.pColor2):stoch20 >= 70 ? (options.pColor3):stoch20 >= 60 ? (options.pColor4):stoch20 >= 50 ? (options.pColor5):stoch20 >= 40 ? (options.nColor5):stoch20 >= 30 ? (options.nColor4):stoch20 >= 20 ? (options.nColor3):stoch20 >= 10 ? (options.nColor2):stoch20 >= 5 ? (options.nColor1):options.bottomColor\nvar colour21 = stoch21>=94 ? options.topColor:stoch21>=90? (options.pColor1):stoch21 >= 80 ? (options.pColor2):stoch21 >= 70 ? (options.pColor3):stoch21 >= 60 ? (options.pColor4):stoch21 >= 50 ? (options.pColor5):stoch21 >= 40 ? (options.nColor5):stoch21 >= 30 ? (options.nColor4):stoch21 >= 20 ? (options.nColor3):stoch21 >= 10 ? (options.nColor2):stoch21 >= 5 ? (options.nColor1):options.bottomColor\nvar colour22 = stoch22>=94 ? options.topColor:stoch22>=90? (options.pColor1):stoch22 >= 80 ? (options.pColor2):stoch22 >= 70 ? (options.pColor3):stoch22 >= 60 ? (options.pColor4):stoch22 >= 50 ? (options.pColor5):stoch22 >= 40 ? (options.nColor5):stoch22 >= 30 ? (options.nColor4):stoch22 >= 20 ? (options.nColor3):stoch22 >= 10 ? (options.nColor2):stoch22 >= 5 ? (options.nColor1):options.bottomColor\nvar colour23 = stoch23>=94 ? options.topColor:stoch23>=90? (options.pColor1):stoch23 >= 80 ? (options.pColor2):stoch23 >= 70 ? (options.pColor3):stoch23 >= 60 ? (options.pColor4):stoch23 >= 50 ? (options.pColor5):stoch23 >= 40 ? (options.nColor5):stoch23 >= 30 ? (options.nColor4):stoch23 >= 20 ? (options.nColor3):stoch23 >= 10 ? (options.nColor2):stoch23 >= 5 ? (options.nColor1):options.bottomColor\nvar colour24 = stoch24>=94 ? options.topColor:stoch24>=90? (options.pColor1):stoch24 >= 80 ? (options.pColor2):stoch24 >= 70 ? (options.pColor3):stoch24 >= 60 ? (options.pColor4):stoch24 >= 50 ? (options.pColor5):stoch24 >= 40 ? (options.nColor5):stoch24 >= 30 ? (options.nColor4):stoch24 >= 20 ? (options.nColor3):stoch24 >= 10 ? (options.nColor2):stoch24 >= 5 ? (options.nColor1):options.bottomColor\nvar colour25 = stoch25>=94 ? options.topColor:stoch25>=90? (options.pColor1):stoch25 >= 80 ? (options.pColor2):stoch25 >= 70 ? (options.pColor3):stoch25 >= 60 ? (options.pColor4):stoch25 >= 50 ? (options.pColor5):stoch25 >= 40 ? (options.nColor5):stoch25 >= 30 ? (options.nColor4):stoch25 >= 20 ? (options.nColor3):stoch25 >= 10 ? (options.nColor2):stoch25 >= 5 ? (options.nColor1):options.bottomColor\nvar colour26 = stoch26>=94 ? options.topColor:stoch26>=90? (options.pColor1):stoch26 >= 80 ? (options.pColor2):stoch26 >= 70 ? (options.pColor3):stoch26 >= 60 ? (options.pColor4):stoch26 >= 50 ? (options.pColor5):stoch26 >= 40 ? (options.nColor5):stoch26 >= 30 ? (options.nColor4):stoch26 >= 20 ? (options.nColor3):stoch26 >= 10 ? (options.nColor2):stoch26 >= 5 ? (options.nColor1):options.bottomColor\nvar colour27 = stoch27>=94 ? options.topColor:stoch27>=90? (options.pColor1):stoch27 >= 80 ? (options.pColor2):stoch27 >= 70 ? (options.pColor3):stoch27 >= 60 ? (options.pColor4):stoch27 >= 50 ? (options.pColor5):stoch27 >= 40 ? (options.nColor5):stoch27 >= 30 ? (options.nColor4):stoch27 >= 20 ? (options.nColor3):stoch27 >= 10 ? (options.nColor2):stoch27 >= 5 ? (options.nColor1):options.bottomColor\nvar colour28 = stoch28>=94 ? options.topColor:stoch28>=90? (options.pColor1):stoch28 >= 80 ? (options.pColor2):stoch28 >= 70 ? (options.pColor3):stoch28 >= 60 ? (options.pColor4):stoch28 >= 50 ? (options.pColor5):stoch28 >= 40 ? (options.nColor5):stoch28 >= 30 ? (options.nColor4):stoch28 >= 20 ? (options.nColor3):stoch28 >= 10 ? (options.nColor2):stoch28 >= 5 ? (options.nColor1):options.bottomColor\n\nif (options.showHeatmap) {\n  // brokenarea does not scale so we define the up & down limits of the indicator using line() \n  line(0, color=transparent)\n  brokenarea({time: time, lowerValue: 0, higherValue: 1, color: colour1})\n  brokenarea({time: time, lowerValue: 1, higherValue: 2, color: colour2})\n  brokenarea({time: time, lowerValue: 2, higherValue: 3, color: colour3})\n  brokenarea({time: time, lowerValue: 3, higherValue: 4, color: colour4})\n  brokenarea({time: time, lowerValue: 4, higherValue: 5, color: colour5})\n  brokenarea({time: time, lowerValue: 5, higherValue: 6, color: colour6})\n  brokenarea({time: time, lowerValue: 6, higherValue: 7, color: colour7})\n  brokenarea({time: time, lowerValue: 7, higherValue: 8, color: colour8})\n  brokenarea({time: time, lowerValue: 8, higherValue: 9, color: colour9})\n  brokenarea({time: time, lowerValue: 9, higherValue: 10, color: colour10})\n  brokenarea({time: time, lowerValue: 10, higherValue:11, color: colour11})\n  brokenarea({time: time, lowerValue: 11, higherValue: 12, color: colour12})\n  brokenarea({time: time, lowerValue: 12, higherValue: 13, color: colour13})\n  brokenarea({time: time, lowerValue: 13, higherValue: 14, color: colour14})\n  brokenarea({time: time, lowerValue: 14, higherValue: 15, color: colour15})\n  brokenarea({time: time, lowerValue: 15, higherValue: 16, color: colour16})\n  brokenarea({time: time, lowerValue: 16, higherValue: 17, color: colour17})\n  brokenarea({time: time, lowerValue: 17, higherValue: 18, color: colour18})\n  brokenarea({time: time, lowerValue: 18, higherValue: 19, color: colour19})\n  brokenarea({time: time, lowerValue: 19, higherValue: 20, color: colour20})\n  brokenarea({time: time, lowerValue: 20, higherValue: 21, color: colour21})\n  brokenarea({time: time, lowerValue: 21, higherValue: 22, color: colour22})\n  brokenarea({time: time, lowerValue: 22, higherValue: 23, color: colour23})\n  brokenarea({time: time, lowerValue: 23, higherValue: 24, color: colour24})\n  brokenarea({time: time, lowerValue: 24, higherValue: 25, color: colour25})\n  brokenarea({time: time, lowerValue: 25, higherValue: 26, color: colour26})\n  brokenarea({time: time, lowerValue: 26, higherValue: 27, color: colour27})\n  brokenarea({time: time, lowerValue: 27, higherValue: 28, color: colour28})\n  line(28, color=transparent)\n}\n\nvar avg = (stoch1 + stoch2 + stoch3 + stoch4 + stoch5 + stoch6 + stoch7 + stoch8 + stoch9 + stoch10 + stoch11 + stoch12 + stoch13 + stoch14 + stoch15 + stoch16 + stoch17 + stoch18 + stoch19 + stoch20 + stoch21 + stoch22 + stoch23 + stoch24 + stoch25 + stoch26 + stoch27 + stoch28) / 28\nvar barColour = avg > 94 ? options.topColor:avg>=90 ? (options.pColor1):avg >= 80 ? (options.pColor2):avg >= 70 ? (options.pColor3):avg >= 60 ? (options.pColor4):avg >= 50 ? (options.pColor5):avg >= 40 ? (options.nColor5):avg >= 30 ? (options.nColor4):avg >= 20 ? (options.nColor3):avg >= 10 ? (options.nColor2):avg >= 5 ? (options.nColor1):options.bottomColor\n\n$price.color = barColour",
+          "createdAt": 1658483940000,
+          "updatedAt": 1705017666152,
+          "options": {
+            "priceScaleId": "shm",
+            "stochMultiplier": 1,
+            "pColor1": "rgb(207,0,0)",
+            "pColor2": "#f22b11",
+            "pColor3": "#f29811",
+            "pColor4": "#eef211",
+            "pColor5": "#3af211",
+            "nColor1": "#02269e",
+            "nColor2": "#0039f5",
+            "nColor3": "#1176f2",
+            "nColor4": "#11aff2",
+            "nColor5": "#11e7f2",
+            "showHeatmap": true,
+            "scaleMargins": {
+              "top": 0.84,
+              "bottom": 0
+            },
+            "emaLength": 1,
+            "bottomColor": "rgb(1,24,101)",
+            "topColor": "rgb(153,0,0)",
+            "visible": false
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "shm copy 1",
+            "mcznw741",
+            "zzfp83o8",
+            "a6ualrim",
+            "w9quyxyh",
+            "4tfrfol9",
+            "86ew33ji",
+            "b3f3kr7k",
+            "g78cbx4f",
+            "98xscmfq",
+            "q894wb6f",
+            "azlmzzry",
+            "0scbfs1m",
+            "3jce33i2",
+            "xfasrw8v",
+            "bwqi04m8",
+            "m4b3292q",
+            "aqca1478",
+            "lbiqzi8v",
+            "clu8m8fi",
+            "5x8k992s",
+            "vjzw24ae",
+            "znd3xcdh",
+            "6lxp7bnz",
+            "23cpec4y",
+            "whi6d8sn",
+            "i7wvyp52",
+            "48jgrtqr",
+            "gpkt1xd4",
+            "mx9j55as"
+          ],
+          "displayName": "SHM"
+        },
+        "_ai7aitvrmca5si9b": {
+          "id": "_ai7aitvrmca5si9b",
+          "libraryId": "cvd-divs-pivot",
+          "name": "CVD Divs Pivot",
+          "script": "if (pivotsMax === 0) {\r\n  // Source\r\n  quote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\n  exchange = option(default=null,type=exchange,rebuild=true)\r\n  type = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n  \r\n  // Pivots\r\n  pivotsMax = 20\r\n  phPositions = []\r\n  plPositions = []\r\n  phVals = []\r\n  plVals = []\r\n}\r\n\r\nbuyVolume = source(vbuy, quote=quote,type=type,exchange=exchange)\r\nsellVolume = source(vsell, quote=quote,type=type,exchange=exchange)\r\n\r\ncvd = cum(buyVolume - sellVolume)\r\n\r\nplotline(cvd, title=\"CVD\", color=options.cvdColor)\r\n\r\nif( options.toggleShowPricePivot ){\r\n  plotline(cvd, color=transparent)\r\n}\r\n\r\nif (options.showDivs) {\r\n  \r\n  // <markers utils>\r\n  if (markersDiv === 0) {\r\n    markersDiv = []\r\n  }\r\n  if (markersPivot === 0) {\r\n    markersPivot = []\r\n  }\r\n  \r\n  if (pendingMarkerDiv && pendingMarkerDiv.time < time) {\r\n    markersDiv.push(pendingMarkerDiv)\r\n    pendingMarkerDiv = null\r\n  }\r\n\r\n  if (pendingMarkerPivot && pendingMarkerPivot.time < time) {\r\n    markersPivot.push(pendingMarkerPivot)\r\n    pendingMarkerPivot = null\r\n  }\r\n  \r\n  var newMarkerDiv = null\r\n  var newMarkerPivot = null\r\n  // </markers utils>\r\n  \r\n  // Check if we get new Pivot High Or Pivot Low\r\n\r\n  // find pivots low (cvd and price)\r\n  plCvd = pivot_low(cvd, options.pivotLeftLength, options.pivotRightLength)\r\n  plPrice = pivot_low($price.low, options.pivotLeftLength, options.pivotRightLength)\r\n\r\n  // find pivots high (cvd and price)\r\n  phCvd = pivot_high(cvd, options.pivotLeftLength, options.pivotRightLength)\r\n  phPrice = pivot_high($price.high, options.pivotLeftLength, options.pivotRightLength)\r\n  \r\n  if( plPrice ){\r\n    plPositions.unshift(bar.length)\r\n    plVals.unshift(plPrice)\r\n    if( plPositions.length > pivotsMax ){\r\n      plPositions.pop();\r\n      plVals.pop()\r\n    }\r\n\r\n    var foundDiv = false\r\n    var startPoint = 0\r\n    cvd[100] // looks like required to load \r\n    for( var i = 0; i < (options.ppCheck || 10); i++ ){ \r\n      if( i > plPositions.length || plPositions[i] == 0){\r\n        break\r\n      }\r\n      var len = bar.length - plPositions[i] + options.pivotRightLength\r\n      if( len > (options.maxbars || 100)){\r\n        break\r\n      }\r\n      \r\n      // Price lower than previous pivot but CVD is higher\r\n      if( len > 2 && plPrice < (plVals[i] || 0) && cvd > cvd[len]){\r\n         console.log('PL', plPositions[i], len, cvd, cvd[len], $price.high, plVals[i])\r\n         foundDiv = true\r\n\r\n         newMarkerDiv = { \r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.DivcolorUp,\r\n          position: 'belowBar',\r\n          //shape: 'arrowDown',\r\n          text: '▲' + (options.togglePivotAgo ? i : '')\r\n        }\r\n        break\r\n      }\r\n    }\r\n\r\n    if( !foundDiv && options.toggleShowPricePivot){\r\n      newMarkerPivot = {\r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.DivcolorUp,\r\n          position: 'belowBar',\r\n          //shape: 'arrowUp',\r\n          text:  'L'\r\n        }\r\n    }\r\n  }\r\n\r\n  if( phPrice ){\r\n \r\n    phPositions.unshift(bar.length)\r\n    phVals.unshift(phPrice)\r\n    if( phPositions.length > pivotsMax ){\r\n      phPositions.pop();\r\n      phVals.pop()\r\n    }\r\n\r\n    var foundDiv = false\r\n    var startPoint = 0\r\n    cvd[100] // looks like required to load \r\n    for( var i = 0; i < (options.ppCheck || 10); i++ ){ \r\n      if( i > phPositions.length || phPositions[i] == 0){\r\n        break\r\n      }\r\n      var len = bar.length - phPositions[i] + options.pivotRightLength\r\n      if( len > (options.maxbars || 100)){\r\n        break\r\n      }\r\n\r\n      // Price greater than previous pivot but CVD lower\r\n      if( len > 2 && phPrice > (phVals[i] || Infinity) && cvd < cvd[len]){\r\n         console.log('PH', phPositions[i], len, cvd, cvd[len], $price.high, phVals[i])\r\n        foundDiv = true\r\n         newMarkerDiv = { \r\n          time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n          color: options.DivcolorDn,\r\n          position: 'aboveBar',\r\n          //shape: 'arrowDown',\r\n          text: '▼' + (options.togglePivotAgo ? i : '')\r\n        }\r\n        break\r\n      }\r\n    }\r\n\r\n    if( !foundDiv  && options.toggleShowPricePivot ){\r\n        newMarkerPivot = { \r\n            time: time - (options.pivotRightLength-1) * bar.timeframe,\r\n            color: options.DivcolorDn,\r\n            position: 'aboveBar',\r\n            //shape: 'arrowDown',\r\n            text: 'H'\r\n          }\r\n    }\r\n  }\r\n  \r\n  // <markers utils>\r\n  if (newMarkerDiv || (pendingMarkerDiv && !newMarkerDiv)) {\r\n      pendingMarkerDiv = newMarkerDiv\r\n    \r\n    if (markersDiv.length > 100) {\r\n        markersDiv.splice(0, 1)\r\n    }\r\n      \r\n    if (series[0].setMarkers) {\r\n      series[0].setMarkers(markersDiv.concat(pendingMarkerDiv))\r\n    }\r\n  }\r\n\r\n  if (newMarkerPivot || (pendingMarkerPivot && !newMarkerPivot)) {\r\n      pendingMarkerPivot = newMarkerPivot\r\n    \r\n    if (markersPivot.length > 100) {\r\n        markersPivot.splice(0, 1)\r\n    }\r\n      \r\n    if (series[1].setMarkers) {\r\n      series[1].setMarkers(markersPivot.concat(pendingMarkerPivot))\r\n    }\r\n  }\r\n\r\n  // </markers utils>\r\n}",
+          "createdAt": 1705023113627,
+          "updatedAt": 1705029127886,
+          "options": {
+            "priceScaleId": "_ai7aitvrmca5si9b",
+            "scaleMargins": {
+              "top": 0.04,
+              "bottom": 0.69
+            },
+            "bodyPercentWatch": null,
+            "wickRatioThreshold": null,
+            "toggleDebug": null,
+            "toggleVolumeWick": null,
+            "togglePrintNormalObv": null,
+            "toggleRefine": null,
+            "showDivs": true,
+            "pivotLeftLength": 5,
+            "pivotRightLength": 5,
+            "ppCheck": 3,
+            "maxbars": null,
+            "togglePivotAgo": true,
+            "toggleShowPricePivot": true,
+            "DivcolorUp": "rgb(102,187,106)",
+            "DivcolorDn": "rgb(247,82,95)",
+            "cvdColor": "rgb(178,181,190)",
+            "quote": 0,
+            "exchange": 0,
+            "type": "perp",
+            "visible": false
+          },
+          "optionsDefinitions": {
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            }
+          },
+          "series": [
+            "cvd-divs-pivot",
+            "pp7rdbql"
+          ],
+          "displayName": "CVD Divs Pivot",
+          "unsavedChanges": true
+        },
+        "_h7kcxa6uptfdou9e": {
+          "id": "_h7kcxa6uptfdou9e",
+          "libraryId": "large-liquidations copy 1",
+          "name": "Large Liquidations",
+          "description": null,
+          "script": "// markers needs a serie to get attached to\r\nline($price.close, color=transparent)\r\n\r\n\r\nif (markers === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n\r\n  // create a var to store already drawn markers\r\n  markers = []\r\n\r\n  // contain the last marker that can change as the bar update\r\n  repaintableMarker = null\r\n\r\n  largeLiquidation = options.largeLiquidation || 3000000\r\n}\r\n\r\nif (repaintableMarker && repaintableMarker.time < time) {\r\n  // bar is +1 since active marker was added, lock it in the array\r\n  markers.push(repaintableMarker)\r\n\r\n  // free up active marker\r\n  repaintableMarker = null\r\n}\r\n\r\nvar newMarker = null\r\n\r\n// big money strategy\r\n// TODO if it has already been on once, don't show\r\nvar signal = sum(lbuy,5) + sum(lsell,5) > largeLiquidation \r\n\r\nif (signal && !iAmOn) {\r\n  // newMarker is a temporary variable (not included in the indicator state)\r\n  // to avoid it being treated as persistent variable we wrap it inside parenthesis\r\n  (newMarker) = {\r\n    time: time,\r\n    position: 'inBar',\r\n    color: (options.markerColor || 'blue'),\r\n    shape: 'square'\r\n  }\r\n\r\n    iAmOn = true\r\n}else if (!signal){\r\n  iAmOn = false\r\n} \r\n\r\nif (newMarker || (repaintableMarker && !newMarker)) {\r\n  // override persistent variable repaintable marker\r\n  repaintableMarker = newMarker\r\n  \r\n  if (series[0].setMarkers) {\r\n    series[0].setMarkers(markers.concat(repaintableMarker))\r\n  }\r\n}",
+          "createdAt": 1705113061741,
+          "updatedAt": 1724269746626,
+          "options": {
+            "priceScaleId": "right",
+            "largeLiquidation": 4000000,
+            "visible": true,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "markerColor": "rgb(77,208,225)"
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "large-liquidations copy 1"
+          ],
+          "displayName": "Large Liquidations",
+          "unsavedChanges": false
+        },
+        "_5fuezhcwusqgurgl": {
+          "id": "_5fuezhcwusqgurgl",
+          "libraryId": "pivots",
+          "name": "Pivots",
+          "script": "candlestick($price, color=transparent)\r\n\r\n\r\nif (pivotsMax === 0) {\r\n  // Pivots\r\n  pivotsMax = 20\r\n  phPositions = []\r\n  plPositions = []\r\n  phVals = []\r\n  plVals = []\r\n}\r\n\r\n  // <markers utils>\r\n  if (markersDiv === 0) {\r\n    markersDiv = []\r\n  }\r\n  if (markersPivot === 0) {\r\n    markersPivot = []\r\n  }\r\n  \r\n  if (pendingMarkerDiv && pendingMarkerDiv.time < time) {\r\n    markersDiv.push(pendingMarkerDiv)\r\n    pendingMarkerDiv = null\r\n  }\r\n\r\n  if (pendingMarkerPivot && pendingMarkerPivot.time < time) {\r\n    markersPivot.push(pendingMarkerPivot)\r\n    pendingMarkerPivot = null\r\n  }\r\n  \r\n  var newMarkerDiv = null\r\n  var newMarkerPivot = null\r\n  // </markers utils>\r\n\r\n  plPrice = pivot_low($price.low, options.pivotLength, options.pivotLength)\r\n  phPrice = pivot_high($price.high, options.pivotLength, options.pivotLength)\r\n  \r\n\r\n  if( plPrice ){\r\n      var timeAtPivot = new Date((time - (options.pivotLength-1) * bar.timeframe) * 1000);\r\n      var isMonday = timeAtPivot.getDay() == 2 && timeAtPivot.getHours() <= 13 \r\n\r\n      if( isMonday ){\r\n        newMarkerPivot = {\r\n            time: time - (options.pivotLength-1) * bar.timeframe,\r\n            color: options.DivcolorUp,\r\n            position: 'belowBar',\r\n            text:  'L'\r\n          }\r\n      }\r\n  }\r\n\r\n\r\n  if( phPrice ){\r\n      var timeAtPivot = new Date((time - (options.pivotLength-1) * bar.timeframe) * 1000);\r\n      var isMonday = timeAtPivot.getDay() == 2 && timeAtPivot.getHours() <= 13 \r\n\r\n      if( isMonday ){\r\n        newMarkerPivot = { \r\n            time: time - (options.pivotLength-1) * bar.timeframe,\r\n            color: options.DivcolorDn,\r\n            position: 'aboveBar',\r\n            text: 'H'\r\n          }\r\n      }\r\n\r\n  }\r\n  \r\n  // <markers utils>\r\n  if (newMarkerPivot || (pendingMarkerPivot && !newMarkerPivot)) {\r\n      pendingMarkerPivot = newMarkerPivot\r\n    \r\n      \r\n    if (series[0].setMarkers) {\r\n      series[0].setMarkers(markersPivot.concat(pendingMarkerPivot))\r\n    }\r\n  }\r\n\r\n  // </markers utils>",
+          "createdAt": 1705351552192,
+          "updatedAt": 1705351964587,
+          "options": {
+            "priceScaleId": "right",
+            "toggleShowPricePivot": null,
+            "showDivs": null,
+            "pivotLeftLength": 14,
+            "pivotRightLength": 14,
+            "ppCheck": null,
+            "maxbars": null,
+            "togglePivotAgo": null,
+            "DivcolorUp": "rgb(76,175,80)",
+            "DivcolorDn": "rgb(233,30,99)",
+            "pivotLength": 14,
+            "visible": false,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "pivots"
+          ],
+          "displayName": "Pivots",
+          "unsavedChanges": false
+        },
+        "_iexfzm3k801uv9t3": {
+          "id": "_iexfzm3k801uv9t3",
+          "libraryId": "wekk-super",
+          "name": "wekk_super",
+          "script": "multiplier = option(default=2,type=text)\r\nperiod = option(default=10,type=text)\r\nquote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\nexchange = option(default=null,type=exchange,rebuild=true)\r\ntype = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n\r\nvar customSrc = source(quote=quote,type=type,exchange=exchange)\r\nvar price = avg_ohlc_with_gaps(customSrc)\r\n\r\npriceRef = price\r\n\r\nvar dayOfWeek = new Date(time*1000).getDay() + 1\r\nvar weekLow = lowest(price.low, dayOfWeek)\r\nvar weekHigh = lowest(price.high, dayOfWeek)\r\n\r\nvar hl = price.high - price.low\r\nvar hc = Math.abs(price.high - priceRef[1].close)\r\nvar lc = Math.abs(price.low - priceRef[1].close)\r\nvar tr = Math.max(hl, hc, lc)\r\natr = (atr[1] * (period - 1) + tr) / period\r\n\r\nvar up = (price.high + price.low) / 2 - multiplier * atr\r\nvar down = (price.high + price.low) / 2 + multiplier * atr\r\n\r\ntrend_up = trend_up[1] && priceRef[1].close > trend_up[1] ? Math.max(up, trend_up[1]) : up\r\ntrend_down = trend_down[1] && priceRef[1].close < trend_down[1] ? Math.min(down, trend_down[1]) : down\r\n\r\ntrend = (trend_down[1] && trend_up[1]) ? (price.close > trend_down[1] ? 1 : (price.close < trend_up[1] ? -1 : (trend[1] || 1))) :  1\r\nvar tsl = trend == 1 ? trend_up : trend_down\r\nvar mycolor = trend === 1 ? 'green' : 'red'\r\n\r\nline({\r\n  time: time,\r\n  value: tsl,\r\n  color: mycolor\r\n}) \r\n\r\n//brokenarea(price.close, up)\r\n//brokenarea(down, price.low)",
+          "createdAt": 1721176378765,
+          "updatedAt": 1721274864886,
+          "options": {
+            "priceScaleId": "right",
+            "visible": false,
+            "quote": 0,
+            "exchange": 0,
+            "type": "perp",
+            "multiplier": 2,
+            "period": 2,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            }
+          },
+          "optionsDefinitions": {
+            "multiplier": {
+              "default": 2,
+              "type": "text"
+            },
+            "period": {
+              "default": 10,
+              "type": "text"
+            },
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            }
+          },
+          "series": [
+            "wekk-super copy 54"
+          ],
+          "displayName": "wekk_super",
+          "unsavedChanges": false
+        },
+        "_5m6q87ub1xbfq82t": {
+          "id": "_5m6q87ub1xbfq82t",
+          "libraryId": "wekk-super-copy-1",
+          "name": "Weekly Supertrend [entry]",
+          "script": "multiplier = option(default=2,type=text)\r\nperiod = option(default=10,type=text)\r\nquote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\nexchange = option(default=null,type=exchange,rebuild=true)\r\ntype = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n\r\n\r\n\r\nvar customSrc = source(name=/^BTC/, quote=quote,type=type,exchange=exchange)\r\nvar price = avg_ohlc_with_gaps(customSrc)\r\n\r\n// initialise weeks\r\nif( !weeks ){\r\n  week = 0\r\n  weeks(10) = price\r\n  trend_up = 0\r\n  trend_down = 0\r\n}\r\n\r\nif( !waitWeek || waitWeek < 8){\r\n  waitWeek = (waitWeek || 0) + 1 \r\n  return\r\n}\r\n\r\nvar dayOfWeek = new Date(time*1000).getDay()\r\n\r\n// new week. add previous week \r\nif( dayOfWeek === 1 ){\r\n  week++\r\n  weeks = weeks[0]\r\n\r\n  var hl = weeks.high - weeks.low\r\n  var hc = Math.abs(weeks.high - weeks[1].close)\r\n  var lc = Math.abs(weeks.low - weeks[1].close)\r\n  var tr = Math.max(hl, hc, lc)\r\n\r\n  atr = (atr[1] * (period - 1) + tr) / period\r\n\r\n  var up = (weeks.high + weeks.low) / 2 - multiplier * atr\r\n  var down = (weeks.high + weeks.low) / 2 + multiplier * atr\r\n\r\n  trend_up = trend_up[1] && weeks[1].close > trend_up[1] ? Math.max(up, trend_up[1]) : up\r\n  trend_down = trend_down[1] && weeks[1].close < trend_down[1] ? Math.min(down, trend_down[1]) : down\r\n\r\n  weeks[0] = { \r\n    time: price.time, \r\n    open: price.open, \r\n    high: price.high, \r\n    low: price.low, \r\n    close: price.close \r\n  }\r\n}else{\r\n  weeks[0] = { \r\n    time: weeks[0].time, \r\n    open: weeks[0].open, \r\n    high: Math.max(weeks[0].high, price.high), \r\n    low: Math.min(weeks[0].low, price.low), \r\n    close: price.close \r\n  }\r\n}\r\n\r\n// supertrend weekly\r\ntrend = (trend_down[1] && trend_up[1]) ? (price.close > trend_down[1] ? 1 : (price.close < trend_up[1] ? -1 : (trend[1] || 1))) :  1\r\nvar tsl = trend == 1 ? trend_up : trend_down\r\nvar mycolor = trend === 1 ? 'green' : 'red'\r\n\r\nline(trend, id=supertrendDir, color=transparent) \r\n\r\nline({\r\n  time: time,\r\n  value: tsl,\r\n  color: mycolor\r\n}) \r\n\r\n\r\n//brokenarea(price.close, up)\r\n//brokenarea(down, price.low)",
+          "createdAt": 1721275077235,
+          "updatedAt": 1726184076818,
+          "options": {
+            "priceScaleId": "right",
+            "visible": true,
+            "quote": 0,
+            "exchange": 0,
+            "type": "perp",
+            "multiplier": 2,
+            "period": 10,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "exitatrperiod": 8,
+            "exitatrmultiple": 4
+          },
+          "optionsDefinitions": {
+            "multiplier": {
+              "default": 2,
+              "type": "text"
+            },
+            "period": {
+              "default": 10,
+              "type": "text"
+            },
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            }
+          },
+          "series": [
+            "supertrendDir",
+            "9cpudqvl"
+          ],
+          "displayName": "Weekly Supertrend [entry]",
+          "unsavedChanges": false
+        },
+        "_q90evanyqw629pxj": {
+          "id": "_q90evanyqw629pxj",
+          "libraryId": "renko",
+          "name": "renko",
+          "script": "renkoATRlength = 27\r\n\r\npriceRef(2) = $price \r\n\r\nvar hl = $price.high - $price.low\r\nvar hc = Math.abs($price.high - priceRef[1].close)\r\nvar lc = Math.abs($price.low - priceRef[1].close)\r\nvar tr = Math.max(hl, hc, lc)\r\natr = (atr[1] * (renkoATRlength - 1) + tr) / renkoATRlength\r\n\r\nif( !renko ){\r\n    renko = $price.close\r\n}\r\nvar renkoUP = false\r\nvar renkoDN = false \r\n\r\nif( $price.close > (renko + atr) ){\r\n    renkoUP = true\r\n    renko =  renko + atr\r\n}\r\n\r\nif( $price.close <= (renko - atr) ){\r\n    renkoDN = true\r\n    renko =  renko - atr\r\n}\r\n\r\nvar renkoClose = renkoUP ? renko[1] + atr[1] : (renkoDN ?  renko[1] - atr[1] : renko[1])\r\nvar renkoLow = (renkoDN ? renko[1] - atr[1] : renko[1])\r\nvar renkoHigh = (renkoUP ? renko[1] + atr[1] : renko[1])\r\n\r\nplotcandlestick({\r\n    time: time,\r\n    open: renko[1],\r\n    high: renko,\r\n    low: renko,\r\n    close: renko\r\n})",
+          "createdAt": 1721281177111,
+          "updatedAt": 1721282746456,
+          "options": {
+            "priceScaleId": "right",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "visible": false
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "renko"
+          ],
+          "displayName": "renko",
+          "unsavedChanges": false
+        },
+        "_dqrpso9tn25r4uhj": {
+          "id": "_dqrpso9tn25r4uhj",
+          "libraryId": "atr-2d",
+          "name": "ATR 2d [exit]",
+          "script": "/**\r\n * This is our exit \r\n */\r\n\r\nquote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\nexchange = option(default=null,type=exchange,rebuild=true)\r\ntype = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\npair = option(default=btc,type=list,options=[null, \"btc\", \"eth\"],rebuild=true)\r\nuseTimeframe = option(default=chart,type=list,options=[null, \"chart\", \"2d\"],rebuild=true)\r\nperiod = option(default=8,type=text)\r\nmultiplier = option(default=4,type=text)\r\n\r\nif (bodyPercentWatch === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n\r\n  // if candle body has a price percent change less than bodyPercentWatch, we start a refinement\r\n  bodyPercentWatch = options.bodyPercentWatch || 0.3\r\n\r\n  // if a wick is x times greater than the other, we might use it to refine change the side\r\n  wickRatioThreshold = options.wickRatioThreshold || 1.5\r\n\r\n  // paint a marker when OBV has been refined (changed of direction)\r\n  toggleDebug = options.toggleDebug || false\r\n\r\n  // when on, we calculate the wick percent difference and keep only that volume to add to OBV \r\n  toggleVolumeWick = options.toggleVolumeWick || false\r\n\r\n  //quote = option(default=null,type=list,options=[null, \"USD\", \"USDT\", \"TUSD\", \"USDC\"],rebuild=true)\r\n  //exchange = option(default=null,type=exchange,rebuild=true)\r\n  //type = option(default=perp,type=list,options=[null, \"spot\", \"perp\"],rebuild=true)\r\n  pairReg = pair === 'btc' ? new RegExp(/^BTC/) : ( pair === 'eth' ? new RegExp(/^ETH/) : new RegExp(/^.*/) )\r\n  \r\n  ohlc4(2) = 0\r\n}\r\n\r\nvar customSrc = source(name=/^BTC/, quote=quote,type=type,exchange=exchange)\r\nvar price = avg_ohlc_with_gaps(customSrc)\r\n\r\n// initialise 2 days array\r\nif( !twodays ){\r\n  twodays(100) = price\r\n}\r\n\r\nvar sourceBuy = source(vbuy, name=/^BTC/, quote=quote,type=type,exchange=exchange) \r\nvar sourceSell = source(vsell, name=/^BTC/, quote=quote,type=type,exchange=exchange)\r\n\r\nvar dayOfWeek = new Date(time*1000).getDay()\r\n// every second day\r\nif( dayOfWeek % 2 ){\r\n  // start a new 2 days\r\n  twodays = twodays[0]\r\n\r\n  var hl = twodays.high - twodays.low\r\n  var hc = Math.abs(twodays.high - twodays[1].close)\r\n  var lc = Math.abs(twodays.low - twodays[1].close)\r\n  var tr = Math.max(hl, hc, lc)\r\n\r\n  atr = (atr[1] * (period - 1) + tr) / period\r\n\r\n  var up = (twodays.high + twodays.low) / 2 - multiplier * atr\r\n  var down = (twodays.high + twodays.low) / 2 + multiplier * atr\r\n\r\n  trend_up = trend_up[1] && twodays[1].close > trend_up[1] ? Math.max(up, trend_up[1]) : up\r\n  trend_down = trend_down[1] && twodays[1].close < trend_down[1] ? Math.min(down, trend_down[1]) : down\r\n\r\n  twodays[0] = { \r\n    time: price.time, \r\n    open: price.open, \r\n    high: price.high, \r\n    low: price.low, \r\n    close: price.close,  \r\n    volume: sourceBuy + sourceSell\r\n  }\r\n  return\r\n}else{\r\n  // merge with day before\r\n  twodays[0] = { \r\n    time: twodays[0].time, \r\n    open: twodays[0].open, \r\n    high: Math.max(twodays[0].high, price.high), \r\n    low: Math.min(twodays[0].low, price.low), \r\n    close: price.close,\r\n    volume: twodays[0].volume + sourceBuy + sourceSell\r\n  }\r\n}\r\n\r\n\r\n\r\n\r\nvar _open = useTimeframe === 'chart' ? $price.open  : twodays.open\r\nvar _high = useTimeframe === 'chart' ? $price.high  : twodays.high\r\nvar _low = useTimeframe === 'chart' ? $price.low : twodays.low\r\nvar _close = useTimeframe === 'chart' ? $price.close : twodays.close\r\n\r\ntrend = (trend_down[1] && trend_up[1]) ? (price.close > trend_down[1] ? 1 : (price.close < trend_up[1] ? -1 : (trend[1] || 1))) :  1\r\nvar tsl = trend == 1 ? trend_up : trend_down\r\nvar mycolor = trend === 1 ? 'blue' : 'orange'\r\n\r\nline(trend, id=supertrendDir, color=transparent) \r\n\r\nline({\r\n  time: time,\r\n  value: tsl,\r\n  color: mycolor\r\n})",
+          "createdAt": 1726183079652,
+          "updatedAt": 1728939445945,
+          "options": {
+            "priceScaleId": "right",
+            "quote": 0,
+            "exchange": 0,
+            "type": "perp",
+            "pair": "btc",
+            "useTimeframe": "chart",
+            "obvSource": "close",
+            "bodyPercentWatch": null,
+            "wickRatioThreshold": null,
+            "toggleDebug": null,
+            "toggleVolumeWick": null,
+            "toggleImprove": null,
+            "obvLength": 14,
+            "emaFast": null,
+            "emaSlow": null,
+            "period": 8,
+            "multiple": 4,
+            "multipler": 4,
+            "multiplier": 4,
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "visible": true
+          },
+          "optionsDefinitions": {
+            "quote": {
+              "default": 0,
+              "type": "list",
+              "options": [
+                null,
+                "USD",
+                "USDT",
+                "TUSD",
+                "USDC"
+              ],
+              "rebuild": true
+            },
+            "exchange": {
+              "default": 0,
+              "type": "exchange",
+              "rebuild": true
+            },
+            "type": {
+              "default": "perp",
+              "type": "list",
+              "options": [
+                null,
+                "spot",
+                "perp"
+              ],
+              "rebuild": true
+            },
+            "pair": {
+              "default": "btc",
+              "type": "list",
+              "options": [
+                null,
+                "btc",
+                "eth"
+              ],
+              "rebuild": true
+            },
+            "useTimeframe": {
+              "default": "chart",
+              "type": "list",
+              "options": [
+                null,
+                "chart",
+                "2d"
+              ],
+              "rebuild": true
+            },
+            "period": {
+              "default": 8,
+              "type": "text"
+            },
+            "multiplier": {
+              "default": 4,
+              "type": "text"
+            }
+          },
+          "series": [
+            "supertrendDir2",
+            "ilqg3hz6"
+          ],
+          "displayName": "ATR 2d [exit]",
+          "unsavedChanges": false
+        },
+        "_pccymxijqtood4t7": {
+          "id": "_pccymxijqtood4t7",
+          "libraryId": "alerts2",
+          "name": "Alerts2",
+          "script": "// markers needs a serie to get attached to\r\ncandlestick($price, color=transparent)\r\n\r\nif (markers === 0) {\r\n  // first script execution (0 is default values for all persistent variables)\r\n\r\n  // create a var to store already drawn markers\r\n  markers = []\r\n\r\n  // contain the last marker that can change as the bar update\r\n  repaintableMarker = null\r\n\r\n  showWeak = option(default=false,type=checkbox)\r\n}\r\n\r\nif (repaintableMarker && repaintableMarker.time < time) {\r\n  // bar is +1 since active marker was added, lock it in the array\r\n  markers.push(repaintableMarker)\r\n\r\n  // free up active marker\r\n  repaintableMarker = null\r\n}\r\n\r\nvar newMarker = null\r\nvar myalert = ORDERBOOK:AGGRSPOT-BTCUSDALERTS.zalert\r\n\r\n/*\r\nexport const signalStrengthMap: SignalStrength = {\r\n    [Signal.no]: 0,\r\n    [Signal.weak]: 1,\r\n    [Signal.strong]: 2,\r\n    [Signal.vstrong]: 3,\r\n    [Signal.ultimate]: 4,\r\n};\r\n*/\r\nif( myalert && myalert.length ) {\r\n  var bearSignal = myalert[2] == 'sell'\r\n  var bullSignal = myalert[2] == 'buy'\r\n\r\n  if (bearSignal && (showWeak || myalert[3] !== 'weak')) {\r\n    var myColor5 = 'grey'\r\n    if( myalert[3] === 'strong' ){\r\n      myColor5 = 'orange'\r\n    } else if (myalert[3] === 'vstrong' ){\r\n      myColor5 = 'red'\r\n    } else if (myalert[3] === 'ultimate' ){\r\n      myColor5 = 'purple'\r\n    }\r\n\r\n    // newMarker is a temporary variable (not included in the indicator state)\r\n    // to avoid it being treated as persistent variable we wrap it inside parenthesis\r\n    (newMarker) = {\r\n      time: time,\r\n      position: 'aboveBar',\r\n      color: myColor5,\r\n      shape: 'arrowDown',\r\n    }\r\n  }\r\n\r\n  if (bullSignal && (showWeak || myalert[3] !== 'weak')) {\r\n    var myColor2 = 'grey'\r\n    if( myalert[3] === 'strong' ){\r\n      myColor2 = 'yellow'\r\n    } else if( myalert[3] === 'vstrong' ){\r\n      myColor2 = 'green'\r\n    } else if( myalert[3] === 'ultimate' ){\r\n      myColor2 = 'purple'\r\n    }\r\n\r\n    (newMarker) = {\r\n      time: time,\r\n      position: 'belowBar',\r\n      color:  myColor2,\r\n      shape: 'arrowUp',\r\n    }\r\n  }\r\n}\r\n\r\nif (newMarker || (repaintableMarker && !newMarker)) {\r\n  // override persistent variable repaintable marker\r\n  repaintableMarker = newMarker\r\n  \r\n  if (series[0].setMarkers) {\r\n    series[0].setMarkers(markers.concat(repaintableMarker))\r\n  }\r\n}",
+          "createdAt": 1701316392533,
+          "updatedAt": 1728939969407,
+          "options": {
+            "priceScaleId": "right",
+            "scaleMargins": {
+              "top": 0.29,
+              "bottom": 0.06
+            },
+            "visible": true,
+            "showWeak": 0
+          },
+          "optionsDefinitions": {
+            "showWeak": {
+              "default": 0,
+              "type": "checkbox"
+            }
+          },
+          "series": [
+            "alerts2"
+          ],
+          "displayName": "Alerts2",
+          "unsavedChanges": false
+        }
+      },
+      "indicatorOrder": [
+        "cvd",
+        "liquidations",
+        "price",
+        "volume",
+        "keltner",
+        "relative-volume",
+        "obv-spots",
+        "obv-perps",
+        "mondays",
+        "volume copy 1",
+        "cvd-btc-perp",
+        "cvd-btc-spot",
+        "extra copy 1",
+        "alerts copy 1",
+        "obv-spots-copy-3",
+        "delta-reg",
+        "delta-reg-copy-1",
+        "obv-regression",
+        "cumulative-volume-delta-tv",
+        "weekends",
+        "obv-regression-refined",
+        "cvd-w-divs",
+        "testvar",
+        "td-sequential",
+        "_f8dx7t03whaig4hs",
+        "_rbw1dtk9t8hd9lgg",
+        "_ai7aitvrmca5si9b",
+        "_h7kcxa6uptfdou9e",
+        "_5fuezhcwusqgurgl",
+        "_iexfzm3k801uv9t3",
+        "_5m6q87ub1xbfq82t",
+        "_q90evanyqw629pxj",
+        "_dqrpso9tn25r4uhj",
+        "_pccymxijqtood4t7"
+      ],
+      "priceScales": {
+        "right": {
+          "scaleMargins": {
+            "top": 0.29,
+            "bottom": 0.06
+          },
+          "priceFormat": {
+            "precision": 1,
+            "minMove": 0.1
+          },
+          "indicators": [
+            "Price"
+          ]
+        },
+        "cvd": {
+          "scaleMargins": {
+            "top": 0.39,
+            "bottom": 0.48
+          }
+        },
+        "volume_liquidations": {
+          "scaleMargins": {
+            "top": 0,
+            "bottom": 0.85
+          },
+          "indicators": [
+            "Liquidations"
+          ]
+        },
+        "volume": {
+          "scaleMargins": {
+            "top": 0.84,
+            "bottom": 0
+          }
+        },
+        "left": {
+          "scaleMargins": {
+            "top": 0.04,
+            "bottom": 0.22
+          },
+          "indicators": [
+            "Price"
+          ]
+        },
+        "obv": {
+          "scaleMargins": {
+            "top": 0.64,
+            "bottom": 0.06
+          },
+          "indicators": [
+            "OBV perps"
+          ]
+        },
+        "obv-copy-1": {
+          "scaleMargins": {
+            "top": 0.64,
+            "bottom": 0.06
+          },
+          "indicators": [
+            "OBV spots"
+          ]
+        },
+        "cvdperp": {
+          "scaleMargins": {
+            "top": 0.29,
+            "bottom": 0.51
+          },
+          "indicators": [
+            "CVD (BTC PERP)"
+          ]
+        },
+        "cvdspot": {
+          "scaleMargins": {
+            "top": 0.28,
+            "bottom": 0.51
+          },
+          "indicators": [
+            "CVD (BTC SPOT)"
+          ]
+        },
+        "obv-spots-copy-1": {
+          "scaleMargins": {
+            "top": 0.59,
+            "bottom": 0.12
+          },
+          "indicators": [
+            "Cumulative volume delta (TV)"
+          ]
+        },
+        "obv-spots-copy-2": {
+          "scaleMargins": {
+            "top": 0.59,
+            "bottom": 0.05
+          },
+          "indicators": [
+            "delta  reg"
+          ]
+        },
+        "obv-regression": {
+          "scaleMargins": {
+            "top": 0,
+            "bottom": 0.75
+          },
+          "indicators": [
+            "OBV regression"
+          ]
+        },
+        "obv-regression-refined": {
+          "scaleMargins": {
+            "top": 0,
+            "bottom": 0.69
+          },
+          "indicators": [
+            "OBV regression refined"
+          ]
+        },
+        "shm": {
+          "scaleMargins": {
+            "top": 0.84,
+            "bottom": 0
+          }
+        },
+        "_ai7aitvrmca5si9b": {
+          "scaleMargins": {
+            "top": 0.04,
+            "bottom": 0.69
+          },
+          "indicators": [
+            "CVD Divs Pivot"
+          ]
+        },
+        "_q90evanyqw629pxj": {
+          "scaleMargins": {
+            "top": 0.1,
+            "bottom": 0.63
+          },
+          "indicators": [
+            "renko"
+          ]
+        }
+      },
+      "layouting": false,
+      "showIndicators": true,
+      "timeframe": "86400",
+      "refreshRate": 1000,
+      "showAlerts": true,
+      "showAlertsLabel": true,
+      "showLegend": true,
+      "fillGapsWithEmpty": true,
+      "showHorizontalGridlines": false,
+      "horizontalGridlinesColor": "rgba(255,255,255,.1)",
+      "showVerticalGridlines": false,
+      "verticalGridlinesColor": "rgba(255,255,255,.1)",
+      "showWatermark": false,
+      "watermarkColor": "rgba(255,255,255,.1)",
+      "showBorder": true,
+      "borderColor": null,
+      "textColor": null,
+      "showLeftScale": false,
+      "showRightScale": true,
+      "showTimeScale": true,
+      "hiddenMarkets": {},
+      "barSpacing": 6.038070015595136,
+      "_id": "chart copy 1",
+      "navigationState": {
+        "tab": "script",
+        "optionsQuery": "",
+        "fontSizePx": 14
+      }
+    },
+    "settings": {
+      "_id": "settings",
+      "preferQuoteCurrencySize": true,
+      "aggregationLength": 1,
+      "calculateSlippage": null,
+      "wsProxyUrl": null,
+      "disableAnimations": false,
+      "autoHideHeaders": true,
+      "autoHideNames": true,
+      "theme": "dark",
+      "backgroundColor": "rgb(23,27,41)",
+      "textColor": "",
+      "buyColor": "rgb(100, 157, 102)",
+      "sellColor": "rgb(239, 67, 82)",
+      "timezoneOffset": 0,
+      "useAudio": false,
+      "audioVolume": 1,
+      "audioFilters": {
+        "PingPongDelay": true,
+        "Compressor": false,
+        "Delay": false,
+        "HighPassFilter": true,
+        "LowPassFilter": false
+      },
+      "sections": [
+        "settings-workspaces",
+        "settings-trades",
+        "timeframe-minutes",
+        "search-extras",
+        "indicator-right-colors",
+        "indicator-right-scale",
+        "timeframe-hours",
+        "timeframe-ticks",
+        "timeframe-vol",
+        "search-type",
+        "indicator-left-other",
+        "indicator-left-colors",
+        "indicator-left-script",
+        "settings-other",
+        "search-exchanges"
+      ],
+      "searchTypes": {
+        "recentSearches": true,
+        "historical": false,
+        "spots": false,
+        "perpetuals": false,
+        "futures": false,
+        "normalize": false,
+        "mergeUsdt": false
+      },
+      "searchQuotes": {},
+      "previousSearchSelections": [
+        {
+          "label": "BTCUSD+ETHUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "COINBASE:ETH-PERP-INTX",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL"
+          ],
+          "count": 25
+        },
+        {
+          "label": "BTCUSD+ETHUSD+AGGRSPOTBTCUSDA...",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "COINBASE:ETH-PERP-INTX",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL",
+            "ORDERBOOK:AGGRSPOT-BTCUSDALERTS"
+          ],
+          "count": 26
+        },
+        {
+          "label": "BTCUSD+ETHUSD+AGGRSPOTBTCUSDA...",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL",
+            "ORDERBOOK:AGGRSPOT-BTCUSDALERTS"
+          ],
+          "count": 25
+        },
+        {
+          "label": "BTCUSD+ETHUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL"
+          ],
+          "count": 24
+        },
+        {
+          "label": "BTCUSD+ETHUSD+AGGRSPOTBTCUSDA...",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "COINBASE:ETH-USD",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL",
+            "OKEX:ETH-USDT",
+            "OKEX:ETH-USDT-SWAP",
+            "ORDERBOOK:AGGRSPOT-BTCUSDALERTS"
+          ],
+          "count": 28
+        },
+        {
+          "label": "BTCUSD+ETHUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE_FUTURES:ethusd_perp",
+            "BINANCE_FUTURES:ethusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BINANCE:ethfdusd",
+            "BINANCE:ethusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "COINBASE:ETH-USD",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL",
+            "OKEX:ETH-USDT",
+            "OKEX:ETH-USDT-SWAP"
+          ],
+          "count": 27
+        },
+        {
+          "label": "BTCUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BITSTAMP:btcusd",
+            "BITSTAMP:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "DERIBIT:BTC_USDC-PERPETUAL",
+            "DERIBIT:BTC-PERPETUAL"
+          ],
+          "count": 20
+        },
+        {
+          "label": "BYBIT:BTCUSDT-SPOT",
+          "markets": [
+            "BYBIT:BTCUSDT-SPOT"
+          ],
+          "count": 0
+        },
+        {
+          "label": "BYBIT:SQRUSDT-SPOT",
+          "markets": [
+            "BYBIT:SQRUSDT-SPOT"
+          ],
+          "count": 0
+        },
+        {
+          "label": "BTCUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDT_UMCBL",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDT",
+            "DERIBIT:BTC-PERPETUAL",
+            "DYDX:BTC-USD"
+          ],
+          "count": 9
+        },
+        {
+          "label": "BTCUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btctusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDC",
+            "COINBASE:BTC-USDT",
+            "OKEX:BTC-USD-SWAP",
+            "OKEX:BTC-USDC-SWAP",
+            "OKEX:BTC-USDT",
+            "OKEX:BTC-USDT-SWAP"
+          ],
+          "count": 17
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDLEVELS+A...",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btctusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDC",
+            "COINBASE:BTC-USDT",
+            "OKEX:BTC-USD-SWAP",
+            "OKEX:BTC-USDC-SWAP",
+            "OKEX:BTC-USDT",
+            "OKEX:BTC-USDT-SWAP",
+            "ORDERBOOK:AGGRPERP-BTCUSDLEVELS",
+            "ORDERBOOK:AGGRSPOT-BTCUSDLEVELS"
+          ],
+          "count": 19
+        },
+        {
+          "label": "BTCUSD+AGGRSPOTBTCUSDLEVELS",
+          "markets": [
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcfdusd",
+            "BINANCE:btctusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDC",
+            "COINBASE:BTC-USDT",
+            "OKEX:BTC-USD-SWAP",
+            "OKEX:BTC-USDC-SWAP",
+            "OKEX:BTC-USDT",
+            "OKEX:BTC-USDT-SWAP",
+            "ORDERBOOK:AGGRSPOT-BTCUSDLEVELS"
+          ],
+          "count": 18
+        },
+        {
+          "label": "BTCUSD+AGGRSPOTBTCUSDLEVELS",
+          "markets": [
+            "BINANCE_FUTURES:btcbusd",
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcbusd",
+            "BINANCE:btcfdusd",
+            "BINANCE:btctusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BITFINEX:BTCUSD",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDC",
+            "COINBASE:BTC-USDT",
+            "HUOBI:BTC-USD",
+            "HUOBI:BTC-USDT",
+            "HUOBI:btcusdc",
+            "HUOBI:btcusdt",
+            "KUCOIN:BTC-USDC",
+            "KUCOIN:BTC-USDT",
+            "KUCOIN:XBTUSDM",
+            "KUCOIN:XBTUSDTM",
+            "MEXC:BTC_USD",
+            "MEXC:BTC_USDT",
+            "MEXC:BTCUSDT",
+            "OKEX:BTC-USD-SWAP",
+            "OKEX:BTC-USDC",
+            "OKEX:BTC-USDC-SWAP",
+            "OKEX:BTC-USDT",
+            "OKEX:BTC-USDT-SWAP",
+            "ORDERBOOK:AGGRSPOT-BTCUSDLEVELS"
+          ],
+          "count": 38
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDLEVELS",
+          "markets": [
+            "BINANCE_FUTURES:btcbusd",
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcbusd",
+            "BINANCE:btcfdusd",
+            "BINANCE:btctusd",
+            "BINANCE:btcusdc",
+            "BINANCE:btcusdt",
+            "BITFINEX:BTCUSD",
+            "BITGET:BTCPERP_CMCBL",
+            "BITGET:BTCUSD_DMCBL",
+            "BITGET:BTCUSDC",
+            "BITGET:BTCUSDT",
+            "BITGET:BTCUSDT_UMCBL",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDC-SPOT",
+            "BYBIT:BTCUSDT",
+            "BYBIT:BTCUSDT-SPOT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDC",
+            "COINBASE:BTC-USDT",
+            "HUOBI:BTC-USD",
+            "HUOBI:BTC-USDT",
+            "HUOBI:btcusdc",
+            "HUOBI:btcusdt",
+            "KUCOIN:BTC-USDC",
+            "KUCOIN:BTC-USDT",
+            "KUCOIN:XBTUSDM",
+            "KUCOIN:XBTUSDTM",
+            "MEXC:BTC_USD",
+            "MEXC:BTC_USDT",
+            "MEXC:BTCUSDT",
+            "OKEX:BTC-USD-SWAP",
+            "OKEX:BTC-USDC",
+            "OKEX:BTC-USDC-SWAP",
+            "OKEX:BTC-USDT",
+            "OKEX:BTC-USDT-SWAP",
+            "ORDERBOOK:AGGRPERP-BTCUSDLEVELS"
+          ],
+          "count": 38
+        }
+      ],
+      "searchExchanges": {
+        "AGGR": false,
+        "BINANCE": false,
+        "BINANCE_FUTURES": false,
+        "BINANCE_US": false,
+        "BITFINEX": false,
+        "BITGET": false,
+        "BITMART": false,
+        "BITMEX": false,
+        "BITSTAMP": false,
+        "BYBIT": false,
+        "COINBASE": false,
+        "CRYPTOCOM": false,
+        "DERIBIT": false,
+        "DYDX": false,
+        "GATEIO": false,
+        "HITBTC": false,
+        "HUOBI": false,
+        "KRAKEN": false,
+        "KUCOIN": false,
+        "MEXC": false,
+        "OKEX": false,
+        "ORDERBOOK": true,
+        "PHEMEX": false,
+        "POLONIEX": false,
+        "UNISWAP": false
+      },
+      "timeframes": [
+        {
+          "label": "1s",
+          "value": "1"
+        },
+        {
+          "label": "3s",
+          "value": "3"
+        },
+        {
+          "label": "5s",
+          "value": "5"
+        },
+        {
+          "label": "10s",
+          "value": "10"
+        },
+        {
+          "label": "15s",
+          "value": "15"
+        },
+        {
+          "label": "30s",
+          "value": "30"
+        },
+        {
+          "label": "1m",
+          "value": "60"
+        },
+        {
+          "label": "3m",
+          "value": "180"
+        },
+        {
+          "label": "5m",
+          "value": "300"
+        },
+        {
+          "label": "15m",
+          "value": "900"
+        },
+        {
+          "label": "21m",
+          "value": "1260"
+        },
+        {
+          "label": "30m",
+          "value": "1800"
+        },
+        {
+          "label": "1h",
+          "value": "3600"
+        },
+        {
+          "label": "2h",
+          "value": "7200"
+        },
+        {
+          "label": "4h",
+          "value": "14400"
+        },
+        {
+          "label": "6h",
+          "value": "21600"
+        },
+        {
+          "label": "8h",
+          "value": "28800"
+        },
+        {
+          "label": "12h",
+          "value": "43200"
+        },
+        {
+          "label": "1d",
+          "value": "86400"
+        },
+        {
+          "label": "21 ticks",
+          "value": "21t"
+        },
+        {
+          "label": "50 ticks",
+          "value": "50t"
+        },
+        {
+          "label": "89 ticks",
+          "value": "89t"
+        },
+        {
+          "label": "100 ticks",
+          "value": "100t"
+        },
+        {
+          "label": "200 ticks",
+          "value": "200t"
+        },
+        {
+          "label": "610 ticks",
+          "value": "610t"
+        },
+        {
+          "label": "1000 ticks",
+          "value": "1000t"
+        },
+        {
+          "label": "1597 ticks",
+          "value": "1597t"
+        },
+        {
+          "label": "100 $",
+          "value": "100v"
+        }
+      ],
+      "favoriteTimeframes": {
+        "60": "1m",
+        "900": "15m"
+      },
+      "normalizeWatermarks": true,
+      "alerts": false,
+      "alertsColor": "rgb(0,255,0)",
+      "alertsLineStyle": 1,
+      "alertsLineWidth": 1,
+      "alertsClick": false,
+      "alertSound": null,
+      "showThresholdsAsTable": true,
+      "indicatorDialogNavigation": "{\"optionsQuery\":\"\",\"editorOptions\":{},\"columnWidth\":240,\"tab\":\"options\"}"
+    }
+  }
+}

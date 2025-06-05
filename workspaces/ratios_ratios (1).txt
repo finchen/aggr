@@ -1,0 +1,1723 @@
+{
+  "version": 7,
+  "createdAt": 1700773469644,
+  "updatedAt": 1727900059434,
+  "name": "ratios",
+  "id": "ratios",
+  "states": {
+    "panes": {
+      "_id": "panes",
+      "locked": false,
+      "panes": {
+        "chart": {
+          "id": "chart",
+          "name": "",
+          "type": "chart",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSD",
+            "ORDERBOOK:AGGRSPOT-BTCUSD",
+            "ORDERBOOK:BINANCE-BTCUSDT",
+            "ORDERBOOK:BITMEX-XBTUSD",
+            "ORDERBOOK:COINBASE-BTCUSD"
+          ],
+          "zoom": 1
+        }
+      },
+      "layout": [
+        {
+          "i": "chart",
+          "type": "chart",
+          "y": 0,
+          "x": 0,
+          "w": 24,
+          "h": 24,
+          "moved": false
+        }
+      ]
+    },
+    "settings": {
+      "_id": "settings",
+      "preferQuoteCurrencySize": true,
+      "aggregationLength": 100,
+      "calculateSlippage": null,
+      "wsProxyUrl": null,
+      "disableAnimations": false,
+      "autoHideHeaders": true,
+      "autoHideNames": true,
+      "theme": "dark",
+      "backgroundColor": "rgb(23,27,41)",
+      "textColor": "",
+      "buyColor": "rgb(100, 157, 102)",
+      "sellColor": "rgb(239, 67, 82)",
+      "timezoneOffset": 43200000,
+      "useAudio": false,
+      "audioVolume": 1,
+      "audioFilters": {
+        "PingPongDelay": true,
+        "Compressor": false,
+        "Delay": false,
+        "HighPassFilter": true,
+        "LowPassFilter": false
+      },
+      "sections": [
+        "settings-workspaces",
+        "settings-trades",
+        "timeframe-minutes",
+        "settings-exchanges",
+        "search-exchanges",
+        "search-type",
+        "timeframe-seconds",
+        "indicator-right-colors",
+        "indicator-right-default",
+        "search-quotes",
+        "indicator-right-scale",
+        "search-extras",
+        "indicator-left-script",
+        "indicator-right-format",
+        "indicator-left-other",
+        "settings-other",
+        "timeframe-hours",
+        "indicator-left-colors"
+      ],
+      "searchTypes": {
+        "recentSearches": true,
+        "historical": false,
+        "spots": false,
+        "perpetuals": false,
+        "futures": false,
+        "normalize": false,
+        "mergeUsdt": false,
+        "recent": false
+      },
+      "searchQuotes": {
+        "OTHERS": false,
+        "USD": false,
+        "USDT": false
+      },
+      "previousSearchSelections": [
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSD+AGGRSPO...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSD",
+            "ORDERBOOK:AGGRSPOT-BTCUSD",
+            "ORDERBOOK:BINANCE-BTCUSDT",
+            "ORDERBOOK:BITMEX-XBTUSD",
+            "ORDERBOOK:COINBASE-BTCUSD"
+          ],
+          "count": 6
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDLEVELS+A...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDLEVELS",
+            "ORDERBOOK:AGGRSPOT-BTCUSDLEVELS",
+            "ORDERBOOK:BINANCE-BTCUSDTLEVELS",
+            "ORDERBOOK:BITMEX-XBTUSDLEVELS",
+            "ORDERBOOK:COINBASE-BTCUSDLEVELS"
+          ],
+          "count": 6
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDLEVELS+A...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDLEVELS",
+            "ORDERBOOK:AGGRSPOT-BTCUSDLEVELS",
+            "ORDERBOOK:BINANCE-BTCUSDTLEVELS",
+            "ORDERBOOK:COINBASE-BTCUSDLEVELS"
+          ],
+          "count": 5
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDLEVELS+A...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDLEVELS",
+            "ORDERBOOK:AGGRSPOT-BTCUSDLEVELS"
+          ],
+          "count": 3
+        },
+        {
+          "label": "ORDERBOOK:BINANCE-BTCUSDTRATIO0",
+          "markets": [
+            "ORDERBOOK:BINANCE-BTCUSDTRATIO0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "BTCUSD+BINANCEBTCUSDTRATIO0",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:BINANCE-BTCUSDTRATIO0"
+          ],
+          "count": 2
+        },
+        {
+          "label": "BINANCE_FUTURES:btcusdt",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt"
+          ],
+          "count": 0
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDASKS0+AG...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS0",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS1",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS2",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS3",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS0",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS1",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS2",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS3"
+          ],
+          "count": 17
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDASKS0+AG...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS0",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS1",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO2"
+          ],
+          "count": 9
+        },
+        {
+          "label": "ORDERBOOK:AGGRPERP-BTCUSDRATIO0",
+          "markets": [
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOT-BTCUSDASKS0",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOT-BTCUSDBIDS0",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDASKS0+AG...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS0",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS1",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS2",
+            "ORDERBOOK:AGGRPERP-BTCUSDASKS3",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS0",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS1",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS2",
+            "ORDERBOOK:AGGRPERP-BTCUSDBIDS3",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDASKS3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDBIDS3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO3"
+          ],
+          "count": 25
+        },
+        {
+          "label": "BTCUSD+AGGRPERPBTCUSDRATIO0+A...",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO3"
+          ],
+          "count": 9
+        },
+        {
+          "label": "ORDERBOOK:BTCUSD",
+          "markets": [
+            "ORDERBOOK:BTCUSD"
+          ],
+          "count": 0
+        },
+        {
+          "label": "BTCUSD",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:BTCUSD"
+          ],
+          "count": 2
+        },
+        {
+          "label": "BTCUSD+AGGRSPOTBTCUSDRATIO0",
+          "markets": [
+            "BINANCE_FUTURES:btcusdt",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0"
+          ],
+          "count": 2
+        },
+        {
+          "label": "ORDERBOOK:AGGRPERPBTCUSDRATIO...",
+          "markets": [
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO3",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRSPOT-BTCUSDRATIO3"
+          ],
+          "count": 8
+        },
+        {
+          "label": "ORDERBOOK:AGGRPERPBTCUSDRATIO...",
+          "markets": [
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO0",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO1",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO2",
+            "ORDERBOOK:AGGRPERP-BTCUSDRATIO3"
+          ],
+          "count": 4
+        },
+        {
+          "label": "ORDERBOOK:AGGRPERPBTCUSDRATIO0",
+          "markets": [
+            "ORDERBOOK:AGGRPERPBTCUSDRATIO0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOTBTCUSDASKS+...",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSD-ASKS-0",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-BIDS-0",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-0"
+          ],
+          "count": 3
+        },
+        {
+          "label": "ORDERBOOK:AGGRPERPBTCUSDASKS+...",
+          "markets": [
+            "ORDERBOOK:AGGRPERP-BTCUSD-ASKS-0",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-BIDS-1",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-0",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-2"
+          ],
+          "count": 4
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOTBTCUSDBIDS+...",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSD-BIDS-1",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-0",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-2"
+          ],
+          "count": 3
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOTBTCUSDBIDS+...",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSD-BIDS-1",
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-0"
+          ],
+          "count": 2
+        },
+        {
+          "label": "ORDERBOOK:AGGRSPOT-BTCUSD-RAT...",
+          "markets": [
+            "ORDERBOOK:AGGRSPOT-BTCUSD-RATIO-0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "ORDERBOOK:BTCUSD-AGGRPERP-0",
+          "markets": [
+            "ORDERBOOK:BTCUSD-AGGRPERP-0"
+          ],
+          "count": 0
+        },
+        {
+          "label": "ORDERBOOK:BTCUSD",
+          "markets": [
+            "ORDERBOOK:BTCUSD",
+            "ORDERBOOK:BTCUSD-P-0"
+          ],
+          "count": 2
+        },
+        {
+          "label": "SENTIMENT+BTCUSD",
+          "markets": [
+            "AGGR:SENTIMENT",
+            "ORDERBOOK:BTCUSD"
+          ],
+          "count": 2
+        },
+        {
+          "label": "AGGR:SENTIMENT",
+          "markets": [
+            "AGGR:SENTIMENT"
+          ],
+          "count": 0
+        },
+        {
+          "label": "SENTIMENT+BTCUSD",
+          "markets": [
+            "AGGR:SENTIMENT",
+            "BINANCE_FUTURES:btcbusd",
+            "BINANCE_FUTURES:btcusd_perp",
+            "BINANCE_FUTURES:btcusdt",
+            "BINANCE:btcbusd",
+            "BINANCE:btcusdt",
+            "BITFINEX:BTCF0:USTF0",
+            "BITFINEX:BTCUSD",
+            "BITFINEX:BTCUST",
+            "BITMEX:XBTUSD",
+            "BITMEX:XBTUSDT",
+            "BITSTAMP:btcusd",
+            "BYBIT:BTCUSD",
+            "BYBIT:BTCUSDT",
+            "COINBASE:BTC-USD",
+            "COINBASE:BTC-USDT",
+            "DERIBIT:BTC-PERPETUAL",
+            "KRAKEN:PI_XBTUSD",
+            "OKEX:BTC-USD-SWAP",
+            "OKEX:BTC-USDT-SWAP"
+          ],
+          "count": 20
+        }
+      ],
+      "searchExchanges": {
+        "AGGR": false,
+        "BINANCE": false,
+        "BINANCE_FUTURES": false,
+        "BINANCE_US": false,
+        "BITFINEX": false,
+        "BITGET": false,
+        "BITMART": false,
+        "BITMEX": false,
+        "BITSTAMP": false,
+        "BYBIT": false,
+        "COINBASE": false,
+        "CRYPTOCOM": false,
+        "DERIBIT": false,
+        "DYDX": false,
+        "GATEIO": false,
+        "HITBTC": false,
+        "HUOBI": false,
+        "KRAKEN": false,
+        "KUCOIN": false,
+        "MEXC": false,
+        "OKEX": false,
+        "ORDERBOOK": true,
+        "PHEMEX": false,
+        "POLONIEX": false,
+        "UNISWAP": false
+      },
+      "timeframes": [
+        {
+          "label": "1s",
+          "value": "1"
+        },
+        {
+          "label": "3s",
+          "value": "3"
+        },
+        {
+          "label": "5s",
+          "value": "5"
+        },
+        {
+          "label": "10s",
+          "value": "10"
+        },
+        {
+          "label": "15s",
+          "value": "15"
+        },
+        {
+          "label": "30s",
+          "value": "30"
+        },
+        {
+          "label": "1m",
+          "value": "60"
+        },
+        {
+          "label": "3m",
+          "value": "180"
+        },
+        {
+          "label": "5m",
+          "value": "300"
+        },
+        {
+          "label": "15m",
+          "value": "900"
+        },
+        {
+          "label": "21m",
+          "value": "1260"
+        },
+        {
+          "label": "30m",
+          "value": "1800"
+        },
+        {
+          "label": "1h",
+          "value": "3600"
+        },
+        {
+          "label": "2h",
+          "value": "7200"
+        },
+        {
+          "label": "4h",
+          "value": "14400"
+        },
+        {
+          "label": "6h",
+          "value": "21600"
+        },
+        {
+          "label": "8h",
+          "value": "28800"
+        },
+        {
+          "label": "12h",
+          "value": "43200"
+        },
+        {
+          "label": "1d",
+          "value": "86400"
+        },
+        {
+          "label": "21 ticks",
+          "value": "21t"
+        },
+        {
+          "label": "50 ticks",
+          "value": "50t"
+        },
+        {
+          "label": "89 ticks",
+          "value": "89t"
+        },
+        {
+          "label": "100 ticks",
+          "value": "100t"
+        },
+        {
+          "label": "200 ticks",
+          "value": "200t"
+        },
+        {
+          "label": "610 ticks",
+          "value": "610t"
+        },
+        {
+          "label": "1000 ticks",
+          "value": "1000t"
+        },
+        {
+          "label": "1597 ticks",
+          "value": "1597t"
+        }
+      ],
+      "favoriteTimeframes": {
+        "3600": "1h"
+      },
+      "normalizeWatermarks": false,
+      "alerts": false,
+      "alertsColor": "rgb(255,0,0)",
+      "alertsLineStyle": 2,
+      "alertsLineWidth": 2,
+      "alertsClick": false,
+      "alertSound": null,
+      "showThresholdsAsTable": true,
+      "indicatorDialogNavigation": "{\"optionsQuery\":\"\",\"editorOptions\":{},\"columnWidth\":240,\"tab\":\"options\"}"
+    },
+    "exchanges": {
+      "AGGR": {
+        "disabled": false
+      },
+      "BINANCE": {
+        "disabled": false
+      },
+      "BINANCE_FUTURES": {
+        "disabled": false
+      },
+      "BINANCE_US": {
+        "disabled": true
+      },
+      "BITFINEX": {
+        "disabled": true
+      },
+      "BITGET": {
+        "disabled": true
+      },
+      "BITMART": {
+        "disabled": true
+      },
+      "BITMEX": {
+        "disabled": true
+      },
+      "BITSTAMP": {
+        "disabled": false
+      },
+      "BYBIT": {
+        "disabled": true
+      },
+      "COINBASE": {
+        "disabled": false
+      },
+      "CRYPTOCOM": {
+        "disabled": true
+      },
+      "DERIBIT": {
+        "disabled": true
+      },
+      "DYDX": {
+        "disabled": false
+      },
+      "GATEIO": {
+        "disabled": true
+      },
+      "HITBTC": {
+        "disabled": true
+      },
+      "HUOBI": {
+        "disabled": true
+      },
+      "KRAKEN": {
+        "disabled": true
+      },
+      "KUCOIN": {
+        "disabled": false
+      },
+      "MEXC": {
+        "disabled": false
+      },
+      "OKEX": {
+        "disabled": true
+      },
+      "ORDERBOOK": {
+        "disabled": false
+      },
+      "PHEMEX": {
+        "disabled": true
+      },
+      "POLONIEX": {
+        "disabled": true
+      },
+      "UNISWAP": {
+        "disabled": true
+      },
+      "_id": "exchanges"
+    },
+    "chart": {
+      "indicatorsErrors": {},
+      "indicators": {
+        "cvd": {
+          "enabled": true,
+          "name": "CVD",
+          "description": "Cumulative Volume Delta",
+          "script": "plotline(cum(vbuy - vsell))",
+          "options": {
+            "priceScaleId": "cvd",
+            "priceFormat": {
+              "type": "volume"
+            },
+            "color": "#3BCA6D",
+            "scaleMargins": {
+              "top": 0.84,
+              "bottom": 0
+            },
+            "visible": false
+          },
+          "id": "cvd",
+          "createdAt": 1700269685372,
+          "updatedAt": null,
+          "series": [
+            "cvd"
+          ],
+          "optionsDefinitions": {}
+        },
+        "liquidations": {
+          "enabled": true,
+          "name": "Liquidations",
+          "description": "Liquidations by side",
+          "script": "plothistogram(lbuy, color=options.upColor)\nplothistogram(-lsell, color=options.downColor)",
+          "options": {
+            "priceFormat": {
+              "type": "volume"
+            },
+            "priceScaleId": "volume_liquidations",
+            "upColor": "rgb(255,76,243)",
+            "downColor": "rgb(255,183,77)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.96
+            },
+            "visible": false
+          },
+          "id": "liquidations",
+          "createdAt": 1700269685372,
+          "updatedAt": null,
+          "series": [
+            "liquidations",
+            "eh5vjbmo"
+          ],
+          "optionsDefinitions": {}
+        },
+        "price": {
+          "enabled": true,
+          "name": "Price",
+          "script": "src = { sources: { \"BINANCE_FUTURES:btcusdt\":BINANCE_FUTURES:btcusdt }, localTimestamp: time }\r\n\r\nvar ohlc = options.useHeikinAshi ? avg_heikinashi(src) : options.useGaps ? avg_ohlc_with_gaps(src) : avg_ohlc(src)\r\n\r\nplotcandlestick(ohlc, id=price)",
+          "options": {
+            "priceScaleId": "right",
+            "priceFormat": {
+              "auto": true,
+              "precision": 0,
+              "minMove": 1
+            },
+            "priceLineVisible": true,
+            "lastValueVisible": true,
+            "borderVisible": true,
+            "upColor": "rgb(59,202,109)",
+            "downColor": "rgb(214,40,40)",
+            "borderUpColor": "rgb(59,202,109)",
+            "borderDownColor": "rgb(239,67,82)",
+            "wickUpColor": "rgb(223,211,144)",
+            "wickDownColor": "rgb(239,67,82)",
+            "useGaps": false,
+            "useHeikinAshi": false,
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "visible": true
+          },
+          "id": "price",
+          "createdAt": 1700269685372,
+          "updatedAt": 1700590671954,
+          "series": [
+            "price"
+          ],
+          "unsavedChanges": true,
+          "preview": {},
+          "optionsDefinitions": {}
+        },
+        "volume": {
+          "enabled": true,
+          "name": "Volume",
+          "description": "Volume + delta",
+          "script": "if (upColor === 0) {\n  if (options.showDelta) {\n    upColor = options.upBgColor\n    downColor = options.downBgColor\n  } else {\n    upColor = options.upColor\n    downColor = options.downColor\n  }\n}\n\nif (options.showDelta) {\n  plothistogram({ time: time, value: Math.abs(vbuy-vsell), color: vbuy - vsell > 0 ? options.upColor : options.downColor})\n}\n\nplothistogram({ time: time, value: vbuy + vsell, color: vbuy > vsell ? upColor : downColor })",
+          "options": {
+            "priceFormat": {
+              "type": "volume"
+            },
+            "upColor": "rgb(59,202,109)",
+            "downColor": "rgb(235,30,47)",
+            "priceScaleId": "volume",
+            "scaleMargins": {
+              "top": 0.84,
+              "bottom": 0
+            },
+            "showDelta": true,
+            "upBgColor": "rgba(59,202,109,0.5)",
+            "downBgColor": "rgba(235,30,47,0.5)",
+            "visible": false
+          },
+          "id": "volume",
+          "createdAt": 1700269685372,
+          "updatedAt": null,
+          "series": [
+            "volume",
+            "9rgq97c2"
+          ],
+          "optionsDefinitions": {}
+        },
+        "orderbook-0-1-spot": {
+          "script": "upper = options.upper || 39\r\nlower = options.lower || -39\r\nratioValue = ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close\r\n\r\nplothistogram({\r\n    time: time,\r\n    value: ratioValue,\r\n    color: ratioValue < lower ? options.warnColor : ratioValue > upper ? options.warnColor : options.ratioColor\r\n}, title=\"spot\")\r\n\r\nif( upperLine === 0 ){  \r\n   upperLine = series[0].createPriceLine({ \r\n      price: upper, \r\n      index: bar.length,\r\n      color: options.upperColor\r\n    })\r\n  }\r\n\r\n  if( lowerLine === 0 ){  \r\n   lowerLine = series[0].createPriceLine({ \r\n      price: lower, \r\n      index: bar.length,\r\n      color: options.lowerColor\r\n    })\r\n  }",
+          "name": "Orderbook 0-1% spot",
+          "priceScaleId": "orderbook-0-1",
+          "id": "orderbook-0-1-spot",
+          "options": {
+            "priceScaleId": "orderbook-0-1-spot",
+            "scaleMargins": {
+              "top": 0.41,
+              "bottom": 0.49
+            },
+            "useGaps": true,
+            "useHeikinAshi": null,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "visible": false,
+            "lastValueVisible": true,
+            "baseLineVisible": true,
+            "pivotLength": 14,
+            "upper": null,
+            "lowerColor": "rgb(120,123,134)",
+            "upperColor": "rgb(120,123,134)",
+            "lower": null,
+            "ratioColor": "rgb(149,152,161)",
+            "warnColor": "rgb(255,235,59)"
+          },
+          "series": [
+            "orderbook-0-1-spot"
+          ],
+          "displayName": "Orderbook 0-1% spot",
+          "unsavedChanges": true,
+          "preview": {},
+          "createdAt": 1700590114591,
+          "updatedAt": 1700636345055,
+          "optionsDefinitions": {}
+        },
+        "orderbook-0-1-perp": {
+          "script": "upper = options.upper || 37\r\nlower = options.lower || -19\r\nratioValue = ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close\r\n\r\nplothistogram({\r\n    time: time,\r\n    value: ratioValue,\r\n    color: ratioValue < lower ? options.warnColor : ratioValue > upper ? options.warnColor : options.ratioColor\r\n}, title=\"perp\")\r\n\r\nif( upperLine === 0 ){  \r\n   upperLine = series[0].createPriceLine({ \r\n      price: upper, \r\n      index: bar.length,\r\n      color: options.upperColor\r\n    })\r\n  }\r\n\r\n  if( lowerLine === 0 ){  \r\n   lowerLine = series[0].createPriceLine({ \r\n      price: lower, \r\n      index: bar.length,\r\n      color: options.lowerColor\r\n    })\r\n  }",
+          "name": "Orderbook 0-1% perp",
+          "priceScaleId": "orderbook-0-1",
+          "id": "orderbook-0-1-perp",
+          "options": {
+            "priceScaleId": "orderbook-0-1-perp",
+            "scaleMargins": {
+              "top": 0.54,
+              "bottom": 0.38
+            },
+            "useGaps": true,
+            "useHeikinAshi": null,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "visible": false,
+            "lastValueVisible": true,
+            "baseLineVisible": true,
+            "upper": null,
+            "lower": null,
+            "warnColor": "rgb(24,72,204)",
+            "upperColor": "rgb(12,50,153)",
+            "lowerColor": "rgb(12,50,153)",
+            "ratioColor": "rgb(178,181,190)"
+          },
+          "series": [
+            "orderbook-0-1-perp"
+          ],
+          "displayName": "Orderbook 0-1% perp",
+          "unsavedChanges": true,
+          "preview": {},
+          "createdAt": 1700598885689,
+          "updatedAt": 1700600633815,
+          "optionsDefinitions": {}
+        },
+        "orderbook-spot": {
+          "script": "ratio1 = ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close\r\nratio2 = ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close\r\n\r\nratio1Upper = options.upper || 62\r\nratio1Lower = options.lower || -62\r\n\r\nratio2Upper = options.upper2 || 45\r\nratio2Lower = options.lower2 || -45\r\n\r\nplotline({\r\n    time: time,\r\n    value: ratio1, \r\n    color: ratio1 < ratio1Lower ? options.warnColor : (ratio1 > ratio1Upper ? options.warnColor : options.ratio1Color)\r\n}, title=S1)\r\n\r\nplotline({\r\n    time: time,\r\n    value: ratio2, \r\n    color: ratio2 < ratio2Lower ? options.warnColor : (ratio2 > ratio2Upper ? options.warnColor: options.ratio2Color)\r\n}, title=S2)\r\n\r\nif( upperLine === 0 ){  \r\n    upperLine = series[0].createPriceLine({ \r\n        price: ratio1Upper, \r\n        index: bar.length,\r\n        color: options.upperColor\r\n    })\r\n}\r\n\r\nif( lowerLine === 0 ){  \r\n    lowerLine = series[0].createPriceLine({ \r\n        price: ratio1Lower, \r\n        index: bar.length,\r\n        color: options.lowerColor\r\n    })\r\n}\r\n\r\nif( upperLine2 === 0 ){  \r\n    upperLine2 = series[0].createPriceLine({ \r\n        price: ratio2Upper, \r\n        index: bar.length,\r\n        color: options.upper2Color\r\n    })\r\n}\r\n\r\nif( lowerLine2 === 0 ){  \r\n    lowerLine2 = series[0].createPriceLine({ \r\n        price: ratio2Lower, \r\n        index: bar.length,\r\n        color: options.lower2Color\r\n    })\r\n}",
+          "name": "Orderbook spot",
+          "priceScaleId": "orderbook-spot",
+          "id": "orderbook-spot",
+          "options": {
+            "priceScaleId": "orderbook-spot",
+            "scaleMargins": {
+              "top": 0.69,
+              "bottom": 0.17
+            },
+            "lastValueVisible": true,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "leverages": null,
+            "ratio1": null,
+            "ratio2": null,
+            "ratio2Color": "rgb(66,189,168)",
+            "ratio1Color": "rgb(186,104,200)",
+            "visible": false,
+            "upper": null,
+            "upper2": null,
+            "lowerColor": "rgb(74,20,140)",
+            "upperColor": "rgb(171,71,188)",
+            "lower2Color": "rgb(66,189,168)",
+            "upper2Color": "rgb(34,171,148)",
+            "lower": null,
+            "lower2": null,
+            "warnColor": "rgb(245,124,0)"
+          },
+          "series": [
+            "orderbook-spot",
+            "u758hqit"
+          ],
+          "displayName": "Orderbook spot",
+          "unsavedChanges": true,
+          "preview": {},
+          "createdAt": 1700599138239,
+          "updatedAt": 1700636267344,
+          "optionsDefinitions": {}
+        },
+        "test": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    startOpacity = options.startOpacity || 0.5\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    console.log(perpToggle)\r\n    ratioIndex = options.ratioIndex || 1\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.1 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "test",
+          "priceScaleId": "test",
+          "id": "test",
+          "options": {
+            "priceScaleId": "right",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "ratio1Color": "rgb(255,255,255)",
+            "warnColor": "rgb(242,54,69)",
+            "visible": false,
+            "color": "rgba(76,175,80,0.22)",
+            "lastValueVisible": true,
+            "transparentColor": "rgba(255,152,0,0)",
+            "topColor": "rgb(255,238,88)",
+            "pColor5": "rgb(255,238,88)",
+            "pColor4": "rgb(255,238,88)",
+            "buyColor": "rgb(251,192,45)",
+            "sellColor": "rgb(128,25,34)",
+            "thresholdRatio1": null,
+            "startOpacity": 0.3,
+            "buyAlert": null,
+            "lowerPercent": null,
+            "perpToggle": null,
+            "ratioIndex": null,
+            "sellAlert": null,
+            "upperPercent": null,
+            "togglePerp": null
+          },
+          "series": [
+            "test copy 21"
+          ],
+          "displayName": "test",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "orderbook-perp": {
+          "script": "ratio1 = ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close\r\nratio2 = ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close\r\n\r\nratio1Upper = options.upper || 26\r\nratio1Lower = options.lower || -26\r\n\r\nratio2Upper = options.upper2 || 35\r\nratio2Lower = options.lower2 || -35\r\n\r\nplotline({\r\n    time: time,\r\n    value: ratio1, \r\n    color: ratio1 < ratio1Lower ? options.warnColor : (ratio1 > ratio1Upper ? options.warnColor : options.ratio1Color)\r\n}, title=P1)\r\n\r\nplotline({\r\n    time: time,\r\n    value: ratio2, \r\n    color: ratio2 < ratio2Lower ? options.warnColor : (ratio2 > ratio2Upper ? options.warnColor: options.ratio2Color)\r\n}, title=P2)\r\n\r\nif( upperLine === 0 ){  \r\n    upperLine = series[0].createPriceLine({ \r\n        price: ratio1Upper, \r\n        index: bar.length,\r\n        color: options.upperColor\r\n    })\r\n}\r\n\r\nif( lowerLine === 0 ){  \r\n    lowerLine = series[0].createPriceLine({ \r\n        price: ratio1Lower, \r\n        index: bar.length,\r\n        color: options.lowerColor\r\n    })\r\n}\r\n\r\nif( upperLine2 === 0 ){  \r\n    upperLine2 = series[0].createPriceLine({ \r\n        price: ratio2Upper, \r\n        index: bar.length,\r\n        color: options.upper2Color\r\n    })\r\n}\r\n\r\nif( lowerLine2 === 0 ){  \r\n    lowerLine2 = series[0].createPriceLine({ \r\n        price: ratio2Lower, \r\n        index: bar.length,\r\n        color: options.lower2Color\r\n    })\r\n}",
+          "name": "Orderbook Perp",
+          "priceScaleId": "orderbook-perp",
+          "id": "orderbook-perp",
+          "options": {
+            "priceScaleId": "orderbook-perp",
+            "lower": null,
+            "lower2": null,
+            "upper": null,
+            "upper2": null,
+            "ratio1Color": "rgb(171,71,188)",
+            "lowerColor": "rgb(186,104,200)",
+            "warnColor": "rgb(255,152,0)",
+            "upperColor": "rgb(186,104,200)",
+            "ratio2Color": "rgb(76,175,80)",
+            "upper2Color": "rgb(76,175,80)",
+            "lower2Color": "rgb(76,175,80)",
+            "visible": false,
+            "lastValueVisible": true
+          },
+          "series": [
+            "orderbook-perp",
+            "kffjjb62"
+          ],
+          "displayName": "Orderbook Perp",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "bids-asks-spots": {
+          "script": "bids = ORDERBOOK:AGGRSPOT-BTCUSDBIDS0.close + ORDERBOOK:AGGRSPOT-BTCUSDBIDS1.close + ORDERBOOK:AGGRSPOT-BTCUSDBIDS2.close + ORDERBOOK:AGGRSPOT-BTCUSDBIDS3.close\r\nasks = ORDERBOOK:AGGRSPOT-BTCUSDASKS0.close + ORDERBOOK:AGGRSPOT-BTCUSDASKS1.close + ORDERBOOK:AGGRSPOT-BTCUSDASKS2.close + ORDERBOOK:AGGRSPOT-BTCUSDASKS3.close\r\n\r\nplotcloudarea(asks, bids, title=spot)",
+          "name": "bids asks spots",
+          "priceScaleId": "bids-asks-total",
+          "id": "bids-asks-spots",
+          "options": {
+            "priceScaleId": "bids-asks-total",
+            "scaleMargins": {
+              "top": 0.09,
+              "bottom": 0.82
+            },
+            "visible": false
+          },
+          "series": [
+            "bids-asks-spots"
+          ],
+          "displayName": "bids asks spots",
+          "unsavedChanges": true,
+          "optionsDefinitions": {}
+        },
+        "high-pivot-pivotlength": {
+          "script": "",
+          "id": "high-pivot-pivotlength",
+          "name": "High (pivot {pivotLength})",
+          "options": {
+            "priceScaleId": "right",
+            "pivotLength": 14,
+            "color": "rgb(41,98,255)",
+            "strokeColor": "rgb(41,98,255)",
+            "strokeWidth": 1,
+            "visible": false,
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            }
+          },
+          "description": null,
+          "createdAt": 1700715051623,
+          "updatedAt": 1700715051623,
+          "unsavedChanges": true,
+          "series": [],
+          "displayName": "High (pivot 14)",
+          "optionsDefinitions": {}
+        },
+        "spot-0-1": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    startOpacity = options.startOpacity || 0.3\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    ratioIndex = options.ratioIndex || 0\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.3 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "Spot 0-1%",
+          "priceScaleId": "right",
+          "id": "spot-0-1",
+          "options": {
+            "priceScaleId": "right",
+            "buyAlert": null,
+            "ratioIndex": 0,
+            "sellAlert": null,
+            "startOpacity": null,
+            "togglePerp": null,
+            "buyColor": "rgb(255,238,88)",
+            "sellColor": "rgb(255,238,88)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "visible": false
+          },
+          "series": [
+            "spot-0-1"
+          ],
+          "displayName": "Spot 0-1%",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "spot-1-25": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    startOpacity = options.startOpacity || 0.3\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    ratioIndex = options.ratioIndex || 0\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.3 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "Spot 1-2.5%",
+          "priceScaleId": "right",
+          "id": "spot-1-25",
+          "options": {
+            "priceScaleId": "right",
+            "buyAlert": null,
+            "ratioIndex": 1,
+            "sellAlert": null,
+            "startOpacity": null,
+            "togglePerp": null,
+            "buyColor": "rgb(255,238,88)",
+            "sellColor": "rgb(255,238,88)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "visible": false
+          },
+          "series": [
+            "spot-1-25"
+          ],
+          "displayName": "Spot 1-2.5%",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "spot-25-5": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    startOpacity = options.startOpacity || 0.3\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    ratioIndex = options.ratioIndex || 0\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.3 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "Spot 2.5-5%",
+          "priceScaleId": "right",
+          "id": "spot-25-5",
+          "options": {
+            "priceScaleId": "right",
+            "buyAlert": null,
+            "ratioIndex": 2,
+            "sellAlert": null,
+            "startOpacity": null,
+            "togglePerp": null,
+            "buyColor": "rgb(255,238,88)",
+            "sellColor": "rgb(255,238,88)",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            }
+          },
+          "series": [
+            "spot-25-5"
+          ],
+          "displayName": "Spot 2.5-5%",
+          "unsavedChanges": true,
+          "optionsDefinitions": {}
+        },
+        "perp-0-1": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    startOpacity = options.startOpacity || (perpToggle ? 0.5 : 0.3)\r\n\r\n    ratioIndex = options.ratioIndex || 0\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.3 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    lowerPercent = perpToggle ? lowerPercent + 0.1 : lowerPercent\r\n    upperPercent = perpToggle ? upperPercent - 0.1 : upperPercent\r\n\r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "Perp 0-1%",
+          "priceScaleId": "right",
+          "id": "perp-0-1",
+          "options": {
+            "priceScaleId": "right",
+            "buyAlert": null,
+            "ratioIndex": 0,
+            "sellAlert": "",
+            "startOpacity": null,
+            "togglePerp": true,
+            "buyColor": "rgb(41,98,255)",
+            "sellColor": "rgb(41,98,255)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "visible": false
+          },
+          "series": [
+            "perp-0-1"
+          ],
+          "displayName": "Perp 0-1%",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "perp-1-25": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    startOpacity = options.startOpacity || (perpToggle ? 0.5 : 0.3)\r\n\r\n    ratioIndex = options.ratioIndex || 0\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.3 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    lowerPercent = perpToggle ? lowerPercent + 0.1 : lowerPercent\r\n    upperPercent = perpToggle ? upperPercent - 0.1 : upperPercent\r\n\r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "Perp 1-2.5%",
+          "priceScaleId": "right",
+          "id": "perp-1-25",
+          "options": {
+            "priceScaleId": "right",
+            "buyAlert": null,
+            "ratioIndex": 1,
+            "sellAlert": null,
+            "startOpacity": null,
+            "togglePerp": true,
+            "buyColor": "rgb(41,98,255)",
+            "sellColor": "rgb(41,98,255)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "visible": false
+          },
+          "series": [
+            "perp-1-25"
+          ],
+          "displayName": "Perp 1-2.5%",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "perp-25-5": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    buyColor = options.buyColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    sellColor = options.sellColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    buyOpacity = buyColor.pop()\r\n    sellOpacity = sellColor.pop()\r\n  \r\n    perpToggle = options.togglePerp || false\r\n    startOpacity = options.startOpacity || (perpToggle ? 0.5 : 0.3)\r\n\r\n    ratioIndex = options.ratioIndex || 0\r\n  \r\n    lowerPercent = ratioIndex === 0 ? 0.3 : ratioIndex === 1 ? 1 : ratioIndex === 2 ? 2.5 : 5 \r\n    upperPercent = ratioIndex === 0 ? 1 : ratioIndex === 1 ? 2.5 : ratioIndex === 2 ? 5 : 10 \r\n  \r\n    lowerPercent = perpToggle ? lowerPercent + 0.1 : lowerPercent\r\n    upperPercent = perpToggle ? upperPercent - 0.1 : upperPercent\r\n\r\n    // spot\r\n    defaultBuyAlert = ratioIndex === 0 ? 40 : ratioIndex === 1 ? 63 : ratioIndex === 2 ? 46 : 60\r\n    defaultSellAlert = ratioIndex === 0 ? -40 : ratioIndex === 1 ? -63 : ratioIndex === 2 ? -46 : -60 \r\n    if( perpToggle ){\r\n      defaultBuyAlert = ratioIndex === 0 ? 38 : ratioIndex === 1 ? 27 : ratioIndex === 2 ? 36 : 35\r\n      defaultSellAlert = ratioIndex === 0 ? -20 : ratioIndex === 1 ? -27 : ratioIndex === 2 ? -36 : -35 \r\n    }\r\n    buyAlert = options.buyAlert || defaultBuyAlert\r\n    sellAlert =  options.sellAlert || defaultSellAlert\r\n  \r\n    /*\r\n    function calculateOpacity (y, min, max, start, stop) {\r\n      const x = start + (stop - start) * ((y - min) / (max - min));\r\n      return x;\r\n    }\r\n    ${calculateOpacity(param.data[2], 500, 800, 0.2, 0.4)})\r\n    */\r\n  }\r\n  // </STARTUP SCRIPT> \r\n  \r\n  ratio = 0\r\n  \r\n  if( perpToggle ){\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRPERP-BTCUSDRATIO2.close : ORDERBOOK:AGGRPERP-BTCUSDRATIO3.close\r\n  }else{\r\n      ratio = ratioIndex === 0 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO0.close : ratioIndex === 1 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO1.close : ratioIndex === 2 ? ORDERBOOK:AGGRSPOT-BTCUSDRATIO2.close : ORDERBOOK:AGGRSPOT-BTCUSDRATIO3.close\r\n  }\r\n  \r\n  directionRatio = Math.sign(ratio)\r\n  thresholdRatio = directionRatio > 0 ? buyAlert : sellAlert\r\n  thresholdRatioAbs = Math.abs(thresholdRatio)\r\n\r\n  if( Math.abs(ratio) < thresholdRatioAbs ){\r\n      return \r\n  }\r\n  \r\n  lower = $price.close + -1 * directionRatio * (($price.close  * lowerPercent) / 100)\r\n  upper = $price.close + -1 * directionRatio * (($price.close  * upperPercent ) / 100);\r\n  \r\n  // console.log(ratio, thresholdRatio, lower, upper, Math.abs(ratio) < thresholdRatio)\r\n  \r\n  alphaRatio = Math.abs(ratio) < thresholdRatioAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdRatioAbs) / (100 - thresholdRatioAbs))\r\n  alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n  colorRatio = 'rgba(' + buyColor.join(',') + ',' + alphaRatioRounded + ')'\r\n  \r\n  plotbrokenarea({\r\n    time: time, \r\n    lowerValue: lower,\r\n    higherValue: upper,\r\n    color:  colorRatio\r\n  })",
+          "name": "Perp 2.5-5%",
+          "priceScaleId": "right",
+          "id": "perp-25-5",
+          "options": {
+            "priceScaleId": "right",
+            "buyAlert": null,
+            "ratioIndex": 2,
+            "sellAlert": null,
+            "startOpacity": null,
+            "togglePerp": true,
+            "buyColor": "rgb(41,98,255)",
+            "sellColor": "rgb(41,98,255)",
+            "visible": false,
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            }
+          },
+          "series": [
+            "perp-25-5"
+          ],
+          "displayName": "Perp 2.5-5%",
+          "unsavedChanges": false,
+          "optionsDefinitions": {}
+        },
+        "ratios-0-1": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    spotColor = options.spotColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    perpColor = options.perpColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    binanceColor = options.binanceColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    coinbaseColor = options.coinbaseColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    bitmexColor = options.bitmexColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    \r\n    //allOnColor = options.allOnColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n\r\n    spotOpacity = spotColor.pop()\r\n    perpOpacity = perpColor.pop()\r\n    binanceOpacity = binanceColor.pop()\r\n    coinbaseOpacity = coinbaseColor.pop()\r\n    bitmexeOpacity = bitmexColor.pop()\r\n   // allOnColorOpacity = allOnColor.pop()\r\n\r\n    startOpacity = options.startOpacity || 0.25\r\n  \r\n    spotBuyAlerts  = [40, 63, 46, 60]\r\n    spotSellAlerts = [-40, -63, -46, -60]\r\n\r\n    perpBuyAlerts  = [38, 27, 36, 35]\r\n    perpSellAlerts = [-20, -27, -36, -35]\r\n\r\n    binanceBuyAlerts  = [70, 70, 70, 70]\r\n    binanceSellAlerts = [-70, -70, -70, -70]\r\n\r\n    coinbaseBuyAlerts  = [50, 50, 50, 50]\r\n    coinbaseSellAlerts = [-50, -70, -65, -50]\r\n\r\n    bitmexBuyAlerts  = [50, 50, 50, 50]\r\n    bitmexSellAlerts = [-50, -50, -50, -50]\r\n\r\n    alerts = {\r\n      spot: {\r\n        buy: spotBuyAlerts,\r\n        sell: spotSellAlerts\r\n      },\r\n      perp: {\r\n        buy: perpBuyAlerts,\r\n        sell: perpSellAlerts\r\n      },\r\n      binance: {\r\n        buy: binanceBuyAlerts,\r\n        sell: binanceSellAlerts\r\n      },\r\n      coinbase: {\r\n        buy: coinbaseBuyAlerts,\r\n        sell: coinbaseSellAlerts\r\n      },\r\n      bitmex: {\r\n        buy: bitmexBuyAlerts,\r\n        sell: bitmexSellAlerts\r\n      }\r\n    }\r\n\r\n    whichColors = {\r\n      spot: spotColor,\r\n      perp: perpColor,\r\n      binance: binanceColor,\r\n      coinbase: coinbaseColor,\r\n      bitmex: bitmexColor\r\n    }\r\n\r\n    showType = {\r\n      spot: options.toggleSpot,\r\n      perp: options.togglePerp,\r\n      binance: options.toggleBinance,\r\n      coinbase: options.toggleCoinbase,\r\n      bitmex: options.toggleBitmex\r\n    }\r\n\r\n    ratioIndex = options.ratioIndex\r\n\r\n  }\r\n  // </STARTUP SCRIPT> \r\n\r\n  var ratiosPerp = ORDERBOOK:AGGRPERP-BTCUSD.zratios\r\n  var ratiosSpot = ORDERBOOK:AGGRSPOT-BTCUSD.zratios \r\n  var ratiosBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'].zratios\r\n  var ratiosCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSD'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSD'].zratios \r\n  var ratiosBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSD'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSD'].zratios \r\n\r\n  var m = [\r\n    { which: 'perp', ratios: ratiosPerp || [] },\r\n    { which: 'spot', ratios: ratiosSpot || []},\r\n    { which: 'binance', ratios: ratiosBinance || [] },\r\n    { which: 'coinbase', ratios: ratiosCoinbase || [] },\r\n    { which: 'bitmex', ratios: ratiosBitmex || [] }\r\n  ]\r\n  \r\n  // for each type (perp, spot, binance, ...)\r\n  for(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n    var c = m[typeIndex]\r\n\r\n    if( showType[c.which]  === false ){\r\n      continue\r\n    }\r\n      \r\n    var ratio = c.ratios.length && c.ratios[ratioIndex]\r\n    var direction = Math.sign(ratio)\r\n    var buyAlert = alerts[c.which]['buy'][ratioIndex]\r\n    var sellAlert = alerts[c.which]['sell'][ratioIndex]\r\n    var threshold = direction > 0 ? buyAlert : sellAlert\r\n    var thresholdAbs = Math.abs(threshold)\r\n\r\n    if( !ratio ){\r\n       continue\r\n    }\r\n\r\n    //var alphaRatio = startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n    var _opacityWhenOn = 0.7\r\n    var alphaRatio = _opacityWhenOn + (1 - _opacityWhenOn) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n\r\n    var _opacity = Math.abs(ratio) > thresholdAbs ? alphaRatio : startOpacity\r\n    var alphaRatioRounded = Math.round(_opacity * 100) / 100 \r\n    var colorRatio = 'rgba(' + whichColors[c.which].join(',') + ',' + alphaRatioRounded + ')'\r\n      \r\n    renderer.indicators[indicatorId].series[2 + typeIndex] = {\r\n        time: time, \r\n        value: ratio,\r\n        color:  colorRatio,\r\n    }\r\n        \r\n  }// end for each type\r\n\r\n/*if( upperLine === 0 ){  \r\n   upperLine = series[0].createPriceLine({ \r\n      price: 70, \r\n      index: bar.length,\r\n      color: options.upperColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n\r\n  if( lowerLine === 0 ){  \r\n   lowerLine = series[0].createPriceLine({ \r\n      price: -70, \r\n      index: bar.length,\r\n      color: options.lowerColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n  */\r\n\r\n\r\nline({ time: time, value: -70, color: options.lowerColor, axisLabelVisible: false })\r\nline({ time: time, value: 70, color: options.lowerColor, axisLabelVisible: false })\r\n\r\nreturn\r\n\r\nline($price.close, title=\"P\")\r\nline($price.close, title=\"S\")\r\nline($price.close, title=\"B\")\r\nline($price.close, title=\"C\")\r\nline($price.close, title=\"B\")",
+          "name": "Ratios 0-1%",
+          "priceScaleId": "right",
+          "id": "ratios-0-1",
+          "options": {
+            "priceScaleId": "mega-copy-1",
+            "startOpacity": null,
+            "allOnColor": "rgb(242,54,69)",
+            "binanceColor": "rgb(255,255,255)",
+            "perpColor": "rgb(41,98,255)",
+            "spotColor": "rgb(255,235,59)",
+            "scaleMargins": {
+              "top": 0.3,
+              "bottom": 0.52
+            },
+            "coinbaseColor": "rgb(247,124,128)",
+            "visible": true,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "toggleSpot": false,
+            "togglePerp": false,
+            "toggleBinance": false,
+            "toggleCoinbase": true,
+            "ratioIndex": 0,
+            "upperColor": "rgba(255,255,255,0.56)",
+            "lowerColor": "rgba(255,255,255,0.56)",
+            "lastValueVisible": true,
+            "priceLineVisible": false,
+            "baseLineVisible": false,
+            "lineStyle": 0,
+            "toggleBitmex": false,
+            "bitmexColor": "rgb(156,39,176)",
+            "testColor": "rgb(187,217,251)"
+          },
+          "series": [
+            "ratios-0-1",
+            "wfepxu5s",
+            "v59kg11e",
+            "2b7zgt2i",
+            "8qoyzb1h",
+            "ka2pqey3",
+            "5m32x2k8"
+          ],
+          "displayName": "Ratios 0-1%",
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "libraryId": "ratios-0-1",
+          "createdAt": 1703127371198,
+          "updatedAt": 1722892854797
+        },
+        "ratios-1-25": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    spotColor = options.spotColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    perpColor = options.perpColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    binanceColor = options.binanceColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    coinbaseColor = options.coinbaseColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    bitmexColor = options.bitmexColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    \r\n    //allOnColor = options.allOnColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n\r\n    spotOpacity = spotColor.pop()\r\n    perpOpacity = perpColor.pop()\r\n    binanceOpacity = binanceColor.pop()\r\n    coinbaseOpacity = coinbaseColor.pop()\r\n    bitmexeOpacity = bitmexColor.pop()\r\n   // allOnColorOpacity = allOnColor.pop()\r\n\r\n    startOpacity = options.startOpacity || 0.25\r\n  \r\n    spotBuyAlerts  = [40, 63, 46, 60]\r\n    spotSellAlerts = [-40, -63, -46, -60]\r\n\r\n    perpBuyAlerts  = [38, 27, 36, 35]\r\n    perpSellAlerts = [-20, -27, -36, -35]\r\n\r\n    binanceBuyAlerts  = [70, 70, 70, 70]\r\n    binanceSellAlerts = [-70, -70, -70, -70]\r\n\r\n    coinbaseBuyAlerts  = [50, 50, 50, 50]\r\n    coinbaseSellAlerts = [-50, -70, -65, -50]\r\n\r\n    bitmexBuyAlerts  = [50, 50, 50, 50]\r\n    bitmexSellAlerts = [-50, -50, -50, -50]\r\n\r\n    alerts = {\r\n      spot: {\r\n        buy: spotBuyAlerts,\r\n        sell: spotSellAlerts\r\n      },\r\n      perp: {\r\n        buy: perpBuyAlerts,\r\n        sell: perpSellAlerts\r\n      },\r\n      binance: {\r\n        buy: binanceBuyAlerts,\r\n        sell: binanceSellAlerts\r\n      },\r\n      coinbase: {\r\n        buy: coinbaseBuyAlerts,\r\n        sell: coinbaseSellAlerts\r\n      },\r\n      bitmex: {\r\n        buy: bitmexBuyAlerts,\r\n        sell: bitmexSellAlerts\r\n      }\r\n    }\r\n\r\n    whichColors = {\r\n      spot: spotColor,\r\n      perp: perpColor,\r\n      binance: binanceColor,\r\n      coinbase: coinbaseColor,\r\n      bitmex: bitmexColor\r\n    }\r\n\r\n    showType = {\r\n      spot: options.toggleSpot,\r\n      perp: options.togglePerp,\r\n      binance: options.toggleBinance,\r\n      coinbase: options.toggleCoinbase,\r\n      bitmex: options.toggleBitmex\r\n    }\r\n\r\n    ratioIndex = options.ratioIndex\r\n\r\n  }\r\n  // </STARTUP SCRIPT> \r\n\r\n  var ratiosPerp = ORDERBOOK:AGGRPERP-BTCUSD.zratios\r\n  var ratiosSpot = ORDERBOOK:AGGRSPOT-BTCUSD.zratios \r\n  var ratiosBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'].zratios\r\n  var ratiosCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSD'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSD'].zratios \r\n  var ratiosBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSD'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSD'].zratios \r\n\r\n  var m = [\r\n    { which: 'perp', ratios: ratiosPerp || [] },\r\n    { which: 'spot', ratios: ratiosSpot || []},\r\n    { which: 'binance', ratios: ratiosBinance || [] },\r\n    { which: 'coinbase', ratios: ratiosCoinbase || [] },\r\n    { which: 'bitmex', ratios: ratiosBitmex || [] }\r\n  ]\r\n  \r\n  // for each type (perp, spot, binance, ...)\r\n  for(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n    var c = m[typeIndex]\r\n\r\n    if( showType[c.which]  === false ){\r\n      continue\r\n    }\r\n      \r\n    var ratio = c.ratios.length && c.ratios[ratioIndex]\r\n    var direction = Math.sign(ratio)\r\n    var buyAlert = alerts[c.which]['buy'][ratioIndex]\r\n    var sellAlert = alerts[c.which]['sell'][ratioIndex]\r\n    var threshold = direction > 0 ? buyAlert : sellAlert\r\n    var thresholdAbs = Math.abs(threshold)\r\n\r\n    if( !ratio ){\r\n       continue\r\n    }\r\n\r\n    //var alphaRatio = startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n    var _opacityWhenOn = 0.7\r\n    var alphaRatio = _opacityWhenOn + (1 - _opacityWhenOn) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n\r\n    var _opacity = Math.abs(ratio) > thresholdAbs ? alphaRatio : startOpacity\r\n    var alphaRatioRounded = Math.round(_opacity * 100) / 100 \r\n    var colorRatio = 'rgba(' + whichColors[c.which].join(',') + ',' + alphaRatioRounded + ')'\r\n      \r\n    renderer.indicators[indicatorId].series[2 + typeIndex] = {\r\n        time: time, \r\n        value: ratio,\r\n        color:  colorRatio,\r\n    }\r\n        \r\n  }// end for each type\r\n\r\n/*if( upperLine === 0 ){  \r\n   upperLine = series[0].createPriceLine({ \r\n      price: 70, \r\n      index: bar.length,\r\n      color: options.upperColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n\r\n  if( lowerLine === 0 ){  \r\n   lowerLine = series[0].createPriceLine({ \r\n      price: -70, \r\n      index: bar.length,\r\n      color: options.lowerColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n  */\r\n\r\n\r\nline({ time: time, value: -70, color: options.lowerColor, axisLabelVisible: false })\r\nline({ time: time, value: 70, color: options.lowerColor, axisLabelVisible: false })\r\n\r\nreturn\r\n\r\nline($price.close, title=\"P\")\r\nline($price.close, title=\"S\")\r\nline($price.close, title=\"B\")\r\nline($price.close, title=\"C\")\r\nline($price.close, title=\"B\")",
+          "name": "Ratios 1-2.5%",
+          "priceScaleId": "right",
+          "id": "ratios-1-25",
+          "options": {
+            "priceScaleId": "ratios-1-25",
+            "startOpacity": null,
+            "allOnColor": "rgb(242,54,69)",
+            "binanceColor": "rgb(255,255,255)",
+            "perpColor": "rgb(41,98,255)",
+            "spotColor": "rgb(255,235,59)",
+            "scaleMargins": {
+              "top": 0.5,
+              "bottom": 0.32
+            },
+            "coinbaseColor": "rgb(247,124,128)",
+            "visible": true,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "toggleSpot": false,
+            "togglePerp": false,
+            "toggleBinance": false,
+            "toggleCoinbase": true,
+            "ratioIndex": 1,
+            "upperColor": "rgba(255,255,255,0.56)",
+            "lowerColor": "rgba(255,255,255,0.56)",
+            "lastValueVisible": true,
+            "priceLineVisible": false,
+            "baseLineVisible": false,
+            "lineStyle": 0,
+            "toggleBitmex": false,
+            "bitmexColor": "rgb(156,39,176)"
+          },
+          "series": [
+            "ratios-1-25",
+            "wes53f6a",
+            "0nzwocb0",
+            "pya5un7p",
+            "o7xc0z20",
+            "21ra5eoq",
+            "s3vy5bfa"
+          ],
+          "displayName": "Ratios 1-2.5%",
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "libraryId": "ratios-1-25",
+          "createdAt": 1703127564634,
+          "updatedAt": 1722893861508
+        },
+        "ratios-25-5": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    spotColor = options.spotColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    perpColor = options.perpColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    binanceColor = options.binanceColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    coinbaseColor = options.coinbaseColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    bitmexColor = options.bitmexColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    \r\n    //allOnColor = options.allOnColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n\r\n    spotOpacity = spotColor.pop()\r\n    perpOpacity = perpColor.pop()\r\n    binanceOpacity = binanceColor.pop()\r\n    coinbaseOpacity = coinbaseColor.pop()\r\n    bitmexeOpacity = bitmexColor.pop()\r\n   // allOnColorOpacity = allOnColor.pop()\r\n\r\n    startOpacity = options.startOpacity || 0.25\r\n  \r\n    spotBuyAlerts  = [40, 63, 46, 60]\r\n    spotSellAlerts = [-40, -63, -46, -60]\r\n\r\n    perpBuyAlerts  = [38, 27, 36, 35]\r\n    perpSellAlerts = [-20, -27, -36, -35]\r\n\r\n    binanceBuyAlerts  = [70, 70, 70, 70]\r\n    binanceSellAlerts = [-70, -70, -70, -70]\r\n\r\n    coinbaseBuyAlerts  = [50, 50, 50, 50]\r\n    coinbaseSellAlerts = [-50, -70, -65, -50]\r\n\r\n    bitmexBuyAlerts  = [50, 50, 50, 50]\r\n    bitmexSellAlerts = [-50, -50, -50, -50]\r\n\r\n    alerts = {\r\n      spot: {\r\n        buy: spotBuyAlerts,\r\n        sell: spotSellAlerts\r\n      },\r\n      perp: {\r\n        buy: perpBuyAlerts,\r\n        sell: perpSellAlerts\r\n      },\r\n      binance: {\r\n        buy: binanceBuyAlerts,\r\n        sell: binanceSellAlerts\r\n      },\r\n      coinbase: {\r\n        buy: coinbaseBuyAlerts,\r\n        sell: coinbaseSellAlerts\r\n      },\r\n      bitmex: {\r\n        buy: bitmexBuyAlerts,\r\n        sell: bitmexSellAlerts\r\n      }\r\n    }\r\n\r\n    whichColors = {\r\n      spot: spotColor,\r\n      perp: perpColor,\r\n      binance: binanceColor,\r\n      coinbase: coinbaseColor,\r\n      bitmex: bitmexColor\r\n    }\r\n\r\n    showType = {\r\n      spot: options.toggleSpot,\r\n      perp: options.togglePerp,\r\n      binance: options.toggleBinance,\r\n      coinbase: options.toggleCoinbase,\r\n      bitmex: options.toggleBitmex\r\n    }\r\n\r\n    ratioIndex = options.ratioIndex\r\n\r\n  }\r\n  // </STARTUP SCRIPT> \r\n\r\n  var ratiosPerp = ORDERBOOK:AGGRPERP-BTCUSD.zratios\r\n  var ratiosSpot = ORDERBOOK:AGGRSPOT-BTCUSD.zratios \r\n  var ratiosBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'].zratios\r\n  var ratiosCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSD'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSD'].zratios \r\n  var ratiosBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSD'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSD'].zratios \r\n\r\n  var m = [\r\n    { which: 'perp', ratios: ratiosPerp || [] },\r\n    { which: 'spot', ratios: ratiosSpot || []},\r\n    { which: 'binance', ratios: ratiosBinance || [] },\r\n    { which: 'coinbase', ratios: ratiosCoinbase || [] },\r\n    { which: 'bitmex', ratios: ratiosBitmex || [] }\r\n  ]\r\n  \r\n  // for each type (perp, spot, binance, ...)\r\n  for(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n    var c = m[typeIndex]\r\n\r\n    if( showType[c.which]  === false ){\r\n      continue\r\n    }\r\n      \r\n    var ratio = c.ratios.length && c.ratios[ratioIndex]\r\n    var direction = Math.sign(ratio)\r\n    var buyAlert = alerts[c.which]['buy'][ratioIndex]\r\n    var sellAlert = alerts[c.which]['sell'][ratioIndex]\r\n    var threshold = direction > 0 ? buyAlert : sellAlert\r\n    var thresholdAbs = Math.abs(threshold)\r\n\r\n    if( !ratio ){\r\n       continue\r\n    }\r\n\r\n    //var alphaRatio = startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n    var _opacityWhenOn = 0.7\r\n    var alphaRatio = _opacityWhenOn + (1 - _opacityWhenOn) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n\r\n    var _opacity = Math.abs(ratio) > thresholdAbs ? alphaRatio : startOpacity\r\n    var alphaRatioRounded = Math.round(_opacity * 100) / 100 \r\n    var colorRatio = 'rgba(' + whichColors[c.which].join(',') + ',' + alphaRatioRounded + ')'\r\n      \r\n    renderer.indicators[indicatorId].series[2 + typeIndex] = {\r\n        time: time, \r\n        value: ratio,\r\n        color:  colorRatio,\r\n    }\r\n        \r\n  }// end for each type\r\n\r\n/*if( upperLine === 0 ){  \r\n   upperLine = series[0].createPriceLine({ \r\n      price: 70, \r\n      index: bar.length,\r\n      color: options.upperColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n\r\n  if( lowerLine === 0 ){  \r\n   lowerLine = series[0].createPriceLine({ \r\n      price: -70, \r\n      index: bar.length,\r\n      color: options.lowerColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n  */\r\n\r\n\r\nline({ time: time, value: -70, color: options.lowerColor, axisLabelVisible: false })\r\nline({ time: time, value: 70, color: options.lowerColor, axisLabelVisible: false })\r\n\r\nreturn\r\n\r\nline($price.close, title=\"P\")\r\nline($price.close, title=\"S\")\r\nline($price.close, title=\"B\")\r\nline($price.close, title=\"C\")\r\nline($price.close, title=\"B\")",
+          "name": "Ratios 2.5-5%",
+          "priceScaleId": "right",
+          "id": "ratios-25-5",
+          "options": {
+            "priceScaleId": "ratios-25-5",
+            "startOpacity": null,
+            "allOnColor": "rgb(242,54,69)",
+            "binanceColor": "rgb(255,255,255)",
+            "perpColor": "rgb(41,98,255)",
+            "spotColor": "rgb(255,235,59)",
+            "scaleMargins": {
+              "top": 0.68,
+              "bottom": 0.14
+            },
+            "coinbaseColor": "rgb(247,124,128)",
+            "visible": true,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "toggleSpot": false,
+            "togglePerp": false,
+            "toggleBinance": false,
+            "toggleCoinbase": true,
+            "ratioIndex": 2,
+            "upperColor": "rgba(255,255,255,0.56)",
+            "lowerColor": "rgba(255,255,255,0.56)",
+            "lastValueVisible": true,
+            "priceLineVisible": false,
+            "baseLineVisible": false,
+            "lineStyle": 0,
+            "toggleBitmex": false,
+            "bitmexColor": "rgb(156,39,176)"
+          },
+          "series": [
+            "ratios-25-5",
+            "ey9u3crk",
+            "qic8tq2z",
+            "omf8735a",
+            "w0nl3xh0",
+            "czfmujub",
+            "e73gl1d7"
+          ],
+          "displayName": "Ratios 2.5-5%",
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "libraryId": "ratios-25-5",
+          "createdAt": 1703127644624,
+          "updatedAt": 1722893856590
+        },
+        "ratios-5-10": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    spotColor = options.spotColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    perpColor = options.perpColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    binanceColor = options.binanceColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    coinbaseColor = options.coinbaseColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    bitmexColor = options.bitmexColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    \r\n    //allOnColor = options.allOnColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n\r\n    spotOpacity = spotColor.pop()\r\n    perpOpacity = perpColor.pop()\r\n    binanceOpacity = binanceColor.pop()\r\n    coinbaseOpacity = coinbaseColor.pop()\r\n    bitmexeOpacity = bitmexColor.pop()\r\n   // allOnColorOpacity = allOnColor.pop()\r\n\r\n    startOpacity = options.startOpacity || 0.25\r\n  \r\n    spotBuyAlerts  = [40, 63, 46, 60]\r\n    spotSellAlerts = [-40, -63, -46, -60]\r\n\r\n    perpBuyAlerts  = [38, 27, 36, 35]\r\n    perpSellAlerts = [-20, -27, -36, -35]\r\n\r\n    binanceBuyAlerts  = [70, 70, 70, 70]\r\n    binanceSellAlerts = [-70, -70, -70, -70]\r\n\r\n    coinbaseBuyAlerts  = [50, 50, 50, 50]\r\n    coinbaseSellAlerts = [-50, -70, -65, -50]\r\n\r\n    bitmexBuyAlerts  = [50, 50, 50, 50]\r\n    bitmexSellAlerts = [-50, -50, -50, -50]\r\n\r\n    alerts = {\r\n      spot: {\r\n        buy: spotBuyAlerts,\r\n        sell: spotSellAlerts\r\n      },\r\n      perp: {\r\n        buy: perpBuyAlerts,\r\n        sell: perpSellAlerts\r\n      },\r\n      binance: {\r\n        buy: binanceBuyAlerts,\r\n        sell: binanceSellAlerts\r\n      },\r\n      coinbase: {\r\n        buy: coinbaseBuyAlerts,\r\n        sell: coinbaseSellAlerts\r\n      },\r\n      bitmex: {\r\n        buy: bitmexBuyAlerts,\r\n        sell: bitmexSellAlerts\r\n      }\r\n    }\r\n\r\n    whichColors = {\r\n      spot: spotColor,\r\n      perp: perpColor,\r\n      binance: binanceColor,\r\n      coinbase: coinbaseColor,\r\n      bitmex: bitmexColor\r\n    }\r\n\r\n    showType = {\r\n      spot: options.toggleSpot,\r\n      perp: options.togglePerp,\r\n      binance: options.toggleBinance,\r\n      coinbase: options.toggleCoinbase,\r\n      bitmex: options.toggleBitmex\r\n    }\r\n\r\n    ratioIndex = options.ratioIndex\r\n\r\n  }\r\n  // </STARTUP SCRIPT> \r\n\r\n  var ratiosPerp = ORDERBOOK:AGGRPERP-BTCUSD.zratios\r\n  var ratiosSpot = ORDERBOOK:AGGRSPOT-BTCUSD.zratios \r\n  var ratiosBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDT'].zratios\r\n  var ratiosCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSD'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSD'].zratios \r\n  var ratiosBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSD'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSD'].zratios \r\n\r\n  var m = [\r\n    { which: 'perp', ratios: ratiosPerp || [] },\r\n    { which: 'spot', ratios: ratiosSpot || []},\r\n    { which: 'binance', ratios: ratiosBinance || [] },\r\n    { which: 'coinbase', ratios: ratiosCoinbase || [] },\r\n    { which: 'bitmex', ratios: ratiosBitmex || [] }\r\n  ]\r\n  \r\n  // for each type (perp, spot, binance, ...)\r\n  for(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n    var c = m[typeIndex]\r\n\r\n    if( showType[c.which]  === false ){\r\n      continue\r\n    }\r\n      \r\n    var ratio = c.ratios.length && c.ratios[ratioIndex]\r\n    var direction = Math.sign(ratio)\r\n    var buyAlert = alerts[c.which]['buy'][ratioIndex]\r\n    var sellAlert = alerts[c.which]['sell'][ratioIndex]\r\n    var threshold = direction > 0 ? buyAlert : sellAlert\r\n    var thresholdAbs = Math.abs(threshold)\r\n\r\n    if( !ratio ){\r\n       continue\r\n    }\r\n\r\n    //var alphaRatio = startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n    var _opacityWhenOn = 0.7\r\n    var alphaRatio = _opacityWhenOn + (1 - _opacityWhenOn) * ((Math.abs(ratio) - thresholdAbs)  / (100 - thresholdAbs))\r\n\r\n    var _opacity = Math.abs(ratio) > thresholdAbs ? alphaRatio : startOpacity\r\n    var alphaRatioRounded = Math.round(_opacity * 100) / 100 \r\n    var colorRatio = 'rgba(' + whichColors[c.which].join(',') + ',' + alphaRatioRounded + ')'\r\n      \r\n    renderer.indicators[indicatorId].series[2 + typeIndex] = {\r\n        time: time, \r\n        value: ratio,\r\n        color:  colorRatio,\r\n    }\r\n        \r\n  }// end for each type\r\n\r\n/*if( upperLine === 0 ){  \r\n   upperLine = series[0].createPriceLine({ \r\n      price: 70, \r\n      index: bar.length,\r\n      color: options.upperColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n\r\n  if( lowerLine === 0 ){  \r\n   lowerLine = series[0].createPriceLine({ \r\n      price: -70, \r\n      index: bar.length,\r\n      color: options.lowerColor,\r\n        axisLabelVisible: false\r\n    })\r\n  }\r\n  */\r\n\r\n\r\nline({ time: time, value: -70, color: options.lowerColor, axisLabelVisible: false })\r\nline({ time: time, value: 70, color: options.lowerColor, axisLabelVisible: false })\r\n\r\nreturn\r\n\r\nline($price.close, title=\"P\")\r\nline($price.close, title=\"S\")\r\nline($price.close, title=\"B\")\r\nline($price.close, title=\"C\")\r\nline($price.close, title=\"B\")",
+          "name": "Ratios 5-10%",
+          "priceScaleId": "right",
+          "id": "ratios-5-10",
+          "options": {
+            "priceScaleId": "ratios-5-10",
+            "startOpacity": null,
+            "allOnColor": "rgb(242,54,69)",
+            "binanceColor": "rgb(255,255,255)",
+            "perpColor": "rgb(41,98,255)",
+            "spotColor": "rgb(255,235,59)",
+            "scaleMargins": {
+              "top": 0.87,
+              "bottom": 0
+            },
+            "coinbaseColor": "rgb(247,124,128)",
+            "visible": true,
+            "priceFormat": {
+              "type": "percent",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "toggleSpot": false,
+            "togglePerp": false,
+            "toggleBinance": false,
+            "toggleCoinbase": true,
+            "ratioIndex": 3,
+            "upperColor": "rgba(255,255,255,0.56)",
+            "lowerColor": "rgba(255,255,255,0.56)",
+            "lastValueVisible": true,
+            "priceLineVisible": false,
+            "baseLineVisible": false,
+            "lineStyle": 0,
+            "toggleBitmex": false,
+            "bitmexColor": "rgb(156,39,176)"
+          },
+          "series": [
+            "ratios-5-10",
+            "u7y1mjod",
+            "1jjodzjq",
+            "nmp8pc0i",
+            "jchn5ghz",
+            "99muyqbg",
+            "9m62z1xi"
+          ],
+          "displayName": "Ratios 5-10%",
+          "unsavedChanges": true,
+          "optionsDefinitions": {},
+          "libraryId": "ratios-5-10",
+          "createdAt": 1703127664797,
+          "updatedAt": 1722893851152
+        },
+        "bids-asks": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n\r\n    showType = {\r\n      spot: options.toggleSpot,\r\n      perp: options.togglePerp,\r\n      binance: options.toggleBinance,\r\n      coinbase: options.toggleCoinbase,\r\n      bitmex: options.toggleBitmex\r\n    }\r\n\r\n    toAdd = [\r\n        options.toggleBand1 || false,\r\n        options.toggleBand2 || false,\r\n        options.toggleBand3 || false,\r\n        options.toggleBand4 || false,\r\n    ]\r\n}\r\n// </STARTUP SCRIPT> \r\nvar bidsPerp = ORDERBOOK:AGGRPERP-BTCUSDLEVELS.zbids\r\nvar asksPerp = ORDERBOOK:AGGRPERP-BTCUSDLEVELS.zasks\r\nvar bidsSpot = ORDERBOOK:AGGRSPOT-BTCUSDLEVELS.zbids \r\nvar asksSpot = ORDERBOOK:AGGRSPOT-BTCUSDLEVELS.zasks \r\nvar bidsBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'].zbids\r\nvar asksBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'].zasks\r\nvar bidsCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'].zbids\r\nvar asksCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'].zasks\r\nvar bidsBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSDLEVELS'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSDLEVELS'].zbids\r\nvar asksBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSDLEVELS'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSDLEVELS'].zasks\r\n\r\nvar m = [\r\n    { which: 'perp', bids: bidsPerp || [], asks: asksPerp || [] },\r\n    { which: 'spot', bids: bidsSpot || [], asks: asksSpot || [] },\r\n    { which: 'binance', bids: bidsBinance || [], asks: asksBinance || [] },\r\n    { which: 'coinbase', bids: bidsCoinbase || [], asks: asksCoinbase || [] },\r\n    { which: 'bitmex', bids: bidsBitmex || [], asks: asksBitmex || [] }\r\n];\r\n\r\nvar _bids = 0\r\nvar _asks = 0\r\n\r\nfor(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n    var c = m[typeIndex]\r\n\r\n    if( showType[c.which]  === false ){\r\n      continue\r\n    }\r\n\r\n    for(let i = 0; i < 4; i++){\r\n        if( toAdd[i] === true ){\r\n            _bids += c.bids[i] || 0\r\n            _asks += c.asks[i] || 0\r\n        }\r\n    }\r\n}\r\nplotcloudarea(_bids, _asks, positiveColor=options.positiveColor,  negativeColor=options.negativeColor,  higherLineColor=options.positiveLineColor, lowerLineColor=options.negativeLineColor)",
+          "name": "Bids Asks",
+          "priceScaleId": "bids-asks",
+          "id": "bids-asks",
+          "options": {
+            "priceScaleId": "bids-asks",
+            "scaleMargins": {
+              "top": 0.18,
+              "bottom": 0.68
+            },
+            "togglePerp": true,
+            "toggleSpot": false,
+            "toggleBinance": false,
+            "toggleC": null,
+            "toggleRatio0": null,
+            "toggleRatio1": null,
+            "toggleRatio2": null,
+            "toggleRatio3": null,
+            "toggleCoinbase": false,
+            "toggleBitmex": true,
+            "toggleBand1": false,
+            "toggleBand2": false,
+            "toggleBand3": false,
+            "toggleBand4": true,
+            "lastValueVisible": true,
+            "priceFormat": {
+              "type": "volume",
+              "precision": 2,
+              "minMove": 0.01,
+              "auto": true
+            },
+            "visible": false
+          },
+          "optionsDefinitions": {},
+          "series": [
+            "bids-asks"
+          ],
+          "displayName": "Bids Asks",
+          "unsavedChanges": true
+        },
+        "orderbook-overlays": {
+          "script": "if (!pendingMarkers) {\r\n    // runs only once\r\n    pendingMarkers = []\r\n    spotColor = options.spotColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    perpColor = options.perpColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    binanceColor = options.binanceColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    coinbaseColor = options.coinbaseColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n    bitmexColor = options.bitmexColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1, 5).map(a => +a);\r\n\r\n    //allOnColor = options.allOnColor.match(/\\(([\\d.]+),([\\d.]+),([\\d.]+),?([\\d.]+)?\\)$/).slice(1,5).map(a => +a)\r\n\r\n    spotOpacity = spotColor.pop()\r\n    perpOpacity = perpColor.pop()\r\n    binanceOpacity = binanceColor.pop()\r\n    coinbaseOpacity = coinbaseColor.pop()\r\n    bitmexOpacity = bitmexColor.pop()\r\n   // allOnColorOpacity = allOnColor.pop()\r\n\r\n    startOpacity = options.startOpacity || 0.1\r\n  \r\n    spotBuyAlerts  = [40, 63, 46, 60]\r\n    spotSellAlerts = [-40, -63, -46, -60]\r\n\r\n    perpBuyAlerts  = [38, 27, 36, 35]\r\n    perpSellAlerts = [-20, -27, -36, -35]\r\n\r\n    binanceBuyAlerts  = [70, 70, 70, 70]\r\n    binanceSellAlerts = [-70, -70, -70, -70]\r\n\r\n    coinbaseBuyAlerts  = [50, 50, 50, 50]\r\n    coinbaseSellAlerts = [-50, -50, -50, -50]\r\n\r\n    bitmexBuyAlerts  = [-50, -60, -50, -50]\r\n    bitmexSellAlerts = [-50, -60, -50, -50]\r\n\r\n    alerts = {\r\n      spot: {\r\n        buy: spotBuyAlerts,\r\n        sell: spotSellAlerts\r\n      },\r\n      perp: {\r\n        buy: perpBuyAlerts,\r\n        sell: perpSellAlerts\r\n      },\r\n      binance: {\r\n        buy: binanceBuyAlerts,\r\n        sell: binanceSellAlerts\r\n      },\r\n      coinbase: {\r\n        buy: coinbaseBuyAlerts,\r\n        sell: coinbaseSellAlerts\r\n      },\r\n        bitmex: {\r\n            buy: bitmexBuyAlerts,\r\n            sell: bitmexSellAlerts\r\n        }\r\n    }\r\n\r\n    whichColors = {\r\n      spot: spotColor,\r\n      perp: perpColor,\r\n      binance: binanceColor,\r\n      coinbase: coinbaseColor,\r\n      bitmex: bitmexColor\r\n    }\r\n\r\n    allOnIndicator = options.toggleAllOnIndicator || false,\r\n\r\n    showType = {\r\n      spot: options.toggleSpot,\r\n      perp: options.togglePerp,\r\n      binance: options.toggleBinance,\r\n      coinbase: options.toggleCoinbase,\r\n      bitmex: options.toggleBitmex\r\n    }\r\n\r\n    lowerPercent = [0.3, 1, 2.5, 5]\r\n    upperPercent = [1, 2.5, 5, 10]  \r\n\r\n  }\r\n  // </STARTUP SCRIPT> \r\n\r\n  var ratiosPerp = ORDERBOOK:AGGRPERP-BTCUSDLEVELS.zratios\r\n  var ratiosSpot = ORDERBOOK:AGGRSPOT-BTCUSDLEVELS.zratios \r\n  var ratiosBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'] && renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'].zratios\r\n  var ratiosCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'] && renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'].zratios \r\n  var ratiosBitmex = renderer.sources['ORDERBOOK:BITMEX-XBTUSDLEVELS'] && renderer.sources['ORDERBOOK:BITMEX-XBTUSDLEVELS'].zratios\r\n\r\n  var m = [\r\n      { which: 'perp', ratios: ratiosPerp || [], bands: [] },\r\n      { which: 'spot', ratios: ratiosSpot || [], bands: [] },\r\n      { which: 'binance', ratios: ratiosBinance || [], bands: [] },\r\n      { which: 'coinbase', ratios: ratiosCoinbase || [], bands: [] },\r\n      { which: 'bitmex', ratios: ratiosBitmex || [], bands: [] }\r\n  ];\r\n  \r\n  /*var ratiosPerp = ORDERBOOK:AGGRPERP-BTCUSDLEVELS.zratios\r\n  var ratiosSpot = ORDERBOOK:AGGRSPOT-BTCUSDLEVELS.zratios \r\n  var ratiosBinance = renderer.sources['ORDERBOOK:BINANCE-BTCUSDTLEVELS'].zratios\r\n  var ratiosCoinbase = renderer.sources['ORDERBOOK:COINBASE-BTCUSDLEVELS'].zratios \r\n\r\n  var perps = []\r\n  var spots = []\r\n  var binance = []\r\n  var coinbase = []\r\n*/\r\n  //var ratio = 0\r\n\r\n  // for each ratio\r\n  for(let ratioIndex = 0; ratioIndex < 4; ratioIndex++){\r\n\r\n    var allOn = true;\r\n\r\n    // for each type (perp, spot, binance, ...)\r\n    for(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n      var c = m[typeIndex]\r\n\r\n      if( showType[c.which]  === false ){\r\n        c.bands.push([0, 0, '']) \r\n        continue\r\n      }\r\n        \r\n      /*\r\n      var ratioPerp = ratiosPerp && ratiosPerp.length > ratioIndex && ratiosPerp[ratioIndex]\r\n      var ratioSpot =  ratiosSpot && ratiosSpot.length > ratioIndex && ratiosSpot[ratioIndex]\r\n      var ratioBinance =  ratiosBinance && ratiosBinance.length > ratioIndex && ratiosBinance[ratioIndex]\r\n      var ratioCoinbase =  ratiosCoinbase && ratiosCoinbase.length > ratioIndex && ratiosCoinbase[ratioIndex]\r\n      */\r\n      var ratio = c.ratios.length && c.ratios[ratioIndex]\r\n      var direction = Math.sign(ratio)\r\n      var buyAlert = alerts[c.which]['buy'][ratioIndex]\r\n      var sellAlert = alerts[c.which]['sell'][ratioIndex]\r\n      var threshold = direction > 0 ? buyAlert : sellAlert\r\n      var thresholdAbs = Math.abs(threshold)\r\n    \r\n      var lower = $price.close + -1 * direction * (($price.close  * lowerPercent[ratioIndex]) / 100)  \r\n      var upper = $price.close + -1 * direction * (($price.close  * upperPercent[ratioIndex]) / 100)\r\n\r\n      if( !ratio || Math.abs(ratio) < thresholdAbs ){\r\n          allOn = false\r\n          c.bands.push([0, 0, '']) \r\n      }else{\r\n\r\n          var alphaRatio = Math.abs(ratio) < thresholdAbs ? 0 : startOpacity + (1 - startOpacity) * ((Math.abs(ratio) - thresholdAbs) / (100 - thresholdAbs))\r\n          var alphaRatioRounded = Math.round(alphaRatio * 100) / 100 \r\n          var colorRatio = 'rgba(' + whichColors[c.which].join(',') + ',' + alphaRatioRounded + ')'\r\n          \r\n          c.bands.push([lower, upper, colorRatio])\r\n      }\r\n      \r\n    }// end for each type\r\n\r\n    if( allOnIndicator && allOn ){\r\n      for(let typeIndex = 0; typeIndex < 4; typeIndex++){\r\n        var c = m[typeIndex]\r\n        c.bands[ratioIndex] = [lower, upper, options.allOnColor]\r\n      }\r\n    }\r\n\r\n  } // end for each ratios\r\n\r\n\r\nvar i = 0\r\n\r\nfor(let ratioIndex = 0; ratioIndex < 4; ratioIndex++){\r\n\r\n    for(let typeIndex = 0; typeIndex < m.length; typeIndex++){\r\n\r\n       var c = m[typeIndex]\r\n    \r\n       if( c.bands.length && c.bands[ratioIndex][0] !== 0 ) {\r\n         renderer.indicators[indicatorId].series[i] = {\r\n          time: time, \r\n          lowerValue: c.bands[ratioIndex][0],\r\n          higherValue: c.bands[ratioIndex][1],\r\n          color:  c.bands[ratioIndex][2]\r\n        }\r\n      }\r\n      i++\r\n    }\r\n}\r\n\r\n\r\n\r\nreturn\r\n//perp\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })     \r\n      brokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })   \r\n      brokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })   \r\n      brokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\n            brokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })\r\nbrokenarea({\r\n        time: time, \r\n        lowerValue: 0,\r\n        higherValue: 0,\r\n        color:  options.color\r\n      })",
+          "name": "Orderbook Overlays",
+          "priceScaleId": "right",
+          "id": "orderbook-overlays",
+          "options": {
+            "priceScaleId": "right",
+            "startOpacity": null,
+            "allOnColor": "rgb(242,54,69)",
+            "binanceColor": "rgb(255,255,255)",
+            "perpColor": "rgb(41,98,255)",
+            "spotColor": "rgb(255,235,59)",
+            "scaleMargins": {
+              "top": 0,
+              "bottom": 0.68
+            },
+            "coinbaseColor": "rgb(247,124,128)",
+            "visible": false,
+            "priceFormat": {
+              "type": "price",
+              "precision": 0,
+              "minMove": 1,
+              "auto": true
+            },
+            "toggleSpot": true,
+            "togglePerp": true,
+            "toggleBinance": true,
+            "toggleCoinbase": true,
+            "toggleAllOnIndicator": null,
+            "toggleBitmex": null,
+            "bitmexColor": "rgb(206,147,216)"
+          },
+          "series": [
+            "orderbook-overlays copy 1",
+            "3qbj49fk",
+            "9gptjhzz",
+            "ze2s8i4i",
+            "zdsf2ird",
+            "4npacr96",
+            "vyq4fcb8",
+            "0zw0miy3",
+            "lpjs4rgj",
+            "ahhxo2v5",
+            "vswqizad",
+            "4qa295fl",
+            "ituw1rtd",
+            "xfwnya5v",
+            "45urwhli",
+            "x77lh7jd",
+            "k2dofm2c",
+            "iek3xzw3",
+            "lsrj5eq5",
+            "z1d47hsu"
+          ],
+          "displayName": "Orderbook Overlays",
+          "unsavedChanges": true,
+          "optionsDefinitions": {}
+        }
+      },
+      "indicatorOrder": [
+        "cvd",
+        "liquidations",
+        "price",
+        "volume",
+        "orderbook-0-1-spot",
+        "orderbook-0-1-perp",
+        "orderbook-spot",
+        "test",
+        "orderbook-perp",
+        "bids-asks-spots",
+        "high-pivot-pivotlength",
+        "spot-0-1",
+        "spot-1-25",
+        "spot-25-5",
+        "perp-0-1",
+        "perp-1-25",
+        "perp-25-5",
+        "ratios-0-1",
+        "ratios-1-25",
+        "ratios-25-5",
+        "ratios-5-10",
+        "bids-asks",
+        "orderbook-overlays"
+      ],
+      "priceScales": {
+        "right": {
+          "scaleMargins": {
+            "top": 0,
+            "bottom": 0.68
+          },
+          "indicators": [
+            "Price"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "cvd": {
+          "scaleMargins": {
+            "top": 0.84,
+            "bottom": 0
+          }
+        },
+        "volume_liquidations": {
+          "scaleMargins": {
+            "top": 0,
+            "bottom": 0.96
+          },
+          "indicators": [
+            "Liquidations"
+          ]
+        },
+        "volume": {
+          "scaleMargins": {
+            "top": 0.84,
+            "bottom": 0
+          }
+        },
+        "orderbook-0-1-spot": {
+          "scaleMargins": {
+            "top": 0.41,
+            "bottom": 0.49
+          },
+          "indicators": [
+            "Orderbook 0-1% spot"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "orderbook-0-1-perp": {
+          "scaleMargins": {
+            "top": 0.54,
+            "bottom": 0.38
+          },
+          "indicators": [
+            "Orderbook 0-1% perp"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "orderbook-spot": {
+          "scaleMargins": {
+            "top": 0.69,
+            "bottom": 0.17
+          },
+          "indicators": [
+            "Orderbook spot"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "orderbook-perp": {
+          "scaleMargins": {
+            "top": 0.86,
+            "bottom": 0
+          },
+          "indicators": [
+            "Orderbook perp"
+          ]
+        },
+        "left": {
+          "scaleMargins": {
+            "top": 0.59,
+            "bottom": 0.28
+          }
+        },
+        "test": {
+          "scaleMargins": {
+            "top": 0.1,
+            "bottom": 0.2
+          }
+        },
+        "bids-asks-total": {
+          "scaleMargins": {
+            "top": 0.09,
+            "bottom": 0.82
+          },
+          "indicators": [
+            "bids asks total"
+          ]
+        },
+        "mega-copy-1": {
+          "scaleMargins": {
+            "top": 0.3,
+            "bottom": 0.52
+          },
+          "indicators": [
+            "Ratios 0-1%"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "ratios-1-25": {
+          "scaleMargins": {
+            "top": 0.5,
+            "bottom": 0.32
+          },
+          "indicators": [
+            "Ratios 1-2.5%"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "ratios-25-5": {
+          "scaleMargins": {
+            "top": 0.68,
+            "bottom": 0.14
+          },
+          "indicators": [
+            "Ratios 2.5-5%"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "ratios-5-10": {
+          "scaleMargins": {
+            "top": 0.87,
+            "bottom": 0
+          },
+          "indicators": [
+            "Ratios 5-10%"
+          ],
+          "priceFormat": {
+            "precision": 0,
+            "minMove": 1
+          }
+        },
+        "bids-asks": {
+          "scaleMargins": {
+            "top": 0.18,
+            "bottom": 0.68
+          },
+          "indicators": [
+            "Bids Asks"
+          ],
+          "priceFormat": {
+            "type": "volume",
+            "precision": 2,
+            "minMove": 0.01,
+            "auto": true
+          }
+        }
+      },
+      "layouting": false,
+      "showIndicators": true,
+      "timeframe": "300",
+      "refreshRate": 1000,
+      "showAlerts": true,
+      "showAlertsLabel": true,
+      "showLegend": true,
+      "fillGapsWithEmpty": true,
+      "showHorizontalGridlines": false,
+      "horizontalGridlinesColor": "rgba(255,255,255,.1)",
+      "showVerticalGridlines": false,
+      "verticalGridlinesColor": "rgba(255,255,255,.1)",
+      "showWatermark": false,
+      "watermarkColor": "rgba(255,255,255,.1)",
+      "showBorder": true,
+      "borderColor": null,
+      "showLeftScale": false,
+      "showRightScale": true,
+      "showTimeScale": true,
+      "hiddenMarkets": {},
+      "barSpacing": 7.758733397532974,
+      "_id": "chart",
+      "navigationState": {
+        "tab": "options",
+        "optionsQuery": "",
+        "fontSizePx": 14
+      }
+    }
+  }
+}
