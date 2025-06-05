@@ -17,10 +17,12 @@ import KRAKEN from './KRAKEN.svg'
 import UNISWAP from './UNISWAP.svg'
 import KUCOIN from './KUCOIN.svg'
 import BITGET from './BITGET.svg'
+import BITUNIX from './BITUNIX.svg'
 import MEXC from './MEXC.svg'
 import GATEIO from './GATEIO.svg'
 import CRYPTOCOM from './CRYPTOCOM.svg'
 import BITMART from './BITMART.svg'
+import HYPERLIQUID from './HYPERLIQUID.svg'
 
 export default {
   BINANCE,
@@ -42,8 +44,10 @@ export default {
   UNISWAP,
   KUCOIN,
   BITGET,
+  BITUNIX,
   MEXC,
   GATEIO,
   CRYPTOCOM,
-  BITMART
+  BITMART,
+  HYPERLIQUID
 }

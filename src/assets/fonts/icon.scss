@@ -1,10 +1,10 @@
 @font-face {font-family: "icon";
-  src: url('icon.eot?t=1694212744087'); /* IE9*/
-  src: url('icon.eot?t=1694212744087#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url("icon.woff2?t=1694212744087") format("woff2"),
-  url("icon.woff?t=1694212744087") format("woff"),
-  url('icon.ttf?t=1694212744087') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('icon.svg?t=1694212744087#icon') format('svg'); /* iOS 4.1- */
+  src: url('icon.eot?t=1748359847075'); /* IE9*/
+  src: url('icon.eot?t=1748359847075#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url("icon.woff2?t=1748359847075") format("woff2"),
+  url("icon.woff?t=1748359847075") format("woff"),
+  url('icon.ttf?t=1748359847075') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('icon.svg?t=1748359847075#icon') format('svg'); /* iOS 4.1- */
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -15,203 +15,209 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-AGGR:before { content: "\ea01"; }
-.icon-BINANCE:before { content: "\ea02"; }
-.icon-BINANCE_FUTURES:before { content: "\ea03"; }
-.icon-BINANCE_US:before { content: "\ea04"; }
-.icon-BITFINEX:before { content: "\ea05"; }
-.icon-BITGET:before { content: "\ea06"; }
-.icon-BITMART:before { content: "\ea07"; }
-.icon-BITMEX:before { content: "\ea08"; }
-.icon-BITSTAMP:before { content: "\ea09"; }
-.icon-BYBIT:before { content: "\ea0a"; }
-.icon-COINBASE:before { content: "\ea0b"; }
-.icon-COINEX:before { content: "\ea0c"; }
-.icon-CRYPTOCOM:before { content: "\ea0d"; }
-.icon-DERIBIT:before { content: "\ea0e"; }
-.icon-DYDX:before { content: "\ea0f"; }
-.icon-FTX:before { content: "\ea10"; }
-.icon-GATEIO:before { content: "\ea11"; }
-.icon-HITBTC:before { content: "\ea12"; }
-.icon-HUOBI:before { content: "\ea13"; }
-.icon-KRAKEN:before { content: "\ea14"; }
-.icon-KUCOIN:before { content: "\ea15"; }
-.icon-MEXC:before { content: "\ea16"; }
-.icon-OKEX:before { content: "\ea17"; }
-.icon-PHEMEX:before { content: "\ea18"; }
-.icon-POLONIEX:before { content: "\ea19"; }
-.icon-UNISWAP:before { content: "\ea1a"; }
-.icon-ada:before { content: "\ea1b"; }
-.icon-add-photo:before { content: "\ea1c"; }
-.icon-bear:before { content: "\ea1d"; }
-.icon-bitcoin:before { content: "\ea1e"; }
-.icon-bps:before { content: "\ea1f"; }
-.icon-btc:before { content: "\ea20"; }
-.icon-bull:before { content: "\ea21"; }
-.icon-candlestick:before { content: "\ea22"; }
-.icon-check:before { content: "\ea23"; }
-.icon-click:before { content: "\ea24"; }
-.icon-cog:before { content: "\ea25"; }
-.icon-coin:before { content: "\ea26"; }
-.icon-copy-paste:before { content: "\ea27"; }
-.icon-cross:before { content: "\ea28"; }
-.icon-dashboard:before { content: "\ea29"; }
-.icon-dollar:before { content: "\ea2a"; }
-.icon-down-thin:before { content: "\ea2b"; }
-.icon-down:before { content: "\ea2c"; }
-.icon-download:before { content: "\ea2d"; }
-.icon-dropper:before { content: "\ea2e"; }
-.icon-edit:before { content: "\ea2f"; }
-.icon-enlarge:before { content: "\ea30"; }
-.icon-eos:before { content: "\ea31"; }
-.icon-eraser:before { content: "\ea32"; }
-.icon-eth:before { content: "\ea33"; }
-.icon-euro:before { content: "\ea34"; }
-.icon-external-link-square-alt:before { content: "\ea35"; }
-.icon-flash:before { content: "\ea36"; }
-.icon-flip:before { content: "\ea37"; }
-.icon-gauge:before { content: "\ea38"; }
-.icon-github:before { content: "\ea39"; }
-.icon-hidden:before { content: "\ea3a"; }
-.icon-info:before { content: "\ea3b"; }
-.icon-iota:before { content: "\ea3c"; }
-.icon-lab:before { content: "\ea3d"; }
-.icon-locked:before { content: "\ea3e"; }
-.icon-ltc:before { content: "\ea3f"; }
-.icon-menu:before { content: "\ea40"; }
-.icon-merge:before { content: "\ea41"; }
-.icon-minus:before { content: "\ea42"; }
-.icon-monero:before { content: "\ea43"; }
-.icon-more:before { content: "\ea44"; }
-.icon-move:before { content: "\ea45"; }
-.icon-ms:before { content: "\ea46"; }
-.icon-music-note:before { content: "\ea47"; }
-.icon-neo:before { content: "\ea48"; }
+.icon-ada:before { content: "\ea01"; }
+.icon-add-photo:before { content: "\ea02"; }
+.icon-AGGR:before { content: "\ea03"; }
+.icon-bear:before { content: "\ea04"; }
+.icon-BINANCE:before { content: "\ea05"; }
+.icon-BINANCE_FUTURES:before { content: "\ea06"; }
+.icon-BINANCE_US:before { content: "\ea07"; }
+.icon-bitcoin:before { content: "\ea08"; }
+.icon-BITFINEX:before { content: "\ea09"; }
+.icon-BITGET:before { content: "\ea0a"; }
+.icon-BITMART:before { content: "\ea0b"; }
+.icon-BITMEX:before { content: "\ea0c"; }
+.icon-BITSTAMP:before { content: "\ea0d"; }
+.icon-BITUNIX:before { content: "\ea0e"; }
+.icon-bps:before { content: "\ea0f"; }
+.icon-btc:before { content: "\ea10"; }
+.icon-bull:before { content: "\ea11"; }
+.icon-BYBIT:before { content: "\ea12"; }
+.icon-candlestick:before { content: "\ea13"; }
+.icon-check:before { content: "\ea14"; }
+.icon-click:before { content: "\ea15"; }
+.icon-cog:before { content: "\ea16"; }
+.icon-coin:before { content: "\ea17"; }
+.icon-COINBASE:before { content: "\ea18"; }
+.icon-COINEX:before { content: "\ea19"; }
+.icon-copy-paste:before { content: "\ea1a"; }
+.icon-cross:before { content: "\ea1b"; }
+.icon-CRYPTOCOM:before { content: "\ea1c"; }
+.icon-dashboard:before { content: "\ea1d"; }
+.icon-DERIBIT:before { content: "\ea1e"; }
+.icon-dollar:before { content: "\ea1f"; }
+.icon-down-thin:before { content: "\ea20"; }
+.icon-down:before { content: "\ea21"; }
+.icon-download:before { content: "\ea22"; }
+.icon-dropper:before { content: "\ea23"; }
+.icon-DYDX:before { content: "\ea24"; }
+.icon-edit:before { content: "\ea25"; }
+.icon-enlarge:before { content: "\ea26"; }
+.icon-eos:before { content: "\ea27"; }
+.icon-eraser:before { content: "\ea28"; }
+.icon-eth:before { content: "\ea29"; }
+.icon-euro:before { content: "\ea2a"; }
+.icon-external-link-square-alt:before { content: "\ea2b"; }
+.icon-flash:before { content: "\ea2c"; }
+.icon-flip:before { content: "\ea2d"; }
+.icon-FTX:before { content: "\ea2e"; }
+.icon-GATEIO:before { content: "\ea2f"; }
+.icon-gauge:before { content: "\ea30"; }
+.icon-github:before { content: "\ea31"; }
+.icon-hidden:before { content: "\ea32"; }
+.icon-HITBTC:before { content: "\ea33"; }
+.icon-HUOBI:before { content: "\ea34"; }
+.icon-HYPERLIQUID:before { content: "\ea35"; }
+.icon-info:before { content: "\ea36"; }
+.icon-iota:before { content: "\ea37"; }
+.icon-KRAKEN:before { content: "\ea38"; }
+.icon-KUCOIN:before { content: "\ea39"; }
+.icon-lab:before { content: "\ea3a"; }
+.icon-locked:before { content: "\ea3b"; }
+.icon-ltc:before { content: "\ea3c"; }
+.icon-menu:before { content: "\ea3d"; }
+.icon-merge:before { content: "\ea3e"; }
+.icon-MEXC:before { content: "\ea3f"; }
+.icon-minus:before { content: "\ea40"; }
+.icon-monero:before { content: "\ea41"; }
+.icon-more:before { content: "\ea42"; }
+.icon-move:before { content: "\ea43"; }
+.icon-ms:before { content: "\ea44"; }
+.icon-music-note:before { content: "\ea45"; }
+.icon-neo:before { content: "\ea46"; }
+.icon-OKEX:before { content: "\ea47"; }
+.icon-PHEMEX:before { content: "\ea48"; }
 .icon-pile:before { content: "\ea49"; }
 .icon-plus:before { content: "\ea4a"; }
-.icon-pound:before { content: "\ea4b"; }
-.icon-refresh:before { content: "\ea4c"; }
-.icon-resize-height:before { content: "\ea4d"; }
-.icon-resize:before { content: "\ea4e"; }
-.icon-save:before { content: "\ea4f"; }
-.icon-search:before { content: "\ea50"; }
-.icon-skull:before { content: "\ea51"; }
-.icon-stamp:before { content: "\ea52"; }
-.icon-star-filled:before { content: "\ea53"; }
-.icon-star:before { content: "\ea54"; }
-.icon-switch:before { content: "\ea55"; }
-.icon-trash:before { content: "\ea56"; }
-.icon-trx:before { content: "\ea57"; }
-.icon-unlocked:before { content: "\ea58"; }
-.icon-up-thin:before { content: "\ea59"; }
-.icon-up:before { content: "\ea5a"; }
-.icon-upload:before { content: "\ea5b"; }
-.icon-visible:before { content: "\ea5c"; }
-.icon-volume-high:before { content: "\ea5d"; }
-.icon-volume-medium:before { content: "\ea5e"; }
-.icon-volume-off:before { content: "\ea5f"; }
-.icon-warning:before { content: "\ea60"; }
-.icon-xmr:before { content: "\ea61"; }
-.icon-xrp:before { content: "\ea62"; }
-.icon-yen:before { content: "\ea63"; }
+.icon-POLONIEX:before { content: "\ea4b"; }
+.icon-pound:before { content: "\ea4c"; }
+.icon-refresh:before { content: "\ea4d"; }
+.icon-resize-height:before { content: "\ea4e"; }
+.icon-resize:before { content: "\ea4f"; }
+.icon-save:before { content: "\ea50"; }
+.icon-search:before { content: "\ea51"; }
+.icon-skull:before { content: "\ea52"; }
+.icon-sol:before { content: "\ea53"; }
+.icon-stamp:before { content: "\ea54"; }
+.icon-star-filled:before { content: "\ea55"; }
+.icon-star:before { content: "\ea56"; }
+.icon-switch:before { content: "\ea57"; }
+.icon-trash:before { content: "\ea58"; }
+.icon-trx:before { content: "\ea59"; }
+.icon-UNISWAP:before { content: "\ea5a"; }
+.icon-unlocked:before { content: "\ea5b"; }
+.icon-up-thin:before { content: "\ea5c"; }
+.icon-up:before { content: "\ea5d"; }
+.icon-upload:before { content: "\ea5e"; }
+.icon-visible:before { content: "\ea5f"; }
+.icon-volume-high:before { content: "\ea60"; }
+.icon-volume-medium:before { content: "\ea61"; }
+.icon-volume-off:before { content: "\ea62"; }
+.icon-warning:before { content: "\ea63"; }
+.icon-xmr:before { content: "\ea64"; }
+.icon-xrp:before { content: "\ea65"; }
+.icon-yen:before { content: "\ea66"; }
 
-$icon-AGGR: "\ea01";
-$icon-BINANCE: "\ea02";
-$icon-BINANCE_FUTURES: "\ea03";
-$icon-BINANCE_US: "\ea04";
-$icon-BITFINEX: "\ea05";
-$icon-BITGET: "\ea06";
-$icon-BITMART: "\ea07";
-$icon-BITMEX: "\ea08";
-$icon-BITSTAMP: "\ea09";
-$icon-BYBIT: "\ea0a";
-$icon-COINBASE: "\ea0b";
-$icon-COINEX: "\ea0c";
-$icon-CRYPTOCOM: "\ea0d";
-$icon-DERIBIT: "\ea0e";
-$icon-DYDX: "\ea0f";
-$icon-FTX: "\ea10";
-$icon-GATEIO: "\ea11";
-$icon-HITBTC: "\ea12";
-$icon-HUOBI: "\ea13";
-$icon-KRAKEN: "\ea14";
-$icon-KUCOIN: "\ea15";
-$icon-MEXC: "\ea16";
-$icon-OKEX: "\ea17";
-$icon-PHEMEX: "\ea18";
-$icon-POLONIEX: "\ea19";
-$icon-UNISWAP: "\ea1a";
-$icon-ada: "\ea1b";
-$icon-add-photo: "\ea1c";
-$icon-bear: "\ea1d";
-$icon-bitcoin: "\ea1e";
-$icon-bps: "\ea1f";
-$icon-btc: "\ea20";
-$icon-bull: "\ea21";
-$icon-candlestick: "\ea22";
-$icon-check: "\ea23";
-$icon-click: "\ea24";
-$icon-cog: "\ea25";
-$icon-coin: "\ea26";
-$icon-copy-paste: "\ea27";
-$icon-cross: "\ea28";
-$icon-dashboard: "\ea29";
-$icon-dollar: "\ea2a";
-$icon-down-thin: "\ea2b";
-$icon-down: "\ea2c";
-$icon-download: "\ea2d";
-$icon-dropper: "\ea2e";
-$icon-edit: "\ea2f";
-$icon-enlarge: "\ea30";
-$icon-eos: "\ea31";
-$icon-eraser: "\ea32";
-$icon-eth: "\ea33";
-$icon-euro: "\ea34";
-$icon-external-link-square-alt: "\ea35";
-$icon-flash: "\ea36";
-$icon-flip: "\ea37";
-$icon-gauge: "\ea38";
-$icon-github: "\ea39";
-$icon-hidden: "\ea3a";
-$icon-info: "\ea3b";
-$icon-iota: "\ea3c";
-$icon-lab: "\ea3d";
-$icon-locked: "\ea3e";
-$icon-ltc: "\ea3f";
-$icon-menu: "\ea40";
-$icon-merge: "\ea41";
-$icon-minus: "\ea42";
-$icon-monero: "\ea43";
-$icon-more: "\ea44";
-$icon-move: "\ea45";
-$icon-ms: "\ea46";
-$icon-music-note: "\ea47";
-$icon-neo: "\ea48";
+$icon-ada: "\ea01";
+$icon-add-photo: "\ea02";
+$icon-AGGR: "\ea03";
+$icon-bear: "\ea04";
+$icon-BINANCE: "\ea05";
+$icon-BINANCE_FUTURES: "\ea06";
+$icon-BINANCE_US: "\ea07";
+$icon-bitcoin: "\ea08";
+$icon-BITFINEX: "\ea09";
+$icon-BITGET: "\ea0a";
+$icon-BITMART: "\ea0b";
+$icon-BITMEX: "\ea0c";
+$icon-BITSTAMP: "\ea0d";
+$icon-BITUNIX: "\ea0e";
+$icon-bps: "\ea0f";
+$icon-btc: "\ea10";
+$icon-bull: "\ea11";
+$icon-BYBIT: "\ea12";
+$icon-candlestick: "\ea13";
+$icon-check: "\ea14";
+$icon-click: "\ea15";
+$icon-cog: "\ea16";
+$icon-coin: "\ea17";
+$icon-COINBASE: "\ea18";
+$icon-COINEX: "\ea19";
+$icon-copy-paste: "\ea1a";
+$icon-cross: "\ea1b";
+$icon-CRYPTOCOM: "\ea1c";
+$icon-dashboard: "\ea1d";
+$icon-DERIBIT: "\ea1e";
+$icon-dollar: "\ea1f";
+$icon-down-thin: "\ea20";
+$icon-down: "\ea21";
+$icon-download: "\ea22";
+$icon-dropper: "\ea23";
+$icon-DYDX: "\ea24";
+$icon-edit: "\ea25";
+$icon-enlarge: "\ea26";
+$icon-eos: "\ea27";
+$icon-eraser: "\ea28";
+$icon-eth: "\ea29";
+$icon-euro: "\ea2a";
+$icon-external-link-square-alt: "\ea2b";
+$icon-flash: "\ea2c";
+$icon-flip: "\ea2d";
+$icon-FTX: "\ea2e";
+$icon-GATEIO: "\ea2f";
+$icon-gauge: "\ea30";
+$icon-github: "\ea31";
+$icon-hidden: "\ea32";
+$icon-HITBTC: "\ea33";
+$icon-HUOBI: "\ea34";
+$icon-HYPERLIQUID: "\ea35";
+$icon-info: "\ea36";
+$icon-iota: "\ea37";
+$icon-KRAKEN: "\ea38";
+$icon-KUCOIN: "\ea39";
+$icon-lab: "\ea3a";
+$icon-locked: "\ea3b";
+$icon-ltc: "\ea3c";
+$icon-menu: "\ea3d";
+$icon-merge: "\ea3e";
+$icon-MEXC: "\ea3f";
+$icon-minus: "\ea40";
+$icon-monero: "\ea41";
+$icon-more: "\ea42";
+$icon-move: "\ea43";
+$icon-ms: "\ea44";
+$icon-music-note: "\ea45";
+$icon-neo: "\ea46";
+$icon-OKEX: "\ea47";
+$icon-PHEMEX: "\ea48";
 $icon-pile: "\ea49";
 $icon-plus: "\ea4a";
-$icon-pound: "\ea4b";
-$icon-refresh: "\ea4c";
-$icon-resize-height: "\ea4d";
-$icon-resize: "\ea4e";
-$icon-save: "\ea4f";
-$icon-search: "\ea50";
-$icon-skull: "\ea51";
-$icon-stamp: "\ea52";
-$icon-star-filled: "\ea53";
-$icon-star: "\ea54";
-$icon-switch: "\ea55";
-$icon-trash: "\ea56";
-$icon-trx: "\ea57";
-$icon-unlocked: "\ea58";
-$icon-up-thin: "\ea59";
-$icon-up: "\ea5a";
-$icon-upload: "\ea5b";
-$icon-visible: "\ea5c";
-$icon-volume-high: "\ea5d";
-$icon-volume-medium: "\ea5e";
-$icon-volume-off: "\ea5f";
-$icon-warning: "\ea60";
-$icon-xmr: "\ea61";
-$icon-xrp: "\ea62";
-$icon-yen: "\ea63";
+$icon-POLONIEX: "\ea4b";
+$icon-pound: "\ea4c";
+$icon-refresh: "\ea4d";
+$icon-resize-height: "\ea4e";
+$icon-resize: "\ea4f";
+$icon-save: "\ea50";
+$icon-search: "\ea51";
+$icon-skull: "\ea52";
+$icon-sol: "\ea53";
+$icon-stamp: "\ea54";
+$icon-star-filled: "\ea55";
+$icon-star: "\ea56";
+$icon-switch: "\ea57";
+$icon-trash: "\ea58";
+$icon-trx: "\ea59";
+$icon-UNISWAP: "\ea5a";
+$icon-unlocked: "\ea5b";
+$icon-up-thin: "\ea5c";
+$icon-up: "\ea5d";
+$icon-upload: "\ea5e";
+$icon-visible: "\ea5f";
+$icon-volume-high: "\ea60";
+$icon-volume-medium: "\ea61";
+$icon-volume-off: "\ea62";
+$icon-warning: "\ea63";
+$icon-xmr: "\ea64";
+$icon-xrp: "\ea65";
+$icon-yen: "\ea66";
 

@@ -29,6 +29,7 @@ const REVERSE_MATCH_REGEX = /(\w+)[^a-z0-9]/i
 const COMMON_FUTURES_SUFFIX_REGEX = /[HUZ_-]\d{2}/
 const UNDERSCORE_ANYTHING_REGEX = /_.*/
 const PARSE_MARKET_REGEX = /([^:]*):(.*)/
+const BITUNIX_PERP_REGEX = /[A-Z]/
 
 const stablecoins = [
   'USDT',
@@ -193,7 +194,14 @@ async function fetchExchangeProducts(
     }
 
     try {
+      const headers: Record<string, string> = {}
+
+      if (endpoint.method === 'POST' && endpoint.data) {
+        headers['Content-Type'] = 'application/json'
+      }
+
       const json = await fetch(endpoint.url, {
+        headers,
         method: endpoint.method,
         body: endpoint.data
       }).then(response => response.json())
@@ -309,7 +317,11 @@ export function getMarketProduct(exchangeId, symbol, noStable?: boolean) {
 
   if (COMMON_FUTURES_SUFFIX_REGEX.test(symbol)) {
     type = 'future'
-  } else if (exchangeId === 'BINANCE_FUTURES' || exchangeId === 'DYDX') {
+  } else if (
+    exchangeId === 'BINANCE_FUTURES' ||
+    exchangeId === 'DYDX' ||
+    exchangeId === 'HYPERLIQUID'
+  ) {
     type = 'perp'
   } else if (exchangeId === 'COINBASE' && COINBASE_INTX_REGEX.test(symbol)) {
     type = 'perp'
@@ -348,11 +360,15 @@ export function getMarketProduct(exchangeId, symbol, noStable?: boolean) {
     type = 'perp'
   } else if (exchangeId === 'KUCOIN' && symbol.indexOf('-') === -1) {
     type = 'perp'
+  } else if (exchangeId === 'BITUNIX' && BITUNIX_PERP_REGEX.test(symbol)) {
+    type = 'perp'
+  } else if (exchangeId === 'GATEIO' && !DASH_SPOT_REGEX.test(symbol)) {
+    type = 'perp'
   }
 
   let localSymbol = symbol
 
-  if (exchangeId === 'BYBIT') {
+  if (exchangeId === 'BYBIT' || exchangeId === 'GATEIO') {
     localSymbol = localSymbol.replace(DASH_SPOT_REGEX, '')
   } else if (exchangeId === 'KRAKEN') {
     localSymbol = localSymbol.replace(KRAKEN_FUTURES_REGEX, '')
@@ -373,6 +389,8 @@ export function getMarketProduct(exchangeId, symbol, noStable?: boolean) {
     localSymbol = localSymbol.replace(KUCOIN_SUFFIX_REGEX, '')
   } else if (exchangeId === 'COINBASE' && type === 'perp') {
     localSymbol = localSymbol.replace(COINBASE_INTX_REGEX, '')
+  } else if (exchangeId === 'HYPERLIQUID') {
+    localSymbol = localSymbol.replace(/^k/, '') + 'USD'
   }
 
   localSymbol = localSymbol
@@ -619,11 +637,11 @@ export function formatAmount(amount, decimals?: number) {
 
   if (amount >= 1000000000) {
     amount =
-      +(amount / 1000000000).toFixed(isNaN(decimals) ? 1 : decimals) + ' B'
+      +(amount / 1000000000).toFixed(isNaN(decimals) ? 1 : decimals) + ' B'
   } else if (amount >= 1000000) {
-    amount = +(amount / 1000000).toFixed(isNaN(decimals) ? 1 : decimals) + ' M'
+    amount = +(amount / 1000000).toFixed(isNaN(decimals) ? 1 : decimals) + ' M'
   } else if (amount >= 1000) {
-    amount = +(amount / 1000).toFixed(isNaN(decimals) ? 1 : decimals) + ' K'
+    amount = +(amount / 1000).toFixed(isNaN(decimals) ? 1 : decimals) + ' K'
   } else {
     amount = +amount.toFixed(isNaN(decimals) ? 2 : decimals)
   }

@@ -572,7 +572,7 @@ export function mountComponent(cmp: Vue, container?: HTMLElement): void {
   container.appendChild(mounted.$el)
 }
 
-let popupWindow
+let popupWindow: WindowProxy
 
 export function displayCanvasInPopup(canvas) {
   if (!canvas) {
@@ -607,6 +607,8 @@ export function displayCanvasInPopup(canvas) {
     const popupFeatures = `width=${popupWidth},height=${popupHeight},toolbar=no,location=no,status=no,menubar=no`
 
     popupWindow = window.open('', '', popupFeatures)
+  } else {
+    popupWindow.focus()
   }
 
   // Check if the popup window was successfully created
@@ -615,7 +617,8 @@ export function displayCanvasInPopup(canvas) {
     const dataURL = canvas.toDataURL()
 
     // Create an image element in the popup window
-    const img = popupWindow.document.createElement('img')
+    const img = (popupWindow.document.body.children[0] ||
+      popupWindow.document.createElement('img')) as HTMLImageElement
 
     // Set the src attribute of the image to the canvas data URL
     img.src = dataURL

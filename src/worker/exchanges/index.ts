@@ -20,44 +20,48 @@ import Dydx from './dydx'
 import Uniswap from './uniswap'
 import Kucoin from './kucoin'
 import Bitget from './bitget'
+import Bitunix from './bitunix'
 import Mexc from './mexc'
 import Gateio from './gateio'
 import CryptoCom from './cryptocom'
 import Bitmart from './bitmart'
 import Orderbook from './orderbook'
+import Hyperliquid from './hyperliquid'
 
 export const exchanges = [
-  new Aggr(),
-  new Bitmex(),
-  new BinanceFutures(),
-  new BinanceUs(),
-  new Kraken(),
-  new Huobi(),
-  new Binance(),
-  new Bitfinex(),
-  new Bitstamp(),
-  new Coinbase(),
-  new Hitbtc(),
-  new Okex(),
-  new Poloniex(),
-  new Deribit(),
-  new Bybit(),
-  new Phemex(),
-  new Dydx(),
-  new Uniswap(),
-  new Kucoin(),
-  new Bitget(),
-  new Mexc(),
-  new Gateio(),
-  new CryptoCom(),
-  new Bitmart(),
-  new Orderbook()
+    new Aggr(),
+    new Bitmex(),
+    new BinanceFutures(),
+    new BinanceUs(),
+    new Kraken(),
+    new Huobi(),
+    new Binance(),
+    new Bitfinex(),
+    new Bitstamp(),
+    new Coinbase(),
+    new Hitbtc(),
+    new Okex(),
+    new Poloniex(),
+    new Deribit(),
+    new Bybit(),
+    new Phemex(),
+    new Dydx(),
+    new Uniswap(),
+    new Kucoin(),
+    new Bitget(),
+    new Bitunix(),
+    new Mexc(),
+    new Gateio(),
+    new CryptoCom(),
+    new Bitmart(),
+    new Orderbook(),
+    new Hyperliquid()
 ] as Exchange[]
 
 export function getExchangeById(id: string) {
-  for (const exchange of exchanges) {
-    if (exchange.id.toLowerCase() === id.toLowerCase()) {
-      return exchange
+    for (const exchange of exchanges) {
+        if (exchange.id.toLowerCase() === id.toLowerCase()) {
+            return exchange
+        }
     }
-  }
 }

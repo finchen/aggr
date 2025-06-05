@@ -2,14 +2,43 @@
 
 All notable changes to this project will be documented here.
 
+## [3.7.0] - 2025-03-17
+
+
+
+
+## [3.6.4] - 2025-01-03
+
+### Added
+
+- Added Solana address to donation
+- Added Indicator scaleWith dropdown
+- Markdown editor for indicators description
+- Zoomable indicator preview
+- Autocomplete local variable in script
+
+### Enhanced
+
+- Changed donation link behavior to copy wallet address to clipboard instead of opening a new tab
+- Fetch range based on indicator length
+
+### Fixed
+
+- Fixed handling of large subscriptions (Kraken)
+- Reconnect closed apis when tab made visible again (& ios pwa)
+
+## [3.6.3] - 2025-01-02
+
+- Add Bitunix exchange
+
 ## [3.6.2] - 2024-09-29
 
-- Fix Dockerfile and startup instructions
+- Fix Binance Futures wicks of death
 - Show weighted average price in trade feed (instead of last price)
 
-## [3.6.1] - 2024-09-27
+## [3.6.1] - 2024-08-14
 
-- Fix Binance Futures wicks of death
+- Fix Dockerfile and startup instructions
 
 ## [3.6.0-hotfix.0] - 2024-08-22
 
